@@ -1,0 +1,270 @@
+.ad{
+    width: 1200px;
+    margin: 0 auto;
+}
+.new-shop, .adv {
+    float: left;
+    font-size: 15px;
+    text-align: center;
+    padding: 10px 0px;
+}
+
+.new-shop {
+    width: 200px;
+    background-color: #ffdddb;
+    height: 280px;
+}
+
+.flash-img {
+    float: left;
+    font-size: 15px;
+    text-align: center;
+    width: 53%;
+}
+
+.adv {
+    width: 300px;
+    background-color: #ffdddb;
+    padding:10px 20px;
+    height: 280px;
+}
+
+.adv ul li {
+    padding-top: 10px;
+}
+
+.new-shop ul li {
+    padding-top: 10px;
+}
+
+.hot-brand {
+    font-size: 10px;
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.hot-brand-title{
+    font-size: 18px;
+    padding: 20px 0px 0px 0px;
+}
+
+.hot-brand ul li {
+    float: left;
+    padding: 10px 20px;
+    color: #ff5e54;
+}
+
+.moldbaby {
+    font-size: 10px;
+}
+
+.moldbaby-more {
+    text-decoration: underline;
+    color: #ff5e54;
+    padding: 30px 10% 0px 0px;
+    text-align: right;
+    font-size: 16px;
+}
+
+.moldbaby-subject {
+    float: left;
+    margin-right: 48px;
+    border: 1px solid #ddd;
+    width: 250px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.moldbaby-subject img {
+    width: 100%;
+}
+
+.moldbaby-subject-img {
+    text-align: center;
+}
+
+.moldbaby-subject-title {
+    font-size: 15px;
+    text-align: center;
+    padding: 15px 10px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.curr-price, .other-price {
+    float: left;
+    font-size: 15px;
+}
+
+.curr-price {
+    height: 30px;
+    line-height: 30px;
+    padding: 0px 15% 0px 10px;
+    color: red;
+}
+
+.go-shop {
+    height: 35px;
+    line-height: 35px;
+    padding: 0px 10px;
+    border: 1px solid #ff5e54;
+    color: white;
+    text-align: center;
+    margin: 10px 0px 0px;
+    background-color: #ff5e54;
+    font-size: 15px;
+}
+
+.shop {
+    width: 250px;
+    border: 1px dotted #ddd;
+    margin-right: 48px;
+    margin-top: 20px;
+    border-radius: 5px;
+    float: left;
+    cursor: pointer;
+}
+
+.shop-logo {
+    margin: 10px 10px;
+}
+
+.shop-logo img {
+    float: left;
+    margin-bottom: 10px;
+    width: 55%;
+}
+
+.shop-desc {
+    padding-top: 9px;
+    padding-left: 58%;
+}
+
+.shop-name {
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.shop-type {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.shop-addr {
+    margin-top: 5px;
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 100px;
+    right: 100px;
+    background: #ff5e54;
+    color: white;
+    font-size: 17px;
+    display: none;
+    padding: 23px 18px;
+    border-radius: 100%;
+    cursor: pointer;
+}
+.hot-prod{
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.prod {
+    min-width: 1300px;
+}
+
+.prod-detail {
+    margin: 20px auto;
+    width: 1050px;
+}
+
+.prod-detail-img {
+    width: 350px;
+    float: left;
+}
+
+.prod-desc {
+    float: left;
+    margin-left: 20px;
+    font-size: 15px;
+    width: 400px;
+}
+
+.prod-desc-title {
+    padding-top: 60px;
+}
+
+.prod-desc-price {
+    margin-top: 60px;
+    background-color: #eee;
+    padding: 20px;
+}
+
+.prod-desc-discount {
+    margin-top: 60px;
+    cursor: pointer;
+}
+
+.prod-desc-discount-coupon {
+    float: left;
+    background-color: #ff5e54;
+    padding: 10px;
+    border-right: 2px dotted #333;
+}
+
+.prod-desc-discount-go {
+    float: left;
+    padding: 18px 20px 17px 20px;
+    background-color: #eee;
+}
+
+.prod-generalize {
+    float: left;
+    width: 300px;
+    font-size: 15px;
+}
+
+.prod-generalize-text {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.prod-generalize-item {
+    text-align: center;
+    cursor: pointer;
+}
+
+.prod-generalize-item-img img {
+    width: 143px;
+}
+
+.prod-generalize-item-price {
+    position: relative;
+    top: -35px;
+    background: white;
+    padding: 10px 0px;
+    opacity: 0.8;
+}
+
+.boutique {
+    font-size: 18px;
+}
+
+.back-to-top {
+    position: fixed;
+    bottom: 100px;
+    right: 100px;
+    background: #ff5e54;
+    color: white;
+    font-size: 17px;
+    display: none;
+    padding: 23px 18px;
+    border-radius: 100%;
+    cursor: pointer;
+}

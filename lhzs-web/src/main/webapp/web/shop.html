@@ -1,0 +1,258 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>【热卖旗舰店，品牌旗舰店】→哔唛网</title>
+    <meta name="Keywords" content="网店,品牌网店,精选网购,精选旗舰店">
+    <meta name="Description" content="精选品牌网店大全，为您推荐精选网店、精选旗舰店、精选品牌网店、精选全面优惠网购等信息。">
+
+    <link rel="stylesheet" href="/web/web/css/shop.css">
+    <link rel="stylesheet" href="/web/web/css/base.css">
+    <link rel="stylesheet" href="/web/web/css/index2.css">
+    <link rel="shortcut icon" href="/web/images/favicon.ico"/>
+    <link rel="bookmark" href="/web/images/favicon.ico"/>
+</head>
+<body>
+<div class="header"></div>
+<section>
+    <div class="hot-brand clearfix" style="display: none">
+        <div class="hot-brand-title">
+            <span class="hot-brand-text">热门店铺精选</span>
+            <span class="hot-shop-next">换一批</span>
+        </div>
+        <div class="shop-list" id="shop-list"></div>
+    </div>
+    <div class="hot-prod" style="display: none">
+        <div class="hot-brand-title">
+            <span class="hot-prod-text">热门商品精选</span>
+            <span class="hot-prod-next">换一批</span>
+        </div>
+        <div class="moldbaby clearfix" id="moldbaby"></div>
+    </div>
+    <div id="dataArea">
+        <div class="prod-catalog clearfix"></div>
+        <div class="shop-list clearfix"></div>
+        <div class="page-num"></div>
+    </div>
+        <!-- 返回顶部 -->
+        <div class="back-to-top">top</div>
+</section>
+<footer class="footer"></footer>
+</body>
+<script src="/js/jquery.min.js"></script>
+<script src="/web/js/app.js"></script>
+<script>
+    var id = getParameter("id");
+    var categoryId = null;
+
+    $(function () {
+        init();
+        setTimeout(function () {
+            $(".search-input").bind("keyup", function (even) {
+                if (even.keyCode == "13") {
+                    searchProduct();
+                }
+            });
+        }, 2000)
+    });
+
+    function init() {
+        $(".header").load("header.html");
+        $(".footer").load("footer.html");
+        app.getSelectedNav(id);
+        getMeta();
+        getCatalog();
+        getShop(1);
+    }
+    function getMeta() {
+        var param = {"id": (parseInt(id) + 1)};
+        app.getMeta(param, function (result) {
+            if (result.code == 200) {
+                var data = result.data;
+                $("head > title").text(data.title);
+                $('head > meta[name="Keywords"]').attr("content", data.keyWords);
+                $('head > meta[name="Description"]').attr("content", data.description);
+            }
+        });
+    }
+    function getCatalog() {
+        var html = "";
+        if (id == "1") {
+            html = '<ul class="prod-catalog-width" style="margin-left: 250px">' +
+                '<li style="background-color:#eeeeee;" index="">店铺分类</li>' +
+                '<li index="0" class="prod-nav-selected">所有旗舰店</li>' +
+                '<li index="1">天猫</li>' +
+                '<li index="2">京东</li>' +
+                '<li index="3">苏宁</li>' +
+                '<li index="4">1号店</li>' +
+                '<li index="5">当当</li>' +
+                '<li index="6">国美</li>' +
+                '<li index="8" style="border-right: 1px solid #eee">其他</li>' +
+                '</ul>';
+        } else if (id == "2") {
+            html = '<ul class="prod-catalog-width" style="margin-left: 250px">' +
+                '<li style="background-color:#eeeeee;" index="">店铺分类</li>' +
+                '<li index="0" class="prod-nav-selected">所有专卖店</li>' +
+                '<li index="1">天猫</li>' +
+                '<li index="2">京东</li>' +
+                '<li index="3">苏宁</li>' +
+                '<li index="4">1号店</li>' +
+                '<li index="5">当当</li>' +
+                '<li index="6">国美</li>' +
+                '<li index="7" style="border-right: 1px solid #eee">淘宝</li>' +
+                '</ul>';
+        } else if (id == "3") {
+            html = '<ul class="prod-catalog-width" style="margin-left: 320px">' +
+                '<li style="background-color:#eeeeee;" index="">店铺分类</li>' +
+                '<li index="0" class="prod-nav-selected">所有自营店</li>' +
+                '<li index="1">天猫</li>' +
+                '<li index="2">京东</li>' +
+                '<li index="3">苏宁</li>' +
+                '<li index="4">1号店</li>' +
+                '<li index="6" style="border-right: 1px solid #eee">国美</li>' +
+                '</ul>';
+        }
+        $(".prod-catalog").html(html);
+
+        $(".prod-catalog ul li").click(function () {
+            var index = $(this).attr("index");
+            $(".prod-catalog ul li").removeClass("prod-nav-selected");
+            $(this).addClass("prod-nav-selected");
+            if (index == "" || index == "0") {
+                categoryId = "0";
+            } else {
+                categoryId = index;
+            }
+            getShop(1);
+        });
+    }
+    function getShop(page) {
+        var param = {};
+        if (id == "1") {
+            param.type = "G";
+        } else if (id == "2") {
+            param.type = "T";
+        } else if (id == "3") {
+            param.type = "W";
+        }
+        if (categoryId != null && categoryId != "0") {
+            param.site = categoryId;
+        }
+        param.page = page;
+        param.size = 20;
+
+        app.getShopList(param, function (result) {
+            if (result.code == 200) {
+                var html = "";
+                var data = result.data.list;
+                if (data.length == 0) {
+                    $(".shop-list").html("");
+                    $(".page-num").html("");
+                    return;
+                }
+                for (var i = 0; i < data.length; i++) {
+                    var shop = data[i];
+                    html += '<div class="shop" index="' + i + '">' +
+                        '<div class="shop-logo ">' +
+                        '<img src="' + getShopImage(shop.site) + '">' +
+                        '</div>' +
+                        '<div class="shop-desc">' +
+                        '<div class="shop-name">' + shop.webShop + '</div>' +
+                        '<div class="shop-type">' +
+                        '<span>商城：</span>' +
+                        '<span>' + getShopType(shop.site) + '</span>' +
+                        '</div>' +
+                        '<div class="shop-addr">' +
+                        '<span>地区：</span>' +
+                        '<span>' + shop.shopAddr + '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>'
+                }
+                $(".shop-list").html(html);
+
+                var totalPage = result.data.pages;
+                var currPage = result.data.pageNum;
+
+                splitPage(totalPage, currPage, ".page-num",
+                    function (index) {
+                        if (index != 1) {
+                            getShop(index - 1);
+                        }
+                    }, function (index) {
+                        index = parseInt(index);
+                        if (index != totalPage) {
+                            getShop(index + 1);
+                        }
+                    }, function (index) {
+                        getShop(index);
+                    });
+
+                $(".shop").click(function () {
+                    var index = $(this).attr("index");
+                    location.href = "shopDetail.html?shopId=" + data[index].id + "&shopImg=" + id;
+                });
+            }
+        });
+    }
+
+    function getShopType(type) {
+        switch (type) {
+            case "1":
+                return "天猫";
+                break;
+            case "2":
+                return "京东";
+                break;
+            case "3":
+                return "苏宁易购";
+                break;
+            case "4":
+                return "一号店";
+                break;
+            case "5":
+                return "当当网";
+                break;
+            case "6":
+                return "国美";
+                break;
+            case "7":
+                return "淘宝店";
+                break;
+            default:
+                return "";
+                break;
+        }
+    }
+
+    function getShopImage(type) {
+        switch (type) {
+            case "1":
+                return "./images/tm.jpg";
+                break;
+            case "2":
+                return "./images/jd.jpg";
+                break;
+            case "3":
+                return "./images/sn.jpg";
+                break;
+            case "4":
+                return "./images/yhd.jpg";
+                break;
+            case "5":
+                return "./images/dd.jpg";
+                break;
+            case "6":
+                return "./images/gm.jpg";
+                break;
+            case "7":
+                return "./images/tb.jpg";
+                break;
+            default:
+                return "./images/qt.jpg";
+                break;
+        }
+    }
+</script>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261882558'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1261882558%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+</html>

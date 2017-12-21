@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lhzs.data.dao.SysAuthMapper">
+  <resultMap id="BaseResultMap" type="cn.lhzs.data.bean.SysAuth">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="amid" jdbcType="BIGINT" property="amid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+  </resultMap>
+
+  <sql id="BaseColumnSql">
+    id, amid, name, url, state, create_time, update_time, create_by, update_by
+  </sql>
+
+  <select id="getUserAuthList" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT
+    <include refid="BaseColumnSql" />
+    FROM sys_auth WHERE id IN (
+        SELECT aid FROM sys_role_auth WHERE rid IN(
+          SELECT rid FROM sys_role_user WHERE id = #{id}
+        )
+    )
+  </select>
+
+</mapper>

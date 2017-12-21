@@ -1,0 +1,303 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>店铺详情</title>
+    <meta name="Keywords" content="领券购物,领券网,领券网">
+    <meta name="Description"
+          content="领券购物专注全网商家内部优惠券活动,每日送出大量商家内部优惠券，特价团购福利，提供当季全网最具性价比的包邮产品,精选万人团商品超值好货,超低价好货享疯狂特价促销,让你全面安心享受网上购物乐趣!">
+
+    <script type="text/javascript">
+        (function (win, doc) {
+            var s = doc.createElement("script"), h = doc.getElementsByTagName("head")[0];
+            if (!win.alimamatk_show) {
+                s.charset = "gbk";
+                s.async = true;
+                s.src = "https://alimama.alicdn.com/tkapi.js";
+                h.insertBefore(s, h.firstChild);
+            }
+            ;
+            var o = {
+                pid: "mm_112821151_22032046_93426139", /*推广单元ID，用于区分不同的推广渠道*/
+                appkey: "", /*通过TOP平台申请的appkey，设置后引导成交会关联appkey*/
+                unid: "", /*自定义统计字段*/
+                type: "click" /* click 组件的入口标志 （使用click组件必设）*/
+            };
+            win.alimamatk_onload = win.alimamatk_onload || [];
+            win.alimamatk_onload.push(o);
+        })(window, document);
+    </script>
+
+    <link rel="stylesheet" href="/web/css/shopDetail.css">
+    <link rel="stylesheet" href="/web/css/base.css">
+    <link rel="stylesheet" href="/web/css/index2.css">
+    <link rel="shortcut icon" href="/web/images/favicon.ico"/>
+    <link rel="bookmark" href="/web/images/favicon.ico"/>
+</head>
+<body>
+<div class="header"></div>
+<section>
+    <div class="hot-brand clearfix" style="display: none">
+        <div class="hot-brand-title">
+            <span class="hot-brand-text">热门店铺精选</span>
+            <span class="hot-shop-next">换一批</span>
+        </div>
+        <div class="shop-list" id="shop-list"></div>
+    </div>
+    <div class="hot-prod" style="display: none">
+        <div class="hot-brand-title">
+            <span class="hot-prod-text">热门商品精选</span>
+            <span class="hot-prod-next">换一批</span>
+        </div>
+        <div class="moldbaby clearfix" id="moldbaby"></div>
+    </div>
+
+    <div id="dataArea">
+        <div class="shop-detail clearfix"></div>
+
+        <div class="hot-brand clearfix" style="display: none">
+            <div class="hot-brand-title">
+                <span class="hot-brand-text">热门店铺精选</span>
+                <span class="hot-shop-next" id="newHotShop">换一批</span>
+            </div>
+            <div class="shop-list"></div>
+        </div>
+    </div>
+    <!-- 返回顶部 -->
+    <div class="back-to-top">top</div>
+</section>
+<footer class="footer"></footer>
+</body>
+<script src="/js/jquery.min.js"></script>
+<script src="/web/js/app.js"></script>
+<script>
+    var shopId = getParameter("shopId");
+    var shopImg = getParameter("shopImg");
+    var page = 1;
+    $(function () {
+        init();
+        setTimeout(function () {
+            $(".search-input").bind("keyup", function (even) {
+                if (even.keyCode == "13") {
+                    searchProduct();
+                }
+            });
+        }, 2000)
+    })
+
+    function init() {
+        $(".header").load("header.html");
+        $(".footer").load("footer.html");
+        getShopDetail();
+        getHotShop(page);
+        bindEvent();
+    }
+
+    function bindEvent() {
+        $("#newHotShop").click(function () {
+            page = page + 1;
+            getHotShop(page);
+        });
+    }
+    function getShopDetail() {
+        var html = "";
+        var param = {"shopId": shopId};
+        app.getShopDetail(param, function (result) {
+            if (result.code == 200) {
+                var data = result.data;
+                var webGeneralize = data.webGeneralize;
+                if (webGeneralize) {
+                    html = '<div class="shop-detail-img">' +
+                        '<img src="' + getShopImage(data.site) + '"/>' +
+                        '</div>' +
+                        '<div class="shop-detail-content">' +
+                        '<div class="shop-detail-content-name">' + data.webShop + '</div>' +
+                        '<div class="shop-detail-content-type">店铺类型：' + getShopType(data.site) + '</div>' +
+                        '<div class="shop-detail-content-addr">地址：' + data.shopAddr + '</div>' +
+                        '</div>' +
+                        '<div class="shop-detail-desc">' +
+                        '<div style="line-height: 22px;">' + getDescription(data.site, data.type, data.webShop, data.sellName, data.sellProd) + '</div>' +
+                        '<div class="shop-detail-desc-img">' +
+                        '<img src="images/gotoshop.png">' +
+                        '</div>' +
+                        '</div>';
+                    $(".shop-detail").html(html);
+
+                    $(".shop-detail-img").click(function () {
+                        window.open(data.webGeneralize);
+                    });
+                    $(".shop-detail-content-name").click(function () {
+                        window.open(data.webGeneralize);
+                    });
+                    $(".shop-detail-desc-img").click(function () {
+                        window.open(data.webGeneralize);
+                    });
+                } else {
+                    html = '<a isconvert="1" rel="nofollow" target="_blank" href="' + data.webUrl + '">' +
+                        '<div class="shop-detail-img">' +
+                        '<img src="' + getShopImage(data.site) + '"/>' +
+                        '</div>' +
+                        '</a>' +
+                        '<div class="shop-detail-content">' +
+                        '<div class="shop-detail-content-name">' +
+                        '<a isconvert="1" rel="nofollow" target="_blank" href="' + data.webUrl + '">' + data.webShop + '</a></div>' +
+                        '<div class="shop-detail-content-type">店铺类型：' + getShopType(data.site) + '</div>' +
+                        '<div class="shop-detail-content-addr">地址：' + data.shopAddr + '</div>' +
+                        '</div>' +
+                        '<div class="shop-detail-desc">' +
+                        '<div style="line-height: 22px;">' + getDescription(data.site, data.type, data.webShop, data.sellName, data.sellProd) + '</div>' +
+                        '<a isconvert="1" rel="nofollow" target="_blank" href="' + data.webUrl + '">' +
+                        '<div class="shop-detail-desc-img">' +
+                        '<img src="images/gotoshop.png">' +
+                        '</div>' +
+                        '</a>' +
+                        '</div>' +
+                        '</a>';
+                    $(".shop-detail").html(html);
+                }
+
+            }
+
+            $("head > title").text(data.webShop + "→【" + data.brandName + "网店】");
+            $('head > meta[name="Keywords"]').attr("content", data.brandName + "网店，" + data.brandName + "网购，" + data.brandName + "店铺，" + data.brandName + "品牌店，" + data.brandName + "官方店");
+            $('head > meta[name="Description"]').attr("content", getDescription(data.site, data.type, data.webShop, data.sellName, data.sellProd));
+        });
+    }
+
+    function getDescription(site, type, webShop, sellName, sellProd) {
+        switch (site) {
+            case "1":
+                return webShop + "是由" + sellName + "开设运营的在线店铺，主要销售" + sellProd + "等产品的网上销售，款式多样，品种齐全，一切如用户所需；店内商品分区明确，所展示商品均与实物相符，并且不定期举行活动，保证以实惠的价格让用户买到心仪的产品，同时提供高效的物流和优质售后服务，让消费者享受畅快的网上购物体验。";
+                break;
+            case "2":
+                if (type == "W") {
+                    return webShop + "主要提供" + sellName + "的" + sellProd + "等商品的网上展示、报价、促销信息等，所售商品保证品质卓越，实惠亲民，并提供专业的京东物流配送，支持在线支付、货到付款、POS机刷卡等灵活多样的支付方式，享受快速上门取换件，无微不至的售前售后服务，【京东商城】始终为消费者提供愉悦的在线购物体验，通过丰富的产品内容和便捷的移动客户端，保障用户享受到省钱又省心的购物乐趣！";
+                } else {
+                    return webShop + "由" + sellName + "运营管理，专业提供" + sellProd + "等产品网上销售，品种多样，物美价廉，质量有保证，通过便捷快速的物流送到用户手中；" + sellName + "一贯秉承提升顾客体验的承诺，用户可通过客服获取产品咨询、使用建议、库存情况、配送信息以及退换指引等一系列专业服务，只为让消费者买的放心，用的舒心。";
+                }
+                break;
+            case "3":
+                return webShop + "是开设在知名购物网站【苏宁易购】的在线网店，主要销售" + sellProd + "等系列产品，本店时刻以顾客为中心，诚信经营为宗旨，保证商品质量，以朴实的价格回馈给消费者，提供优质的物流和售后服务，让用户享受无微不至的购物体验。苏宁易购网上商城销售传统家电、通讯数码、电脑、家居百货、服装、母婴、食品等数万类商品和服务，物美价廉,由本地配送,让您省钱又放心。";
+                break;
+            case "4":
+                return webShop + "在线为您提供" + sellName + "的优良产品，涵盖" + sellProd + "等产品，种类多，性价比高，并且不定期举行优惠活动，以真挚实惠的价格，完善的售后服务，让用户购买到心仪的产品；作为国内大型购物平台，【1号店】以商品的多样性、管理的现代化、经营的规模化，为广大消费者日常购物提供方便所需。";
+                break;
+            case "5":
+                return webShop + "主要经营" + sellName + "的" + sellProd + "等产品，种类多样齐全，且价格朴实亲民，在线为您提供优质的购物咨询服务，以高效的物流和完整的售后服务，让消费者轻松选购心仪的产品。【当当网】作为知名综合性网上购物中心，其产品类目丰富多样，优惠活动时时有，提供机打发票，先行赔付保障及三包服务，为您提供愉悦的网上商城购物体验!";
+                break;
+            case "6":
+                return webShop + "是" + sellName + "在国美网上商城的网上销售店铺，主要销售" + sellProd + "等系列产品，款式别致多样，品质有保证，一直都以优惠的价格，让每一位顾客享受物美价廉的购物体验。【国美在线网上商城】时刻为您提供便捷、诚信的售前售后服务，以更低的价格，更快的物流，让你全面安心的享受网上购物带来的乐趣。";
+                break;
+            case "7":
+                return webShop + "是由" + sellName + "开设运营的在线店铺，主要销售" + sellProd + "等产品的网上销售，款式多样，品种齐全，一切如用户所需；店内商品分区明确，所展示商品均与实物相符，并且不定期举行活动，保证以实惠的价格让用户买到心仪的产品，同时提供高效的物流和优质售后服务，让消费者享受畅快的网上购物体验。";
+                break;
+            default:
+                return webShop + "是" + sellName + "自主开设的网上商城，主要销售" + sellProd + "等系列产品，款式别致多样，品质有保证，厂家直售，一直都以优惠的价格，让每一位顾客享受物美价廉的购物体验。并且{名称}时刻为您提供便捷、诚信的售前售后服务，以更低的价格，更快的物流，让你全面安心的享受网上购物带来的乐趣。";
+                break;
+        }
+    }
+    function getShopType(type) {
+        switch (type) {
+            case "1":
+                return "天猫";
+                break;
+            case "2":
+                return "京东";
+                break;
+            case "3":
+                return "苏宁易购";
+                break;
+            case "4":
+                return "一号店";
+                break;
+            case "5":
+                return "当当网";
+                break;
+            case "6":
+                return "国美";
+                break;
+            case "7":
+                return "淘宝店";
+                break;
+            default:
+                return "";
+                break;
+        }
+    }
+    function getShopImage(type) {
+        switch (type) {
+            case "1":
+                return "./images/tm.jpg";
+                break;
+            case "2":
+                return "./images/jd.jpg";
+                break;
+            case "3":
+                return "./images/sn.jpg";
+                break;
+            case "4":
+                return "./images/yhd.jpg";
+                break;
+            case "5":
+                return "./images/dd.jpg";
+                break;
+            case "6":
+                return "./images/gm.jpg";
+                break;
+            case "7":
+                return "./images/tb.jpg";
+                break;
+            default:
+                return "./images/qt.jpg";
+                break;
+        }
+    }
+    function getHotShop(page) {
+        var param = {};
+        param.page = page;
+        param.size = 8;
+        app.getHotShop(param, function (result) {
+            if (result.code == 200) {
+                var html = "";
+                var data = result.data.list;
+                for (var i = 0; i < data.length; i++) {
+                    var shop = data[i];
+                    html += '<div class="shop" index="' + i + '">' +
+                        '<div class="shop-logo ">' +
+                        '<img src="' + getShopImage(shop.site) + '">' +
+                        '</div>' +
+                        '<div class="shop-desc">' +
+                        '<div class="shop-name">' + shop.webShop + '</div>' +
+                        '<div class="shop-type">' +
+                        '<span>商城：</span>' +
+                        '<span>' + getShopType(shop.site) + '</span>' +
+                        '</div>' +
+                        '<div class="shop-addr">' +
+                        '<span>地区：</span>' +
+                        '<span>' + shop.shopAddr + '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>'
+                }
+                $("#dataArea").find(".shop-list").html(html);
+                $("#dataArea").find(".hot-brand").css("display", "block");
+
+                $(".shop").click(function () {
+                    var index = $(this).attr("index");
+                    window.open("shopDetail.html?shopId=" + data[index].id + "&shopImg=" + getShopId(data[index].type));
+                });
+            }
+        });
+    }
+    function getShopId(type) {
+        if (type == "G") {
+            return "1";
+        } else if (type == "W") {
+            return "2";
+        } else if (type == "T") {
+            return "3";
+        }
+    }
+</script>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261882558'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1261882558%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+</html>

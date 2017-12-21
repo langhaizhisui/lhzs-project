@@ -1,0 +1,275 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>后台管理系统</title>
+    <meta name="Keywords" content="网店,品牌网店,精选网购,精选旗舰店">
+    <meta name="Description" content="精选品牌网店大全，为您推荐精选网店、精选旗舰店、精选品牌网店、精选全面优惠网购等信息。">
+    <link rel="stylesheet" href="/admin/css/manage-system.css">
+    <link rel="shortcut icon" href="/admin/images/favicon.ico"/>
+    <link rel="bookmark" href="/admin/images/favicon.ico"/>
+    <style>
+
+        .nav {
+            width: 100%;
+            height: 100px;
+            background: #0094d2;
+            color: white;
+            font-size: 16px;
+        }
+
+        .nav-logo {
+            float: left;
+            padding: 10px 20px;
+        }
+
+        .nav-logo img {
+            width: 100px;
+        }
+
+        .nav ul li {
+            float: left;
+            padding: 40px 20px;
+        }
+
+        .nav ul li a {
+            color: white;
+        }
+
+        .center {
+            min-width: 1500px;
+        }
+
+        .left-nav {
+            width: 181px;
+            float: left;
+            border: 1px solid #d5d5d5;
+            font-size: 14px;
+            color: #666;
+            min-height: 650px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px #ccc;
+        }
+
+        .left-nav-grade1 {
+            width: 100%;
+            font-weight: 700;
+            height: 41px;
+            line-height: 41px;
+            text-indent: 20px;
+            position: relative;
+            background-color: #edf6f9;
+            color: #999;
+        }
+
+        .left-nav-grade2 {
+            text-indent: 35px;
+            width: 100%;
+            border-bottom: 1px solid #e7e7e7;
+            line-height: 40px;
+        }
+
+        .nav-bg {
+            background: #157fac;
+        }
+
+        .center-right {
+            float: left;
+            margin-left: 60px;
+            margin-top: 30px;
+        }
+
+        .prod-operation {
+            background: #0094d2;
+        }
+
+        .prod-operation a {
+            color: white;
+        }
+
+        .table {
+            border: 0;
+            cellspacing: 0;
+            cellpadding: 0;
+            width: 800px;
+        }
+
+        .table td {
+            border-bottom: 1px solid #ddd;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            border-top: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            font-size: 13px;
+        }
+
+        .table-title {
+            background-color: #f4f4f4;
+            text-align: center;
+            border-right: 1px solid #ddd;
+            border-top: 1px solid #ddd;
+        }
+
+        .table-input {
+            width: 450px;
+            height: 27px;
+            padding-left: 5px;
+            margin-left: 20px;
+        }
+
+        .btn-group {
+            margin-top: 20px;
+            margin-bottom: 120px;
+            text-align: center;
+        }
+
+        #save-btn {
+            width: 112px;
+            height: 32px;
+            background-color: #333;
+            color: #fff;
+            line-height: 32px;
+            text-align: center;
+            border-radius: 2px;
+            cursor: pointer;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div class="nav">
+        <div class="nav-logo">
+            <img src="../images/logo2.jpg">
+            <div>系统管理后台</div>
+        </div>
+        <ul>
+            <li id="prod-manage"><a>商品管理</a></li>
+            <li id="shop-manage"><a>店铺管理</a></li>
+            <li id="article-manage"><a>文章管理</a></li>
+            <li id="base-set" class="nav-bg"><a>基础设置</a></li>
+        </ul>
+    </div>
+
+    <div class="center">
+        <div class="left-nav clearfix">
+            <div>
+                <div class="left-nav-grade1">首页</div>
+                <div class="left-nav-grade2">
+                    <div class="left-nav-bg">
+                        <a href="/admin/slideShowPictureEnterManage.html">轮播图</a>
+                    </div>
+                    <div class="left-nav-bg">
+                        <a href="/admin/slideShowPictureManage.html">轮播图列表</a>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="left-nav-grade1">商城推荐</div>
+                <div class="left-nav-grade2">
+                    <div class="left-nav-bg">
+                        <a href="/admin/baseSetManage.html">商城列表</a>
+                    </div>
+                    <div class="left-nav-bg prod-list prod-operation">
+                        <a href="/admin/webGeneralizeEnterManage.html">增加商城</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="center-right">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td class="table-title">商城名称</td>
+                    <td colspan="3">
+                        <input class="table-input" type="text" name="" id="prod-name" value="">
+                    </td>
+                <tr>
+                    <td class="table-title">商城权重</td>
+                    <td colspan="3">
+                        <input class="table-input" type="text" name="" id="banner-url" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-title">商城链接</td>
+                    <td colspan="3">
+                        <input class="table-input" type="text" name="" id="detail-url" value="">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="btn-group">
+                <span id="save-btn">保存</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="load">
+    <div class="loading hidden"></div>
+    <img class="loading-img hidden" src="../images/loading.gif" />
+</div>
+
+</body>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.form.js"></script>
+<script src="/admin/js/app.js"></script>
+<script src="/admin/js/systemManage.js"></script>
+<script>
+    var id = getParameter("id");
+
+    $(function () {
+        init();
+    });
+
+    function init() {
+        getWebGeneralize();
+        bindEvent();
+    }
+
+    function getWebGeneralize() {
+        if (id) {
+            var param = {};
+            param.id = id;
+            app.getWebGeneralizeDetail(param, function (result) {
+                if (result.code == 200) {
+                    var data = result.data;
+                    $("#prod-name").val(data.webName);
+                    $("#banner-url").val(data.weighnt);
+                    $("#detail-url").val(data.url);
+                }
+            });
+        }
+    }
+
+    function bindEvent() {
+        $("#save-btn").click(function () {
+            var prodName = $("#prod-name").val();
+            var bannerUrl = $("#banner-url").val();
+            var detailUrl = $("#detail-url").val();
+
+            if (prodName == "" || bannerUrl == "" || detailUrl == "") {
+                alert("信息填写不能为空");
+                return;
+            }
+
+            var param = {};
+            param.webName = prodName;
+            param.weighnt = bannerUrl;
+            param.url = detailUrl;
+
+            if (id) {
+                param.id = id;
+                app.updateWebGeneralize(param, function () {
+                    alert("更新成功");
+                });
+            } else {
+                app.addWebGeneralize(param, function () {
+                    alert("添加成功");
+                });
+            }
+        });
+    }
+</script>
+</html>

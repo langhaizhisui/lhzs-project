@@ -1,0 +1,549 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>后台管理系统</title>
+    <meta name="Keywords" content="网店,品牌网店,精选网购,精选旗舰店">
+    <meta name="Description" content="精选品牌网店大全，为您推荐精选网店、精选旗舰店、精选品牌网店、精选全面优惠网购等信息。">
+    <link rel="stylesheet" href="/admin/css/manage-system.css">
+    <link rel="shortcut icon" href="/admin/images/favicon.ico"/>
+    <link rel="bookmark" href="/admin/images/favicon.ico"/>
+    <style>
+
+        .nav {
+            width: 100%;
+            height: 100px;
+            background: #0094d2;
+            color: white;
+            font-size: 16px;
+        }
+
+        .nav-logo {
+            float: left;
+            padding: 10px 20px;
+        }
+
+        .nav-logo img {
+            width: 100px;
+        }
+
+        .nav ul li {
+            float: left;
+            padding: 40px 20px;
+        }
+
+        .nav ul li a {
+            color: white;
+        }
+
+        .center {
+            min-width: 1500px;
+        }
+
+        .left-nav {
+            width: 181px;
+            float: left;
+            border: 1px solid #d5d5d5;
+            font-size: 14px;
+            color: #666;
+            min-height: 650px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px #ccc;
+        }
+
+        .left-nav-grade1 {
+            width: 100%;
+            font-weight: 700;
+            height: 41px;
+            line-height: 41px;
+            text-indent: 20px;
+            position: relative;
+            background-color: #edf6f9;
+            color: #999;
+        }
+
+        .left-nav-grade2 {
+            text-indent: 35px;
+            width: 100%;
+            border-bottom: 1px solid #e7e7e7;
+            line-height: 40px;
+        }
+
+        .content {
+            width: 997px;
+            min-width: 997px;
+            background-color: #fff;
+            border: 1px solid #d5d5d5;
+        }
+
+        .content-title div, .content-item div {
+            float: left;
+            padding: 10px 10px;
+            border-top: 2px solid #e0e0e0;
+            color: #666;
+            font-size: 13px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .content-title div {
+            font-weight: 700;
+            background-color: #f4f4f4;
+        }
+
+        .prod-id {
+            width: 80px;
+        }
+
+        .prod-title {
+            width: 177px;
+        }
+
+        .cata {
+            width: 80px;
+        }
+
+        .price {
+            width: 80px;
+        }
+
+        .sale-price {
+            width: 80px;
+        }
+
+        .save-price {
+            width: 80px;
+        }
+
+        .plate {
+            width: 80px;
+        }
+
+        .expire {
+            width: 80px;
+        }
+
+        .operation {
+            width: 80px;
+        }
+
+        .prod-edit, .prod-delete {
+            text-decoration: underline;
+            color: #0094d2;
+        }
+
+        .page-num {
+            float: left;
+            text-align: center;
+            width: 1500px;
+            margin: 40px 0px 40px 0px;
+        }
+
+        .page-num span {
+            padding: 10px;
+            background: #eee;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        #curr-page {
+            background-color: #ea6b18;
+        }
+
+        .prod-btn {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        #add-prod, #add-prods {
+            width: 112px;
+            height: 32px;
+            background-color: #333;
+            color: #fff;
+            line-height: 32px;
+            text-align: center;
+            border-radius: 2px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        #add-prods {
+            margin-left: 20px;
+        }
+
+        #prods-form {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .nav-bg {
+            background: #157fac;
+        }
+
+        .left-nav-bg {
+            color: white;
+        }
+
+        .prod-operation {
+            color: #666;
+        }
+
+        .prod-list {
+            background: #0094d2;
+        }
+
+        .prod-list a {
+            color: white;
+        }
+
+        .center-right {
+            float: left;
+            margin-left: 40px;
+            margin-top: 60px;
+        }
+
+        .search-title {
+            font-size: 13px;
+            margin-right: 5px;
+        }
+
+        .search {
+            margin-right: 20px;
+        }
+
+        .search-line {
+            margin-bottom: 20px;
+        }
+
+        .search-btn, .more-delete-btn, .all-delete-btn {
+            width: 59px;
+            height: 22px;
+            border: 1px solid #ccc;
+            background-color: #ececec;
+            color: #666;
+            line-height: 22px;
+            text-align: center;
+            margin-left: 10px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .cata {
+            width: 85px;
+        }
+
+        .price {
+            width: 250px;
+        }
+
+        .operation {
+            width: 87px;
+        }
+
+        .prod-title {
+            width: 390px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div class="nav">
+        <div class="nav-logo">
+            <img src="../images/logo2.jpg">
+            <div>系统管理后台</div>
+        </div>
+        <ul>
+            <li id="prod-manage"><a>商品管理</a></li>
+            <li id="shop-manage"><a>店铺管理</a></li>
+            <li id="article-manage"><a>文章管理</a></li>
+            <li id="base-set" class="nav-bg"><a>基础设置</a></li>
+        </ul>
+    </div>
+
+    <div class="center clearfix">
+        <div class="left-nav clearfix">
+            <div>
+                <div class="left-nav-grade1">首页</div>
+                <div class="left-nav-grade2">
+                    <div class="left-nav-bg">
+                        <a href="/admin/slideShowPictureEnterManage.htmle.html">轮播图</a>
+                    </div>
+                    <div class="left-nav-bg">
+                        <a href="/admin/slideShowPictureManage.htmle.html">轮播图列表</a>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="left-nav-grade1">商城推荐</div>
+                <div class="left-nav-grade2">
+                    <div class="left-nav-bg prod-list prod-operation">
+                        <a href="/admin/baseSetManage.html">商城列表</a>
+                    </div>
+                    <div class="left-nav-bg">
+                        <a href="/admin/webGeneralizeEnterManage.htmle.html">增加商城</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="center-right">
+            <div>
+                <div class="search-line">
+                    <span class="search">
+                        <span class="search-title">商城名称</span>
+                        <span>
+                            <input class="search-input" id="shop-id-input" placeholder="请输入商城名称"/>
+                        </span>
+                    </span>
+                    <span class="search-btn">查询</span>
+                    <!--<span class="all-delete-btn">全部删除</span>-->
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="content-title clearfix">
+                    <div class="prod-id">商城ID</div>
+                    <div class="prod-title">商城名称</div>
+                    <div class="cata">权重</div>
+                    <div class="price">商城链接</div>
+                    <div class="sale-price">操作</div>
+                </div>
+
+                <div class="content-list">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--分页-->
+    <div class="page-num"></div>
+</div>
+
+<div class="load hidden">
+    <div class="loading"></div>
+    <img class="loading-img" src="../images/loading.gif"/>
+</div>
+</body>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.form.js"></script>
+<script src="/admin/js/app.js"></script>
+<script src="/admin/js/systemManage.js"></script>
+<script src="/js/paging.js/js/paging.js"></script>
+<script>
+    $(function () {
+        init();
+        bindEvent();
+    });
+
+    function init() {
+        getWebGeneralizeList(1);
+    }
+
+    function getWebGeneralizeList(page) {
+        var param = {};
+        param.page = page;
+        param.size = 20;
+
+        var webName = $("#shop-id-input").val();
+        if (webName) {
+            param.webName = webName;
+        }
+
+        app.getWebGeneralize(param, function (result) {
+            if (result.code == 200) {
+                var html = "";
+                var data = result.data.list;
+                if (data.length == 0) {
+                    $(".shop-list").html("");
+                    $(".page-num").html("");
+                    return;
+                }
+
+                for (var i = 0; i < data.length; i++) {
+                    var item = data[i];
+                    html += '<div class="content-item">' +
+                        '<div class="prod-id">' + (i + 1) + '</div>' +
+                        '<div class="prod-title">' + item.webName + '</div>' +
+                        '<div class="cata">' + item.weighnt + '</div>' +
+                        '<div class="price">' + item.url + '</div>' +
+                        '<div class="operation">' +
+                        '<span class="prod-edit"> 编辑 </span>' +
+                        '<span class="prod-delete"> 删除 </span>' +
+                        '</div>' +
+                        '</div>';
+                }
+                $(".content-list").html(html);
+
+                var totalPage = result.pages;
+                var currPage = result.data.pageNum;
+
+                splitPage(totalPage, currPage, ".page-num",
+                    function (index) {
+                        if (index != 1) {
+                            getWebGeneralizeList(index - 1);
+                        }
+                    }, function (index) {
+                        index = parseInt(index);
+                        if (index != totalPage) {
+                            getWebGeneralizeList(index + 1);
+                        }
+                    }, function (index) {
+                        getWebGeneralizeList(index);
+                    });
+
+                $(".prod-delete").click(function () {
+                    var id = $(this).parent().parent().find(".prod-id").text();
+                    var param = {};
+                    param.id = id;
+                    app.deleteWebGeneralize(param, function (result) {
+                        if (result.code == 200) {
+                            getWebGeneralizeList(page);
+                            alert("删除成功");
+                        }
+                    });
+                });
+
+                $(".prod-edit").click(function () {
+                    var id = $(this).parent().parent().find(".prod-id").text();
+                    location.href = "/webGeneralizeEnterManage.html?id=" + id;
+                });
+            }
+        });
+    }
+
+    function bindEvent() {
+        $(".search-btn").click(function () {
+            getWebGeneralizeList(1);
+        });
+
+        $(".more-delete-btn").click(function () {
+
+            var shopId = $("#shop-id-input").val();
+            var shopName = $("#shop-name-input").val();
+            var storeType = $("#store-type-input").val();
+            var shopType = $("#shop-type-input").val();
+            var createTimeStart = $("#createtime-start-input").val();
+            var createTimeEnd = $("#createtime-end-input").val();
+
+            if (shopId == "" && shopName == "" && storeType == "" && shopType == "" && createTimeStart == "" && createTimeEnd == "") {
+                alert("请输入删除条件");
+                return;
+            }
+
+            $(".load").removeClass("hidden");
+
+            var param = {};
+            param.id = shopId;
+            param.webShop = shopName;
+            param.site = storeType;
+            param.type = shopType;
+            param.createTimeStart = createTimeStart;
+            param.createTimeEnd = createTimeEnd;
+            param.page = 1;
+            param.size = 20;
+
+            app.batchShopDelete(param, function (result) {
+                $(".load").addClass("hidden");
+                if (result.code == 200) {
+                    searchInfo(1);
+                    alert("删除成功");
+                }
+            });
+        });
+
+        $(".all-delete-btn").click(function () {
+            $(".load").removeClass("hidden");
+
+            var param = {};
+            app.allShopDelete(param, function (result) {
+                $(".load").addClass("hidden");
+                if (result.code == 200) {
+                    searchInfo(1);
+                    alert("删除成功");
+                }
+            });
+        });
+    }
+
+    function searchInfo(page) {
+        var storeType = $("#store-type-input").val();
+        var shopType = $("#shop-type-input").val();
+        var createTimeStart = $("#createtime-start-input").val();
+        var createTimeEnd = $("#createtime-end-input").val();
+        var param = {};
+
+        var shopId = $("#shop-id-input").val();
+        if(param.id){
+            param.id = shopId;
+        }
+
+        var shopName = $("#shop-name-input").val();
+        param.webShop = shopName;
+        param.site = storeType;
+        param.type = shopType;
+        param.createTimeStart = createTimeStart;
+        param.createTimeEnd = createTimeEnd;
+        param.page = page;
+        param.size = 20;
+        app.searchShopList(param, function (result) {
+            if (result.code == 200) {
+                var html = '';
+                var data = result.data.list;
+                for (var i = 0; i < data.length; i++) {
+                    var shop = data[i];
+                    html += '<div class="content-item">' +
+                        '<div class="prod-id">' + shop.id + '</div>' +
+                        '<div class="prod-title">' + shop.webShop + '</div>' +
+                        '<div class="cata">' + shop.site + '</div>' +
+                        '<div class="price">' + shop.type + '</div>' +
+                        '<div class="sale-price">' + shop.sellName + '</div>' +
+                        '<div class="save-price">' + shop.brandName + '</div>' +
+                        '<div class="plate">' + shop.sellProd + '</div>' +
+                        '<div class="expire">' + shop.shopAddr + '</div>' +
+                        '<div class="operation">' +
+                        '<span class="prod-edit"> 编辑 </span>' +
+                        '<span class="prod-delete"> 删除 </span>' +
+                        '</div>' +
+                        '</div>';
+                }
+                $(".content-list").html(html);
+
+                var totalPage = result.data.pages;
+                var currPage = result.data.pageNum;
+                splitPage(totalPage, currPage, ".page-num",
+                    function (index) {
+                        if (index != 1) {
+                            searchInfo(index - 1);
+                        }
+                    }, function (index) {
+                        index = parseInt(index);
+                        if (index != totalPage) {
+                            searchInfo(index + 1);
+                        }
+                    }, function (index) {
+                        searchInfo(index);
+                    });
+
+                $(".prod-delete").click(function () {
+                    var shopId = $(this).parent().parent().find(".prod-id").text();
+                    var param = {};
+                    param.shopId = shopId;
+                    app.deleteShop(param, function (result) {
+                        if (result.code == 200) {
+                            getShop(page);
+                            alert("删除成功");
+                        }
+                    });
+                });
+
+                $(".prod-edit").click(function () {
+                    var shopId = $(this).parent().parent().find(".prod-id").text();
+                    location.href = "/shopEnterManage.html?id=" + shopId;
+                });
+            }
+        });
+    }
+</script>
+</html>

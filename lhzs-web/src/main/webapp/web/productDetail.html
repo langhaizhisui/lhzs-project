@@ -1,0 +1,175 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>优惠券</title>
+    <meta name="Keywords" content="网购，九块九，网购省钱，淘宝优惠券，天猫优惠券，内部优惠券，9块9包邮，天天特价">
+    <meta name="Description" content="哔唛网领券购物专区，专注全网商家内部优惠券活动,每日送出大量商家内部优惠券，特价团购福利，提供当季全网最具性价比的包邮产品,精选万人团商品超值好货,超低价好货享疯狂特价促销,让你全面安心享受网上购物乐趣!">
+
+    <link rel="stylesheet" href="/web/css/productDetail.css">
+    <link rel="stylesheet" href="/web/css/base.css">
+    <link rel="stylesheet" href="/web/css/index2.css">
+    <link rel="shortcut icon" href="/web/images/favicon.ico"/>
+    <link rel="bookmark" href="/web/images/favicon.ico"/>
+</head>
+<body>
+<div class="header"></div>
+<section>
+    <div class="hot-brand clearfix" style="display: none">
+        <div class="hot-brand-title">
+            <span class="hot-brand-text">热门店铺精选</span>
+            <span class="hot-shop-next">换一批</span>
+        </div>
+        <div class="shop-list" id="shop-list"></div>
+    </div>
+    <div class="hot-prod" style="display: none">
+        <div class="hot-brand-title">
+            <span class="hot-prod-text">热门商品精选</span>
+            <span class="hot-prod-next">换一批</span>
+        </div>
+        <div class="moldbaby clearfix" id="moldbaby"></div>
+    </div>
+
+    <div id="dataArea">
+        <div class="prod clearfix">
+            <div class="prod-detail"></div>
+
+            <div class="prod-generalize">
+                <div class="prod-generalize-text">- 大家都在抢 -</div>
+                <div class="prod-generalize-list"></div>
+            </div>
+        </div>
+        <div class="hot-prod">
+            <div class="boutique">热门商品精选</div>
+            <div class=" moldbaby clearfix"></div>
+        </div>
+    </div>
+
+    <!-- 返回顶部 -->
+    <div class="back-to-top">top</div>
+</section>
+<footer class="footer"></footer>
+</body>
+<script src="/js/jquery.min.js"></script>
+<script src="/web/js/app.js"></script>
+<script>
+    var prodId = getParameter("prodId");
+
+    $(function () {
+        init();
+        setTimeout(function () {
+            $(".search-input").bind("keyup", function (even) {
+                if (even.keyCode == "13") {
+                    searchProduct();
+                }
+            });
+        }, 2000)
+    });
+    function init() {
+        $(".header").load("header.html");
+        $(".footer").load("footer.html");
+        getProductDetail();
+        getGeneralizeProduct();
+        getProduct();
+    }
+
+    function getProductDetail() {
+        var param = {"prodId": prodId};
+        app.getProductDetail(param, function (result) {
+            if (result.code == 200) {
+                var data = result.data;
+
+                var html = '<img src="' + data.banner + '" class="prod-detail-img">' +
+                    '<div class="prod-desc">' +
+                    '<div class="prod-desc-title">' + data.name + '</div>' +
+                    '<div class="prod-desc-price">' +
+                    '<span class="prod-desc-price-dx">(独享)</span>' +
+                    '<span>券后价 </span>' +
+                    '<span class="prod-desc-price-now">¥' + data.discountPrice + '</span>' +
+                    '<span> 在售价</span>' +
+                    '<span class="prod-desc-price-old">¥' + data.price + '</span>' +
+                    '</div>' +
+                    '<div class="prod-desc-discount">' +
+                    '<div class="prod-desc-discount-coupon">' +
+                    '<div>优惠券</div>' +
+                    '<div>¥' + (data.price - data.discountPrice).toFixed(2) + '</div>' +
+                    '</div>' +
+                    '<div class="prod-desc-discount-go">领券购买</div>' +
+                    '</div>' +
+                    '</div>';
+            }
+            $(".prod-detail").html(html);
+            $("head > title").text(data.name);
+            $(".prod-desc-discount-go").click(function () {
+                window.open(data.prodGeneralize);
+            })
+        });
+    }
+    function getGeneralizeProduct() {
+        var param = {};
+        param.page = 1;
+        param.size = 2;
+        app.getGeneralizeProduct(param, function (result) {
+            if (result.code == 200) {
+                var html = '';
+                var data = result.data.list;
+                for (var i = 0; i < data.length; i++) {
+                    var product = data[i];
+                    html += '<div class="prod-generalize-item" index="' + i + '">' +
+                        '<div class="prod-generalize-item-img">' +
+                        '<img src="' + product.banner + '">' +
+                        '</div>' +
+                        '<div class="prod-generalize-item-price">券后¥' + product.discountPrice.toFixed(2) + '</div>' +
+                        '</div>'
+                }
+                $(".prod-generalize-list").html(html);
+
+                $(".prod-generalize-item").click(function () {
+                    var index = $(this).attr("index");
+                    location.href = "productDetail.html?prodId=" + data[index].prodId;
+                });
+            }
+        });
+    }
+    function getProduct() {
+        var param = {};
+        param.page = 1;
+        param.size = 20;
+        app.getProductList(param, function (result) {
+            if (result.code == 200) {
+                var html = '';
+                var data = result.data.list;
+                for (var i = 0; i < data.length; i++) {
+                    var product = data[i];
+                    html += '<div class="moldbaby-subject" index="' + i + '">' +
+                        '<div class="moldbaby-subject-img">' +
+                        '<img src="' + product.banner + '">' +
+                        '</div>' +
+                        '<div class="moldbaby-subject-title">' + getProductName(product.name) + '</div>' +
+                        '<div class="clearfix">' +
+                        '<div class="curr-price">现价:¥' + product.discountPrice.toFixed(2) + '</div>' +
+                        '<div class="other-price">' +
+                        '<div style="margin-bottom:5px">原价:¥' + product.price.toFixed(2) + '</div>' +
+                        '<div>立省:¥' + (product.price - product.discountPrice).toFixed(2) + '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="go-shop">去购物</div>' +
+                        '</div>';
+                }
+                $(".moldbaby").html(html);
+
+                $(".moldbaby-subject").click(function () {
+                    var index = $(this).attr("index");
+                    location.href = "productDetail.html?prodId=" + data[index].prodId;
+                });
+            }
+        });
+    }
+    function getProductName(productName) {
+        if (productName.length > 30) {
+            productName = productName.substr(0, 28) + "...";
+        }
+        return productName;
+    }
+</script>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261882558'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1261882558%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+</html>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lhzs.data.dao.ArticleMapper">
+  <resultMap id="BaseResultMap" type="cn.lhzs.data.bean.Article">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="meta_title" jdbcType="VARCHAR" property="metaTitle" />
+    <result column="meta_key" jdbcType="VARCHAR" property="metaKey" />
+    <result column="meta_descp" jdbcType="VARCHAR" property="metaDescp" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="src" jdbcType="VARCHAR" property="src" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="content_descp" jdbcType="VARCHAR" property="contentDescp" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+
+  <sql id="sql_where">
+    <if test="type != null">
+      AND FIND_IN_SET(#{type},type)
+    </if>
+    <if test="title != null">
+      AND title LIKE CONCAT('%',#{title,jdbcType=VARCHAR},'%')
+    </if>
+  </sql>
+
+  <select id="getArticleList" parameterType="cn.lhzs.data.bean.Article" resultMap="BaseResultMap">
+    select id, meta_title, meta_key, meta_descp, title, picture, author, src, weight, type, content_descp, state, create_time, update_time
+    from article WHERE 1=1
+    <include refid="sql_where"></include>
+    ORDER BY create_time DESC
+  </select>
+
+  <select id="getArticleCount" parameterType="cn.lhzs.data.bean.Article" resultMap="BaseResultMap">
+    select count(1)
+    from article WHERE 1=1
+    <include refid="sql_where"></include>
+  </select>
+</mapper>

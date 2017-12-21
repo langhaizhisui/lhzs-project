@@ -1,0 +1,122 @@
+<header class="top-header clearfix">
+    <div class="logo">
+        <a href="index.html"><img src="images/logo2.jpg"></a>
+    </div>
+    <div class="search-box">
+        <div>
+            <input class="search-input" placeholder="关键字"/>
+            <span class="search-btn" id="search-btn">搜索</span>
+        </div>
+    </div>
+</header>
+<div class="top-nav clearfix">
+    <ul>
+        <li><a href="index.html">商城</a></li>
+        <li><a href="shop.html?id=1">旗舰店</a></li>
+        <li><a href="shop.html?id=2">专卖店</a></li>
+        <li><a href="shop.html?id=3">自营店</a></li>
+        <li><a href="discountCoupon.html?id=4">内部优惠券</a></li>
+        <li><a href="article.html">文章资讯</a></li>
+    </ul>
+</div>
+<script>
+    $(".search-btn").click(function () {
+        var flag = $("#pageFlag").text();
+        if (flag == "article") {
+            searchArticle();
+        } else {
+            searchProduct();
+        }
+    });
+
+    function searchArticle() {
+        var title = $(".search-input").val();
+        getArticleList(1, title);
+    }
+
+    function searchProduct() {
+        var key = $(".search-input").val();
+
+        var reqData = {};
+        var param = {};
+        param.key = key;
+        reqData.reqData = param;
+        $.ajax({
+            type: 'post',
+            url: "prod/search",
+            dataType: 'json',
+            contentType: "application/json",
+            data: JSON.stringify(reqData),
+            success: function (result) {
+                if (result.code == 200) {
+                    var html = '';
+                    var shopList = result.data.shopList.list;
+                    var prodList = result.data.prodList.list;
+                    $(".ad").css("display", "none");
+                    $("#dataArea").css("display", "none")
+                    if (shopList.length == 0) {
+                        $(".hot-brand").css("display", "none");
+                    } else {
+                        $(".hot-brand").css("display", "block");
+                        $(".hot-brand-text").text("店铺");
+                        $(".hot-shop-next").css("display", "none");
+                        for (var i = 0; i < shopList.length; i++) {
+                            var shop = shopList[i];
+                            html += '<div class="shop clearfix" index="' + i + '">' +
+                                '<div class="shop-logo ">' +
+                                '<img src="' + getShopImage(shop.site) + '">' +
+                                '</div>' +
+                                '<div class="shop-desc">' +
+                                '<div class="shop-name">' + shop.webShop + '</div>' +
+                                '<div class="shop-type">' +
+                                '<span>商城：</span>' +
+                                '<span>' + getShopType(shop.site) + '</span>' +
+                                '</div>' +
+                                '<div class="shop-addr">' +
+                                '<span>地区：</span>' +
+                                '<span>' + shop.shopAddr + '</span>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>'
+                        }
+                        $("#shop-list").html(html);
+
+                        $(".shop").click(function () {
+                            var index = $(this).attr("index");
+                            window.open("shopDetail.html?shopId=" + shopList[index].id + "&shopImg=" + getShopId(shopList[index].type));
+                        });
+                    }
+
+                    html = "";
+                    $(".hot-prod-text").text("商品");
+                    $(".hot-prod-next").css("display", "none");
+                    $(".hot-prod").css("display", "block");
+                    for (var i = 0; i < prodList.length; i++) {
+                        var product = prodList[i];
+                        html += '<div class="moldbaby-subject" index="' + i + '">' +
+                            '<div class="moldbaby-subject-img">' +
+                            '<img src="' + product.banner + '">' +
+                            '</div>' +
+                            '<div class="moldbaby-subject-title">' + product.name + '</div>' +
+                            '<div class="clearfix">' +
+                            '<div class="curr-price">现价:¥' + product.discountPrice + '</div>' +
+                            '<div class="other-price">' +
+                            '<div>原价:¥' + product.price + '</div>' +
+                            '<div>立省:¥' + (product.price - product.discountPrice).toFixed(2) + '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="go-shop">去购物</div>' +
+                            '</div>';
+                    }
+                    $("#moldbaby").html(html);
+
+                    $(".moldbaby-subject").click(function () {
+                        var index = $(this).attr("index");
+                        window.open("productDetail.html?prodId=" + prodList[index].prodId);
+                    });
+                }
+            }
+        });
+    }
+
+</script>

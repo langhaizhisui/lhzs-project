@@ -1,0 +1,339 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>后台管理系统</title>
+    <meta name="Keywords" content="网店,品牌网店,精选网购,精选旗舰店">
+    <meta name="Description" content="精选品牌网店大全，为您推荐精选网店、精选旗舰店、精选品牌网店、精选全面优惠网购等信息。">
+    <link rel="stylesheet" href="/admin/css/manage-system.css">
+    <link rel="shortcut icon" href="/admin/images/favicon.ico"/>
+    <link rel="bookmark" href="/admin/images/favicon.ico"/>
+    <style>
+
+        .nav {
+            width: 100%;
+            height: 100px;
+            background: #0094d2;
+            color: white;
+            font-size: 16px;
+        }
+
+        .nav-logo {
+            float: left;
+            padding: 10px 20px;
+        }
+
+        .nav-logo img {
+            width: 100px;
+        }
+
+        .nav ul li {
+            float: left;
+            padding: 40px 20px;
+        }
+
+        .nav ul li a {
+            color: white;
+        }
+
+        .center {
+            min-width: 1500px;
+        }
+
+        .left-nav {
+            width: 181px;
+            float: left;
+            border: 1px solid #d5d5d5;
+            font-size: 14px;
+            color: #666;
+            min-height: 650px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px #ccc;
+        }
+
+        .left-nav-grade1 {
+            width: 100%;
+            font-weight: 700;
+            height: 41px;
+            line-height: 41px;
+            text-indent: 20px;
+            position: relative;
+            background-color: #edf6f9;
+            color: #999;
+        }
+
+        .left-nav-grade2 {
+            text-indent: 35px;
+            width: 100%;
+            border-bottom: 1px solid #e7e7e7;
+            line-height: 40px;
+        }
+
+        .nav-bg {
+            background: #157fac;
+        }
+
+        .center-right {
+            float: left;
+            margin-left: 60px;
+            margin-top: 30px;
+        }
+
+        .prod-operation {
+            background: #0094d2;
+        }
+
+        .prod-operation a {
+            color: white;
+        }
+
+        .table {
+            border: 0;
+            cellspacing: 0;
+            cellpadding: 0;
+            width: 800px;
+        }
+
+        .table td {
+            border-bottom: 1px solid #ddd;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            border-top: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            font-size: 13px;
+        }
+
+        .table-title {
+            background-color: #f4f4f4;
+            text-align: center;
+            border-right: 1px solid #ddd;
+            border-top: 1px solid #ddd;
+        }
+
+        .table-input {
+            width: 450px;
+            height: 27px;
+            padding-left: 5px;
+            margin-left: 20px;
+        }
+
+        .btn-group {
+            margin-top: 20px;
+            margin-bottom: 120px;
+            text-align: center;
+        }
+
+        #save-btn {
+            width: 112px;
+            height: 32px;
+            background-color: #333;
+            color: #fff;
+            line-height: 32px;
+            text-align: center;
+            border-radius: 2px;
+            cursor: pointer;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div class="nav">
+        <div class="nav-logo">
+            <img src="../images/logo2.jpg">
+            <div>系统管理后台</div>
+        </div>
+        <ul>
+            <li id="prod-manage"><a>商品管理</a></li>
+            <li id="shop-manage" class="nav-bg"><a>店铺管理</a></li>
+            <li id="article-manage"><a>文章管理</a></li>
+            <li id="base-set"><a>基础设置</a></li>
+        </ul>
+    </div>
+
+    <div class="center">
+        <div class="left-nav clearfix">
+            <div>
+                <div class="left-nav-grade1">店铺管理</div>
+                <div class="left-nav-grade2">
+                    <div class="left-nav-bg prod-operation">
+                        <a href="/admin/shopEnterManage.html">店铺录入</a>
+                    </div>
+                    <div class="left-nav-bg prod-list">
+                        <a href="/admin/shopManage.htmle.html">店铺列表</a>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="left-nav-grade1">批量管理</div>
+                <div class="left-nav-grade2">
+                    <div class="left-nav-bg prod-all">
+                        <a href="/admin/shopBatchManage.html">店铺批量管理</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="center-right">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <td class="table-title">网店名称</td>
+                    <td colspan="3">
+                        <input class="table-input" type="text" name="" id="shop-name" value="">
+                    </td>
+                <tr>
+                    <td class="table-title">商城类型</td>
+                    <td colspan="3">
+                        <input class="table-input" type="text" name="" id="site" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-title">网店类型</td>
+                    <td colspan="3">
+                        <input class="table-input" type="text" name="" id="shop-type" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-title">经营商</td>
+                    <td colspan="3">
+                        <input class="table-input" type="text" name="" id="sell-name" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-title">经营品牌</td>
+                    <td colspan="3">
+                        <input class="table-input" type="text" name="" id="brand-name" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-title">经营产品</td>
+                    <td colspan="3">
+                        <input class="table-input" type="text" name="" id="sell-prod" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-title">网店链接</td>
+                    <td colspan="3">
+                        <input class="table-input" type="text" name="" id="shop-url" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-title">网店推广链接</td>
+                    <td colspan="3">
+                        <input class="table-input" type="text" name="" id="shop-generalize-url" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-title">手机链接</td>
+                    <td colspan="3">
+                        <input class="table-input" type="text" name="" id="mobile-url" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-title">手机推广链接</td>
+                    <td colspan="3">
+                        <input class="table-input" type="text" name="" id="mobile-generalize-url" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-title">网店地址</td>
+                    <td colspan="3">
+                        <input class="table-input" type="text" name="" id="shop-addr" value="">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="btn-group">
+                <span id="save-btn">保存</span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.form.js"></script>
+<script src="/admin/js/app.js"></script>
+<script src="/admin/js/systemManage.js"></script>
+<script>
+    var id = getParameter("id");
+
+    $(function () {
+        init();
+    });
+
+    function init() {
+        getShop();
+        bindEvent();
+    }
+
+    function getShop() {
+        if (id) {
+            var param = {};
+            param.shopId = id;
+            app.getShopDetail(param, function (result) {
+                if (result.code == 200) {
+                    var data = result.data;
+                    $("#shop-name").val(data.webShop);
+                    $("#site").val(data.site);
+                    $("#shop-type").val(data.type);
+                    $("#sell-name").val(data.sellName);
+                    $("#brand-name").val(data.brandName);
+                    $("#sell-prod").val(data.sellProd);
+                    $("#shop-url").val(data.webUrl);
+                    $("#shop-generalize-url").val(data.webGeneralize);
+                    $("#mobile-url").val(data.mobileUrl);
+                    $("#mobile-generalize-url").val(data.mobileGeneralize);
+                    $("#shop-addr").val(data.shopAddr);
+                }
+            });
+        }
+    }
+
+    function bindEvent() {
+        $("#save-btn").click(function () {
+            var shopName = $("#shop-name").val();
+            var site = $("#site").val();
+            var shopType = $("#shop-type").val();
+            var sellName = $("#sell-name").val();
+            var brandName = $("#brand-name").val();
+            var sellProd = $("#sell-prod").val();
+            var shopUrl = $("#shop-url").val();
+            var shopGeneralizeUrl = $("#shop-generalize-url").val();
+            var mobileUrl = $("#mobile-url").val();
+            var mobileGeneralizeUrl = $("#mobile-generalize-url").val();
+            var shopAddr = $("#shop-addr").val();
+
+//            if (shopName == "" || site == "" || shopType == "" || sellName == "" || brandName == "" || sellProd == ""
+//                || shopUrl == "" || shopGeneralizeUrl == "" || mobileUrl == "" || mobileGeneralizeUrl == "" || shopAddr == "") {
+//                alert("信息填写不能为空");
+//                return;
+//            }
+
+            var param = {};
+            param.webShop = shopName;
+            param.site = site;
+            param.type = shopType;
+            param.sellName = sellName;
+            param.brandName = brandName;
+            param.sellProd = sellProd;
+            param.webUrl = shopUrl;
+            param.webGeneralize = shopGeneralizeUrl;
+            param.mobileUrl = mobileUrl;
+            param.mobileGeneralize = mobileGeneralizeUrl;
+            param.shopAddr = shopAddr;
+
+            if (id) {
+                param.id = id;
+                app.updateShop(param, function () {
+                    alert("更新成功");
+                });
+            } else {
+                app.addShop(param, function () {
+                    alert("添加成功");
+                });
+            }
+        });
+    }
+</script>
+</html>

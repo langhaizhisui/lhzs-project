@@ -1,0 +1,151 @@
+/*弹框页面样式*/
+.prize-page {
+    width: 13rem;
+    max-width: 640px;
+    margin: 2rem auto;
+    background-color: #FFFFFF;
+    height: auto;
+    background-size: 100% 100%;
+}
+
+.prize-banner {
+    width: 100%;
+    height: 24rem;
+    position: relative;
+    margin: 0 auto;
+    z-index: 2;
+    margin-bottom: -.3rem;
+    background: white;
+}
+
+.prize-box-title {
+    color: #949494;
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+.prize-box-title p {
+    margin-top: .2rem;
+}
+
+.pop-light {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: .5;
+    width: 100%;
+    height: 100%;
+    background: black;
+}
+
+.prize-box-img {
+    position: relative;
+    width: 5rem;
+    height: auto;
+    background: #efefef;
+    padding: 0.6rem;
+    border-radius: .5rem;
+    left: 3.7rem;
+    top: 1.2rem;
+}
+
+.prize_box_title p {
+    margin-top: .2rem;
+}
+
+.submit-btn {
+    background-color: #8de8f9;
+    padding: 0.7rem;
+    border-radius: 1rem;
+    text-align: center;
+    margin: 2.5rem 1rem;
+    font-weight: bold;
+    color: black;
+}
+
+
+/*兑奖信息页面样式*/
+.prize-info {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    background-color: #8de8f9;
+    height: auto;
+    background-size: 100% 100%;
+    height: 100%;
+}
+.prize-info-banner {
+    position: relative;
+    width: 15rem;
+    height: 20rem;
+    left: 0.5rem;
+    top: 3.5rem;
+}
+.prize-info-banner img {
+    position: absolute;
+    top:0;
+    z-index: 10;
+    width: 70%;
+    max-width: 100%;
+    left: 2rem;
+}
+.prize-info-box {
+    position: absolute;
+    top: 1.8rem;
+    z-index: 8;
+    width: 15rem;
+    height: 18rem;
+    border: .1rem solid #ffde7c;
+    border-radius: 0.3rem;
+    background: #ffde7c;
+}
+.prize-info-box1 {
+    position: absolute;
+    top: 0.8rem;
+    bottom: 0.1rem;
+    left: 0.1rem;
+    right: 0.1rem;
+    z-index: 9;
+    border: 0.08rem solid #ead69c;
+    border-radius: 0.4rem;
+    background: #f5e8c8;
+}
+.prize-info-box2 {
+    position: absolute;
+    top: 0.1rem;
+    bottom: 0.1rem;
+    left: 0.1rem;
+    right: 0.1rem;
+    z-index: 9;
+    border: 0.01rem dashed #bd976d;
+    border-radius: 0.4rem;
+}
+.prize-info-title {
+    padding: 1rem 0;
+    text-align: center;
+    color: #884c04;
+    font-weight: bold;
+    line-height: 0.8rem;
+    margin: 0 0.7rem;
+    border-bottom: 1px solid;
+}
+.prize-info-text {
+    color: #884c04;
+    font-weight: bold;
+    text-align: center;
+    margin: 1rem 0 0 0;
+}
+.prize-info-text input {
+    height: 1rem;
+    border-radius: 0.2rem;
+}
+.next {
+    background-color: #8de8f9;
+    height: auto;
+    padding: 0.7rem;
+    color: black;
+    text-align: center;
+    margin: 1.4rem;
+    border-radius: 1rem;
+    font-weight: bold;
+}

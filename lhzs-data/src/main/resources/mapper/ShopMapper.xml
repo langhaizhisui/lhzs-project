@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lhzs.data.dao.ShopMapper">
+    <resultMap id="BaseResultMap" type="cn.lhzs.data.bean.Shop">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="web_shop" jdbcType="VARCHAR" property="webShop"/>
+        <result column="site" jdbcType="VARCHAR" property="site"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="sell_name" jdbcType="VARCHAR" property="sellName"/>
+        <result column="brand_name" jdbcType="VARCHAR" property="brandName"/>
+        <result column="sell_prod" jdbcType="VARCHAR" property="sellProd"/>
+        <result column="web_url" jdbcType="VARCHAR" property="webUrl"/>
+        <result column="web_generalize" jdbcType="VARCHAR" property="webGeneralize"/>
+        <result column="mobile_url" jdbcType="VARCHAR" property="mobileUrl"/>
+        <result column="mobile_generalize" jdbcType="VARCHAR" property="mobileGeneralize"/>
+        <result column="shop_addr" jdbcType="VARCHAR" property="shopAddr"/>
+        <result column="banner" jdbcType="VARCHAR" property="banner"/>
+        <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <delete id="deleteTable">
+        truncate table shop
+    </delete>
+</mapper>

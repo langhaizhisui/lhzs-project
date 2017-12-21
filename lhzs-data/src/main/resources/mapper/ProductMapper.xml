@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lhzs.data.dao.ProductMapper">
+    <resultMap id="BaseResultMap" type="cn.lhzs.data.bean.Product">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="banner" jdbcType="VARCHAR" property="banner"/>
+        <result column="detail" jdbcType="VARCHAR" property="detail"/>
+        <result column="category" jdbcType="VARCHAR" property="category"/>
+        <result column="price" jdbcType="DOUBLE" property="price"/>
+        <result column="discount_price" jdbcType="DOUBLE" property="discountPrice"/>
+        <result column="discount_desc" jdbcType="VARCHAR" property="discountDesc"/>
+        <result column="platform" jdbcType="VARCHAR" property="platform"/>
+        <result column="save_price" jdbcType="DOUBLE" property="savePrice"/>
+        <result column="prod_generalize" jdbcType="VARCHAR" property="prodGeneralize"/>
+        <result column="expiration" jdbcType="VARCHAR" property="expiration"/>
+        <result column="scan_num" jdbcType="INTEGER" property="scanNum"/>
+        <result column="state" jdbcType="INTEGER" property="state"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into product (name, banner,
+        detail, category, price,
+        discount_price, discount_desc, platform,
+        save_price, prod_generalize, expiration,
+        scan_num, state, create_time, update_time
+        )
+        values
+        <foreach collection="list" index="index" item="data" separator=",">
+            (#{data.name}, #{data.banner},
+            #{data.detail}, #{data.category}, #{data.price},
+            #{data.discountPrice}, #{data.discountDesc}, #{data.platform},
+            #{data.savePrice}, #{data.prodGeneralize}, #{data.expiration},
+            #{data.scanNum}, #{data.state}, #{data.createTime}, #{data.updateTime}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteTable">
+      truncate table product
+    </delete>
+
+    <delete id="timerDeleteTask" parameterType="java.lang.String">
+        delete from product
+        where expiration <![CDATA[<=]]> #{expiration,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>

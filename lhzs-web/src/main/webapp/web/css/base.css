@@ -1,0 +1,205 @@
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, blockquote, th, td, input, select, textarea, button {
+    margin: 0;
+    padding: 0
+}
+
+/* ��ʼ����ǩ������������е�margin��paddingֵ */
+fieldset, img {
+    border: 0 none
+}
+
+/* ����fieldset�������飩��ͼƬ�ı߿�Ϊ0*/
+dl, ul, ol, menu, li {
+    list-style: none
+}
+
+/* �������ǰ������Ϊonne,menu��HTML5����Ч */
+blockquote, q {
+    quotes: none
+}
+
+/* ����Ƕ�����õ��������� */
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none
+}
+
+/* ����Ƕ������*/
+input, select, textarea, button {
+    vertical-align: middle
+}
+
+/* ���ñ��ؼ���ֱ����*/
+button {
+    border: 0 none;
+    background-color: transparent;
+    cursor: pointer
+}
+
+/* ���ñ�button��ťЧ�� */
+body {
+    background: #fff
+}
+
+/* ����body ҳ�汳��Ϊ��ɫ */
+body, th, td, input, select, textarea, button {
+    font-size: 12px;
+    line-height: 1;
+    font-family: "΢���ź�", "����", "����";
+    color: #666
+}
+
+/* ����ҳ���������� */
+a {
+    color: #666;
+    text-decoration: none
+}
+
+/* ��������a��ǩ */
+a:active, a:hover {
+    text-decoration: none
+}
+
+/* ��������a��ǩ����껬��Ч�� */
+address, caption, cite, code, dfn, em, var {
+    font-style: normal;
+    font-weight: normal
+}
+
+/* ������ʽ��ǩ����ʽ */
+caption {
+    display: none;
+}
+
+/* ���ñ�����Ϊ���� */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    table-layout: fixed;
+}
+
+/* ����table���� */
+img {
+    vertical-align: top
+}
+
+/* ͼƬ�ڵ�ǰ���ڵĴ�ֱλ�� */
+/* ȡ��a��ǩ���������߿� */
+a {
+    outline: none;
+}
+
+a:active {
+    star: expression(this.onFocus=this.blur());
+}
+
+/*�������*/
+.clear {
+    clear: both;
+}
+
+.clearfix:before, .clearfix:after {
+    content: '';
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.top-header{
+    width: 1200px;
+    margin: 0 auto;
+}
+
+/* �������� */
+.logo {
+    float: left;
+}
+
+.logo a {
+    font-size: 30px;
+    padding: 10px 20px;
+    color: #ff5e54;
+    font-weight: bold;
+}
+
+.logo a img {
+    width: 200px;
+}
+
+.search-box {
+    padding: 37px 10% 15px;
+    margin-left: 700px;
+}
+
+.search-box ul li {
+    float: left;
+    padding: 7px 10px;
+    color: #ff5e54;
+    font-size: 14px;
+    text-decoration: underline;
+}
+
+.search-box input {
+    float: left;
+    border: 2px solid #ff5e54;
+    padding: 5px 10px;
+    font-size: 15px;
+}
+
+.search-btn {
+    float: left;
+    background-color: #ff5e54;
+    color: white;
+    height: 34px;
+    line-height: 34px;
+    padding: 0px 15px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.top-nav {
+    background-color: #ff5e54;
+    color: white;
+    width: 100%;
+}
+
+.top-nav ul{
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.top-nav ul li {
+    float: left;
+    font-size: 16px;
+    text-align: center;
+    padding: 10px 50px;
+}
+.top-nav-select{
+    background-color: #ee2d21;
+}
+
+.top-nav ul li:first-child{
+    width: 100px;
+}
+
+.top-nav ul li a {
+    color: white;
+}
+
+/* �ײ���ʽ */
+.bottom-icp {
+    position: relative;
+    top: -6px;
+    color: #939393;
+    left: 5px;
+}
+
+.safe360{
+    position: relative;
+    width: 10%;
+    top: -8px;
+    left: 23px;
+}

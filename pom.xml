@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>cn.lhzs</groupId>
+  <artifactId>lhzs-project</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <modules>
+    <module>lhzs-web</module>
+    <module>lhzs-service</module>
+    <module>lhzs-data</module>
+    <module>lhzs-common</module>
+    <module>lhzs-generator</module>
+  </modules>
+  <name>lhzs-project Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <springframework.version>4.3.5.RELEASE</springframework.version>
+    <mybatis.version>3.4.1</mybatis.version>
+    <mybatis-spring.version>1.3.0</mybatis-spring.version>
+    <mapper.version>3.4.5</mapper.version>
+    <mysql-connector-java.version>5.1.38</mysql-connector-java.version>
+    <c3p0.version>0.9.5</c3p0.version>
+    <servlet-api.version>3.1.0</servlet-api.version>
+    <persistence-api.version>1.0</persistence-api.version>
+    <fileupload.version>1.3.1</fileupload.version>
+    <tomcat-servlet-api.version>8.0.26</tomcat-servlet-api.version>
+    <shiro-spring.version>1.2.2</shiro-spring.version>
+    <log4j.version>1.2.17</log4j.version>
+    <jest.version>0.0.2</jest.version>
+    <commons-lang3.version>3.4</commons-lang3.version>
+    <elasticsearch.version>0.20.2</elasticsearch.version>
+    <pagehelper.version>4.1.6</pagehelper.version>
+    <aspectjweaver.version>1.8.5</aspectjweaver.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons-lang3.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-spring</artifactId>
+      <version>${shiro-spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-servlet-api</artifactId>
+      <version>${tomcat-servlet-api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.pagehelper</groupId>
+      <artifactId>pagehelper</artifactId>
+      <version>${pagehelper.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.searchbox</groupId>
+      <artifactId>jest</artifactId>
+      <version>${jest.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.elasticsearch</groupId>
+      <artifactId>elasticsearch</artifactId>
+      <version>${elasticsearch.version}</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <finalName>lhzs-project</finalName>
+  </build>
+</project>

@@ -1,0 +1,86 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>后台管理系统</title>
+    <meta name="Keywords" content="网店,品牌网店,精选网购,精选旗舰店">
+    <meta name="Description" content="精选品牌网店大全，为您推荐精选网店、精选旗舰店、精选品牌网店、精选全面优惠网购等信息。">
+    <link rel="stylesheet" href="/admin/css/manage-system.css">
+    <link rel="shortcut icon" href="/admin/images/favicon.ico"/>
+    <link rel="bookmark" href="/admin/images/favicon.ico"/>
+    <style>
+        body{
+            background: #eeeeee;
+        }
+        .bg-frame{
+            margin: 15% auto;
+            background: white;
+            width: 400px;
+            height: 300px;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: #333333;
+        }
+        .account{
+            padding-top: 80px;
+        }
+        .pwd{
+            padding-top: 20px;
+        }
+        #login{
+            background: #0094d2;
+            width: 100px;
+            padding: 5px 0;
+            text-align: center;
+            border-radius: 5px ;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div class="bg-frame">
+        <div class="account">
+            账号：
+            <input id="userName"/>
+        </div>
+        <div class="pwd">
+            密码：
+            <input id="password"/>
+        </div>
+        <div id="login">登录</div>
+    </div>
+
+</div>
+<div class="load hidden">
+    <div class="loading"></div>
+    <img class="loading-img" src="../images/loading.gif"/>
+</div>
+</body>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.form.js"></script>
+<script src="/admin/js/app.js"></script>
+<script>
+    $(function () {
+        init();
+    });
+
+    function init() {
+        bindEvent();
+    }
+
+    function bindEvent() {
+        $("#login").click(function () {
+            var param = {};
+            param.userName=$("#userName").val();
+            param.password=$("#password").val();
+            app.login(param, function (result) {
+                if(result.code == 601){
+                    location.replace("/admin/manageSystem.html");
+                }else{
+                    alert(result.msg);
+                }
+            });
+        });
+    }
+</script>
+</html>
