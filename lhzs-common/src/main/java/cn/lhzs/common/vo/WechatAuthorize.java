@@ -1,4 +1,4 @@
-package cn.lhzs.data.bean;
+package cn.lhzs.common.vo;
 
 /**
  * Created by ZHX on 2017/12/21.
@@ -11,7 +11,7 @@ public class WechatAuthorize {
 
     private String scope;
 
-    private Integer state;
+    private String state;
 
     public String getAppId() {
         return appId;
@@ -37,11 +37,11 @@ public class WechatAuthorize {
         this.scope = scope;
     }
 
-    public Integer getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(Integer state) {
+    public void setState(String state) {
         this.state = state;
     }
 }

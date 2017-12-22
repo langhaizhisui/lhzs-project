@@ -12,7 +12,8 @@ public enum ResponseCode {
     INTERNAL_SERVER_ERROR(501, "服务器出错"),
     UNLOGIN(600, "未登录"),
     LOGIN(601, "登录成功"),
-    LOGIN_FAIL(602, "登录失败");
+    LOGIN_FAIL(602, "登录失败"),
+    WECHAT_ERROR(603, "微信接口错误");
 
     private Integer code;
     private String descp;

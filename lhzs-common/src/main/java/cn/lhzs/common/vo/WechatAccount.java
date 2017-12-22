@@ -1,4 +1,4 @@
-package cn.lhzs.data.bean;
+package cn.lhzs.common.vo;
 
 /**
  * Created by ZHX on 2017/12/21.

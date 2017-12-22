@@ -2,6 +2,7 @@ package cn.lhzs.web.config;
 
 
 import cn.lhzs.common.exception.LoginException;
+import cn.lhzs.common.exception.WechatException;
 import cn.lhzs.common.result.ResponseCode;
 import cn.lhzs.common.result.ResponseResult;
 import cn.lhzs.common.util.DateUtil;
@@ -88,6 +89,8 @@ public class ExceptionManageConfig extends WebMvcConfigurerAdapter {
                 result.setCode(ResponseCode.BAD_REQUEST.getCode()).setMsg(e.getMessage());
             } else if (e instanceof LoginException) {
                 result.setCode(ResponseCode.LOGIN_FAIL.getCode()).setMsg(e.getMessage());
+            } else if (e instanceof WechatException) {
+                result.setCode(ResponseCode.WECHAT_ERROR.getCode()).setMsg(e.getMessage());
             } else {
                 result.setCode(ResponseCode.INTERNAL_SERVER_ERROR.getCode()).setMsg("接口 [" + request.getRequestURI() + "] 内部错误，请联系管理员");
                 String message = e.getMessage();
