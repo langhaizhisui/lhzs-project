@@ -1,6 +1,6 @@
 package cn.lhzs.web.controller;
 
-import cn.lhzs.data.bean.WebGeneralize;
+import cn.lhzs.common.vo.WebGeneralizeCondition;
 import cn.lhzs.common.result.ResponseResult;
 import cn.lhzs.service.intf.ConfigService;
 import com.github.pagehelper.PageInfo;
@@ -23,13 +23,13 @@ public class WebGeneralizeController {
     @Autowired
     public ConfigService configService;
 
-    @RequestMapping("/webGeneralize/search")
+    @RequestMapping("/search")
     @ResponseBody
-    public ResponseResult getWebGeneralize(@RequestBody WebGeneralize webGeneralize) {
+    public ResponseResult getWebGeneralize(@RequestBody WebGeneralizeCondition webGeneralize) {
         return generatorSuccessResult(new PageInfo(configService.getWebGeneralizeList(webGeneralize)));
     }
 
-    @RequestMapping("/webGeneralize/detail")
+    @RequestMapping("/detail")
     @ResponseBody
     public ResponseResult getWebGeneralizeDetail(@RequestParam Integer id) {
         return generatorSuccessResult(configService.getWebGeneralizeDetail(id));

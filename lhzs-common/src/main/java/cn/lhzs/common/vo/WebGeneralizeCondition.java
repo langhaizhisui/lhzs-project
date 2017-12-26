@@ -1,9 +1,9 @@
-package cn.lhzs.data.bean;
+package cn.lhzs.common.vo;
 
 /**
  * Created by ZHX on 2017/9/27.
  */
-public class WebGeneralize {
+public class WebGeneralizeCondition extends BaseCondition{
 
     private Integer id;
 
@@ -44,4 +44,5 @@ public class WebGeneralize {
     public void setUrl(String url) {
         this.url = url;
     }
+
 }

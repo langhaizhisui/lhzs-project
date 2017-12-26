@@ -29,22 +29,7 @@
             </div>
         </div>
         <div class="adv">
-            <ul class="advUl">
-                <!--<li><a href="http://www.chinaz.com/news/2015/0326/393596.shtml" target="_blank">怎么开淘宝网店，开网店需要多少钱</a>
-                </li>
-                <li><a href="http://www.cr173.com/apple/112356_1.html?_t_t_t=0.1211917503568185" target="_blank">苹果的双重验证有什么用</a>
-                </li>
-                <li><a href="http://product.pconline.com.cn/itbk/software/dnwt/1501/6062836.html" target="_blank">电脑开不了机怎么办，笔记本开不了机原因</a>
-                </li>
-                <li><a href="http://mt.sohu.com/20151007/n422661011.shtml" target="_blank">全球十大顶级旅行箱品牌排行榜</a></li>
-                <li><a href="http://www.tuijianshu.net/article-364-1.html" target="_blank">推荐国内外值得一看的好书</a></li>
-                <li><a href="http://www.qqtn.com/health/167037_1.html" target="_blank">30万左右买什么车好，30万性价比车排行榜</a></li>
-                <li><a href="http://www.lusongsong.com/reed/664.html" target="_blank">一个网站完整详细的SEO优化方案</a></li>
-                <li><a href="http://www.chinaz.com/web/2014/0804/362374.shtml" target="_blank">该如何巧妙运用网站内容中的关键词</a></li>
-                <li><a href="http://www.sanwen8.cn/subject/wxotqhi.html" target="_blank">情人节送女孩什么礼物好最有意义</a></li>
-                <li><a href="http://www.ledolady.com/view-298938.html" target="_blank">如何让皮肤变白嫩，肌肤美白小窍门</a></li>
-                <li><a href="http://www.maigoo.com/goomai/156151.html" target="_blank">2万元如何创业,2万元能做什么生意</a></li>-->
-            </ul>
+            <ul class="advUl"></ul>
         </div>
     </div>
     <div class="hot-brand clearfix" style="display: none">
@@ -83,8 +68,8 @@
         }, 2000)
     });
     function init() {
-        $(".header").load("header.html");
-        $(".footer").load("footer.html");
+        $(".header").load("/web/header.html");
+        $(".footer").load("/web/footer.html");
         app.getSelectedNav(0);
         getCatalog();
         getHotShop();
@@ -148,7 +133,7 @@
                 var data = result.data;
                 for (var i = 0; i < data.length; i++) {
                     var catalog = data[i];
-                    html += '<li><a href="discountCoupon.html?id=' + (parseInt(catalog.cataId) + 5) + '" target="_blank">' + catalog.name + '</a></li>';
+                    html += '<li><a href="/web/discountCoupon.html?id=' + (parseInt(catalog.id) + 5) + '" target="_blank">' + catalog.name + '</a></li>';
                 }
                 $(".shop-item").html(html);
             }
@@ -209,7 +194,7 @@
                 for (var i = 0; i < data.length; i++) {
                     var item = data[i];
                     html += '<li>' +
-                        '<a href='+item.id+'"articleDetail.html?id=" target="_blank">'+getArticleTitle(item.title)+'</a>' +
+                        '<a href="/web/articleDetail.html?id='+item.id+'" target="_blank">'+getArticleTitle(item.title)+'</a>' +
                         '</li>';
                 }
                 $(".advUl").html(html);
@@ -257,7 +242,7 @@
 
                 $(".shop").click(function () {
                     var index = $(this).attr("index");
-                    window.open("shopDetail.html?shopId=" + data[index].id + "&shopImg=" + getShopId(data[index].type));
+                    window.open("/web/shopDetail.html?shopId=" + data[index].id + "&shopImg=" + getShopId(data[index].type));
                 });
 
                 if (data.length == 0 || data.length < param.pageSize) {
@@ -300,28 +285,28 @@
     function getShopImage(type) {
         switch (type) {
             case "1":
-                return "./images/tm.jpg";
+                return "/web/images/tm.jpg";
                 break;
             case "2":
-                return "./images/jd.jpg";
+                return "/web/images/jd.jpg";
                 break;
             case "3":
-                return "./images/sn.jpg";
+                return "/web/images/sn.jpg";
                 break;
             case "4":
-                return "./images/yhd.jpg";
+                return "/web/images/yhd.jpg";
                 break;
             case "5":
-                return "./images/dd.jpg";
+                return "/web/images/dd.jpg";
                 break;
             case "6":
-                return "./images/gm.jpg";
+                return "/web/images/gm.jpg";
                 break;
             case "7":
-                return "./images/tb.jpg";
+                return "/web/images/tb.jpg";
                 break;
             default:
-                return "./images/qt.jpg";
+                return "/web/images/qt.jpg";
                 break;
         }
     }

@@ -2,35 +2,35 @@ var app = {
     cache: [],
     getCatalog: function (data, callback) {
         var self = this;
-        self.ajax("post", "catalog/cataList", data, callback);
+        self.ajax("post", "/catalog/cataList", data, callback);
     },
     getShopList: function (data, callback) {
         var self = this;
-        self.ajax("post", "shop/getList", data, callback);
+        self.ajax("post", "/shop/search", data, callback);
     },
     getHotShop: function (data, callback) {
         var self = this;
-        self.ajax("post", "shop/getList", data, callback);
+        self.ajax("post", "/shop/search", data, callback);
     },
     getShopDetail: function (data, callback) {
         var self = this;
-        self.ajax("get", "shop/getShop", data, callback);
+        self.ajax("get", "/shop/getShop", data, callback);
     },
     getProductList: function (data, callback) {
         var self = this;
-        self.ajax("post", "prod/getList", data, callback);
+        self.ajax("post", "/prod/getList", data, callback);
     },
     getProductDetail: function (data, callback) {
         var self = this;
-        self.ajax("get", "prod/getProduct", data, callback);
+        self.ajax("get", "/prod/getProduct", data, callback);
     },
     getGeneralizeProduct: function (data, callback) {
         var self = this;
-        self.ajax("post", "prod/getList", data, callback);
+        self.ajax("post", "/prod/getList", data, callback);
     },
     getMeta: function (data, callback) {
         var self = this;
-        self.ajax("get", "meta/getMeta", data, callback);
+        self.ajax("get", "/meta/getMeta", data, callback);
     },
     getSelectedNav: function (navId) {
         setTimeout(function () {
@@ -43,27 +43,27 @@ var app = {
     },
     getArticleDetail: function (data, callback) {
         var self = this;
-        self.ajax("post", "article/detail", data, callback);
+        self.ajax("post", "/article/detail", data, callback);
     },
     getArticleList: function (data, callback) {
         var self = this;
-        self.ajax("post", "article/search", data, callback);
+        self.ajax("post", "/article/search", data, callback);
     },
     getArticleCount: function (data, callback) {
         var self = this;
-        self.ajax("post", "article/count", data, callback);
+        self.ajax("post", "/article/count", data, callback);
     },
     getWebGeneralize: function (data, callback) {
         var self = this;
-        self.ajax("post", "article/webGeneralize/search", data, callback);
+        self.ajax("post", "/web/generalize/search", data, callback);
     },
     getWebGeneralizeDetail: function (data, callback) {
         var self = this;
-        self.ajax("get", "article/webGeneralize/detail", data, callback);
+        self.ajax("get", "/web/generalize/detail", data, callback);
     },
     getSlideshowPictureList: function (data, callback) {
         var self = this;
-        self.ajax("post", "config/slideshowPicture/list", data, callback);
+        self.ajax("post", "/config/slideshowPicture/list", data, callback);
     },
     "ajax": function (type, url, data, callback) {
         var self = this;

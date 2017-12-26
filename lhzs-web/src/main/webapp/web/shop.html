@@ -6,9 +6,9 @@
     <meta name="Keywords" content="网店,品牌网店,精选网购,精选旗舰店">
     <meta name="Description" content="精选品牌网店大全，为您推荐精选网店、精选旗舰店、精选品牌网店、精选全面优惠网购等信息。">
 
-    <link rel="stylesheet" href="/web/web/css/shop.css">
-    <link rel="stylesheet" href="/web/web/css/base.css">
-    <link rel="stylesheet" href="/web/web/css/index2.css">
+    <link rel="stylesheet" href="/web/css/shop.css">
+    <link rel="stylesheet" href="/web/css/base.css">
+    <link rel="stylesheet" href="/web/css/index2.css">
     <link rel="shortcut icon" href="/web/images/favicon.ico"/>
     <link rel="bookmark" href="/web/images/favicon.ico"/>
 </head>
@@ -190,7 +190,7 @@
 
                 $(".shop").click(function () {
                     var index = $(this).attr("index");
-                    location.href = "shopDetail.html?shopId=" + data[index].id + "&shopImg=" + id;
+                    location.href = "/web/shopDetail.html?shopId=" + data[index].id + "&shopImg=" + id;
                 });
             }
         });
@@ -228,28 +228,28 @@
     function getShopImage(type) {
         switch (type) {
             case "1":
-                return "./images/tm.jpg";
+                return "/web/images/tm.jpg";
                 break;
             case "2":
-                return "./images/jd.jpg";
+                return "/web/images/jd.jpg";
                 break;
             case "3":
-                return "./images/sn.jpg";
+                return "/web/images/sn.jpg";
                 break;
             case "4":
-                return "./images/yhd.jpg";
+                return "/web/images/yhd.jpg";
                 break;
             case "5":
-                return "./images/dd.jpg";
+                return "/web/images/dd.jpg";
                 break;
             case "6":
-                return "./images/gm.jpg";
+                return "/web/images/gm.jpg";
                 break;
             case "7":
-                return "./images/tb.jpg";
+                return "/web/images/tb.jpg";
                 break;
             default:
-                return "./images/qt.jpg";
+                return "/web/images/qt.jpg";
                 break;
         }
     }

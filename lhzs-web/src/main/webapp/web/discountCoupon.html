@@ -114,7 +114,7 @@
                 var data = result.data;
                 for (var i = 0; i < data.length; i++) {
                     var catalog = data[i];
-                    html += '<li><a href="discountCoupon.html?id=' + (parseInt(catalog.cataId) + 5) + '" target="_blank">' + catalog.name + '</a></li>';
+                    html += '<li><a href="/web/discountCoupon.html?id=' + (parseInt(catalog.cataId) + 5) + '" target="_blank">' + catalog.name + '</a></li>';
                 }
                 $(".shop-item").html(html);
             }
@@ -214,7 +214,7 @@
 
                 $(".moldbaby-subject").click(function () {
                     var index = $(this).attr("index");
-                    window.open("productDetail.html?prodId=" + data[index].prodId);
+                    window.open("/web/productDetail.html?prodId=" + data[index].prodId);
                 });
             }
         });

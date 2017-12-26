@@ -1,7 +1,7 @@
 package cn.lhzs.web.controller.admin;
 
 import cn.lhzs.common.aop.log.OpLog;
-import cn.lhzs.data.bean.WebGeneralize;
+import cn.lhzs.common.vo.WebGeneralizeCondition;
 import cn.lhzs.common.result.ResponseResult;
 import cn.lhzs.service.intf.ConfigService;
 import com.github.pagehelper.PageInfo;
@@ -29,14 +29,14 @@ public class AdminWebGeneralizeController {
 
     @RequestMapping("/search")
     @ResponseBody
-    public ResponseResult getWebGeneralize(@RequestBody WebGeneralize webGeneralize) {
+    public ResponseResult getWebGeneralize(@RequestBody WebGeneralizeCondition webGeneralize) {
         return generatorSuccessResult(new PageInfo(configService.getWebGeneralizeList(webGeneralize)));
     }
 
     @OpLog(type = ADD, descp = "增加推荐商城")
     @RequestMapping("/add")
     @ResponseBody
-    public ResponseResult addWebGeneralize(@RequestBody WebGeneralize webGeneralize) {
+    public ResponseResult addWebGeneralize(@RequestBody WebGeneralizeCondition webGeneralize) {
         configService.addWebGeneralize(webGeneralize);
         return generatorSuccessResult();
     }
@@ -52,7 +52,7 @@ public class AdminWebGeneralizeController {
     @OpLog(type = EDIT, descp = "修改推荐商城")
     @RequestMapping("/update")
     @ResponseBody
-    public ResponseResult updateWebGeneralize(@RequestBody WebGeneralize webGeneralize) {
+    public ResponseResult updateWebGeneralize(@RequestBody WebGeneralizeCondition webGeneralize) {
         configService.updateWebGeneralize(webGeneralize);
         return generatorSuccessResult();
     }

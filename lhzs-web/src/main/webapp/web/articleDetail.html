@@ -333,28 +333,28 @@
     function getShopImage(type) {
         switch (type) {
             case "1":
-                return "./images/tm.jpg";
+                return "/web/images/tm.jpg";
                 break;
             case "2":
-                return "./images/jd.jpg";
+                return "/web/images/jd.jpg";
                 break;
             case "3":
-                return "./images/sn.jpg";
+                return "/web/images/sn.jpg";
                 break;
             case "4":
-                return "./images/yhd.jpg";
+                return "/web/images/yhd.jpg";
                 break;
             case "5":
-                return "./images/dd.jpg";
+                return "/web/images/dd.jpg";
                 break;
             case "6":
-                return "./images/gm.jpg";
+                return "/web/images/gm.jpg";
                 break;
             case "7":
-                return "./images/tb.jpg";
+                return "/web/images/tb.jpg";
                 break;
             default:
-                return "./images/qt.jpg";
+                return "/web/images/qt.jpg";
                 break;
         }
     }
@@ -449,7 +449,7 @@
 
                 $(".prod-generalize-item").click(function () {
                     var index = $(this).attr("index");
-                    location.href = "productDetail.html?prodId=" + data[index].prodId;
+                    location.href = "/web/productDetail.html?prodId=" + data[index].prodId;
                 });
             }
         });
@@ -484,7 +484,7 @@
 
                 $(".moldbaby-subject").click(function () {
                     var index = $(this).attr("index");
-                    location.href = "productDetail.html?prodId=" + data[index].prodId;
+                    location.href = "/web/productDetail.html?prodId=" + data[index].prodId;
                 });
             }
         });
@@ -523,7 +523,7 @@
 
                 $(".shop").click(function () {
                     var index = $(this).attr("index");
-                    window.open("shopDetail.html?shopId=" + data[index].id + "&shopImg=" + getShopId(data[index].type));
+                    window.open("/web/shopDetail.html?shopId=" + data[index].id + "&shopImg=" + getShopId(data[index].type));
                 });
             }
         });
