@@ -49,7 +49,6 @@ public class ShiroRealm extends AuthorizingRealm {
 
     private AuthorizationInfo getUserAuth(SimpleAuthorizationInfo simpleAuthorInfo, Subject subject, SysUser sysUser) {
         sysAuthService.getUserAuthList(sysUser.getId()).forEach(userAuth -> simpleAuthorInfo.addStringPermission(userAuth.getId() + ""));
-        subject.getSession().setAttribute("userAuth", setUserAuthId(sysUser.getId()));
         return simpleAuthorInfo;
     }
 
@@ -105,17 +104,7 @@ public class ShiroRealm extends AuthorizingRealm {
             Session session = currentUser.getSession();
             session.setTimeout(1000 * 60 * 60 * 2);
             session.setAttribute("user", uid);
-            session.setAttribute("userAuth", setUserAuthId(uid));
         }
-    }
-
-    private String setUserAuthId(Long uid) {
-        String authIds = "";
-        List<SysAuth> userAuthList = sysAuthService.getUserAuthList(uid);
-        for (int i = 0; i < userAuthList.size(); i++) {
-            authIds += userAuthList.get(i).getId() + ",";
-        }
-        return "".equals(authIds) ? "" : authIds.substring(0, authIds.length() - 1);
     }
 
 }

@@ -96,6 +96,10 @@ var app = {
         var self = this;
         self.ajax("post", "/login", data, callback);
     },
+    getMenu: function (data, callback) {
+        var self = this;
+        self.ajax("post", "/admin/user/menu", data, callback);
+    },
     "ajax": function (type, url, data, callback) {
         var self = this;
         if (self.isParamEmpty(type) || self.isParamEmpty(url) || self.isParamEmpty(data)) {
