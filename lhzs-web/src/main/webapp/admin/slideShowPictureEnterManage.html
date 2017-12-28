@@ -163,45 +163,18 @@
 </head>
 <body>
 <div>
-    <div class="nav">
-        <div class="nav-logo">
-            <img src="../images/logo2.jpg">
-            <div>系统管理后台</div>
+    <div id="navigation">
+        <div class="nav">
+            <div class="nav-logo">
+                <img src="/admin/images/logo1_03.png">
+                <div>系统管理后台</div>
+            </div>
+            <ul class="top-nav"></ul>
         </div>
-        <ul>
-            <li id="prod-manage"><a>商品管理</a></li>
-            <li id="shop-manage"><a>店铺管理</a></li>
-            <li id="article-manage"><a>文章管理</a></li>
-            <li id="base-set" class="nav-bg"><a>基础设置</a></li>
-        </ul>
+        <div class="left-nav clearfix"></div>
     </div>
 
     <div class="center">
-        <div class="left-nav clearfix">
-            <div>
-                <div class="left-nav-grade1">首页</div>
-                <div class="left-nav-grade2">
-                    <div class="left-nav-bg  prod-list prod-operation">
-                        <a href="/admin/slideShowPictureEnterManage.html">轮播图</a>
-                    </div>
-                    <div class="left-nav-bg">
-                        <a href="/admin/slideShowPictureManage.htmle.html">轮播图列表</a>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="left-nav-grade1">商城推荐</div>
-                <div class="left-nav-grade2">
-                    <div class="left-nav-bg">
-                        <a href="/admin/baseSetManage.html">商城列表</a>
-                    </div>
-                    <div class="left-nav-bg">
-                        <a href="/admin/webGeneralizeEnterManage.htmle.html">增加商城</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div class="center-right">
             <div class="batch-bg">
                 <div class="batch-submit">
@@ -236,6 +209,7 @@
 <script src="/js/jquery.form.js"></script>
 <script src="/admin/js/app.js"></script>
 <script src="/admin/js/systemManage.js"></script>
+<script src="/admin/js/navigation.js"></script>
 <script>
     $(function () {
         init();

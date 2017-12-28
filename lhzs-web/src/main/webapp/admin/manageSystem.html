@@ -238,21 +238,11 @@
                 <img src="/admin/images/logo1_03.png">
                 <div>系统管理后台</div>
             </div>
-            <ul class="top-nav">
-                <li id="prod-manage" class="nav-bg"><a>商品管理</a></li>
-            </ul>
+            <ul class="top-nav"></ul>
         </div>
-        <div class="left-nav clearfix">
-            <div>
-                <div class="left-nav-grade1">商品管理</div>
-                <div class="left-nav-grade2">
-                    <div class="left-nav-bg prod-operation">
-                        <a href="/admin/prodEnterManage.htmle.html">商品录入</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="left-nav clearfix"></div>
     </div>
+
     <div class="center">
         <div class="center-right">
             <div>
@@ -313,7 +303,6 @@
                     <div class="expire">有效期</div>
                     <div class="operation">操作</div>
                 </div>
-
                 <div class="content-list"></div>
             </div>
         </div>
@@ -332,7 +321,8 @@
 <script src="/js/jquery.form.js"></script>
 <script src="/admin/js/app.js"></script>
 <script src="/admin/js/systemManage.js"></script>
-<script src="/js/paging.js/js/paging.js"></script>
+<script src="/js/paging.js"></script>
+<script src="/admin/js/navigation.js"></script>
 <script>
     $(function () {
         init();
@@ -340,106 +330,7 @@
     });
 
     function init() {
-        getMenu()
-        getProduct(1);
-    }
-
-    function getMenu() {
-        var param = {};
-        app.getMenu(param, function (result) {
-            if (result.code == 200) {
-                var topNav = "";
-                var leftNav = "";
-                var data = result.data;
-                for (var i = 0; i < data.length; i++) {
-                    var firstNav = data[i];
-                    topNav += '<li id="prod-manage" class="nav-bg"><a>' + firstNav.name + '</a></li>';
-                    var secondNavList = firstNav.subSysAuthMenuList;
-                    for (var j = 0; j < secondNavList.length; j++) {
-                        var secondNav = secondNavList[j];
-                        leftNav += '<div>' +
-                            '<div class="left-nav-grade1">' + secondNav.name + '</div>' +
-                            '<div class="left-nav-grade2">';
-                        var thirdNavList = secondNav.subSysAuthMenuList;
-                        for (var k = 0; k < thirdNavList.length; k++) {
-                            var thirdNav = thirdNavList[k]
-                            leftNav += '<div class="left-nav-bg prod-operation">' +
-                                '<a href="'+thirdNav.url+'">' + thirdNav.name + '</a>' +
-                                '</div>';
-                        }
-                        leftNav += '</div></div>';
-                    }
-                }
-
-                $(".top-nav").html(topNav);
-                $(".left-nav").html(leftNav);
-            }
-        });
-    }
-
-    function getProduct(page) {
-        var param = {};
-        param.page = page;
-        param.size = 20;
-        app.searchProductList(param, function (result) {
-            if (result.code == 200) {
-                var html = '';
-                var data = result.data.list;
-                for (var i = 0; i < data.length; i++) {
-                    var product = data[i];
-                    html += '<div class="content-item">' +
-                        '<div class="prod-id">' + product.prodId + '</div>' +
-                        '<div class="prod-title">' + product.name + '</div>' +
-                        '<div class="cata">' + product.category + '</div>' +
-                        '<div class="price">' + product.price + '</div>' +
-                        '<div class="sale-price">' + product.discountPrice + '</div>' +
-                        '<div class="save-price">' + product.savePrice + '</div>' +
-                        '<div class="plate">' + product.platform + '</div>' +
-                        '<div class="expire">' + product.expiration + '</div>' +
-                        '<div class="operation">' +
-                        '<span class="prod-edit"> 编辑 </span>' +
-                        '<span class="prod-delete"> 删除 </span>' +
-                        '</div>' +
-                        '</div>';
-                }
-                $(".content-list").html(html);
-
-                var totalPage = result.data.pages;
-                var currPage = result.data.pageNum;
-
-                splitPage(totalPage, currPage, ".page-num",
-                    function (index) {
-                        if (index != 1) {
-                            getProduct(index - 1);
-                        }
-                    }, function (index) {
-                        index = parseInt(index);
-                        if (index != totalPage) {
-                            getProduct(index + 1);
-                        }
-                    }, function (index) {
-                        getProduct(index);
-                    });
-
-                $(".prod-delete").click(function () {
-                    var prodId = $(this).parent().parent().find(".prod-id").text();
-                    var param = {};
-                    param.prodId = prodId;
-
-                    app.deleteProduct(param, function () {
-                        if (result.code == 200) {
-                            getProduct(page);
-                            alert("删除成功");
-                        }
-                    });
-                });
-                $(".prod-edit").click(function () {
-                    var prodId = $(this).parent().parent().find(".prod-id").text();
-                    location.href = "/prodEnterManage.html?id=" + prodId;
-                });
-
-            }
-        });
+        searchInfo(1);
     }
 
     function bindEvent() {
@@ -448,51 +339,58 @@
         });
 
         $(".more-delete-btn").click(function () {
-            var prodId = $("#prod-id-input").val();
-            var category = $("#category-input").val();
-            var platform = $("#platform-input").val();
-            var expirationStart = $("#expiration-start-input").val();
-            var expirationEnd = $("#expiration-end-input").val();
-            var createTimeStart = $("#createtime-start-input").val();
-            var createTimeEnd = $("#createtime-end-input").val();
-
-            if (prodId == "" && category == "" && platform == "" && expirationStart == "" && expirationEnd == ""
-                && createTimeStart == "" && createTimeEnd == "") {
-                alert("请输入删除条件");
-                return;
-            }
-            $(".load").removeClass("hidden");
-            var param = {};
-            param.prodId = prodId;
-            param.category = category;
-            param.platform = platform;
-            param.expirationStart = expirationStart;
-            param.expirationEnd = expirationEnd;
-            param.createTimeStart = createTimeStart;
-            param.createTimeEnd = createTimeEnd;
-            param.page = 1;
-            param.size = 20;
-
-            app.batchProdDelete(param, function (result) {
-                $(".load").addClass("hidden");
-                if (result.code == 200) {
-                    searchInfo(1);
-                    alert("删除成功");
-                }
-            });
+            batchDelete();
         });
 
         $(".all-delete-btn").click(function () {
-            $(".load").removeClass("hidden");
+            allDelete();
+        });
+    }
 
-            var param = {};
-            app.allProdDelete(param, function (result) {
-                $(".load").addClass("hidden");
-                if (result.code == 200) {
-                    searchInfo(1);
-                    alert("删除成功");
-                }
-            });
+    function batchDelete() {
+        var prodId = $("#prod-id-input").val();
+        var category = $("#category-input").val();
+        var platform = $("#platform-input").val();
+        var expirationStart = $("#expiration-start-input").val();
+        var expirationEnd = $("#expiration-end-input").val();
+        var createTimeStart = $("#createtime-start-input").val();
+        var createTimeEnd = $("#createtime-end-input").val();
+
+        if (prodId == "" && category == "" && platform == "" && expirationStart == "" && expirationEnd == ""
+            && createTimeStart == "" && createTimeEnd == "") {
+            alert("请输入删除条件");
+            return;
+        }
+        $(".load").removeClass("hidden");
+        var param = {};
+        param.prodId = prodId;
+        param.category = category;
+        param.platform = platform;
+        param.expirationStart = expirationStart;
+        param.expirationEnd = expirationEnd;
+        param.createTimeStart = createTimeStart;
+        param.createTimeEnd = createTimeEnd;
+        param.page = 1;
+        param.size = 20;
+
+        app.batchProdDelete(param, function (result) {
+            $(".load").addClass("hidden");
+            if (result.code == 200) {
+                searchInfo(1);
+                alert("删除成功");
+            }
+        });
+    }
+
+    function allDelete() {
+        $(".load").removeClass("hidden");
+        var param = {};
+        app.allProdDelete(param, function (result) {
+            $(".load").addClass("hidden");
+            if (result.code == 200) {
+                searchInfo(1);
+                alert("删除成功");
+            }
         });
     }
 
