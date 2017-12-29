@@ -74,12 +74,12 @@ public class ProductServiceImpl extends AbstractBaseService<Product> implements 
         if (StringUtil.isNotEmpty(productSearchCondition.getExpirationStart() + "")
                 && StringUtil.isNotEmpty(productSearchCondition.getExpirationEnd() + "")) {
             criteria.andGreaterThanOrEqualTo("expiration", productSearchCondition.getExpirationStart())
-                    .andGreaterThanOrEqualTo("expiration", productSearchCondition.getExpirationEnd());
+                    .andLessThanOrEqualTo("expiration", productSearchCondition.getExpirationEnd());
         }
-        if (StringUtil.isNotEmpty(productSearchCondition.getExpirationStart() + "")
-                && StringUtil.isNotEmpty(productSearchCondition.getExpirationEnd() + "")) {
-            criteria.andGreaterThanOrEqualTo("expiration", productSearchCondition.getCreateTimeStart())
-                    .andLessThanOrEqualTo("expiration", productSearchCondition.getCreateTimeEnd());
+        if (StringUtil.isNotEmpty(productSearchCondition.getCreateTimeStart() + "")
+                && StringUtil.isNotEmpty(productSearchCondition.getCreateTimeEnd() + "")) {
+            criteria.andGreaterThanOrEqualTo("createTime", productSearchCondition.getCreateTimeStart())
+                    .andLessThanOrEqualTo("createTime", productSearchCondition.getCreateTimeEnd());
         }
         return example;
     }

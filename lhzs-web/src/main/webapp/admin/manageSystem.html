@@ -395,31 +395,14 @@
     }
 
     function searchInfo(page) {
-        var prodId = $("#prod-id-input").val();
-        var category = $("#category-input").val();
-        var platform = $("#platform-input").val();
-        var expirationStart = $("#expiration-start-input").val();
-        var expirationEnd = $("#expiration-end-input").val();
-        var createTimeStart = $("#createtime-start-input").val();
-        var createTimeEnd = $("#createtime-end-input").val();
-        var param = {};
-        param.prodId = prodId;
-        param.category = category;
-        param.platform = platform;
-        param.expirationStart = expirationStart;
-        param.expirationEnd = expirationEnd;
-        param.createTimeStart = createTimeStart;
-        param.createTimeEnd = createTimeEnd;
-        param.page = page;
-        param.size = 20;
-        app.searchProductList(param, function (result) {
+        app.searchProductList(getSearchProdParams(page, 20), function (result) {
             if (result.code == 200) {
                 var html = '';
-                var data = result.data.prodList.list;
+                var data = result.data.list;
                 for (var i = 0; i < data.length; i++) {
                     var product = data[i];
                     html += '<div class="content-item">' +
-                        '<div class="prod-id">' + product.prodId + '</div>' +
+                        '<div class="prod-id">' + product.id + '</div>' +
                         '<div class="prod-title">' + product.name + '</div>' +
                         '<div class="cata">' + product.category + '</div>' +
                         '<div class="price">' + product.price + '</div>' +
@@ -435,8 +418,8 @@
                 }
                 $(".content-list").html(html);
 
-                var totalPage = result.data.totalPage;
-                var currPage = result.data.page;
+                var totalPage = result.data.pages;
+                var currPage = result.data.pageNum;
                 splitPage(totalPage, currPage, ".page-num",
                     function (index) {
                         if (index != 1) {
@@ -449,7 +432,8 @@
                         }
                     }, function (index) {
                         searchInfo(index);
-                    });
+                    }
+                );
 
                 $(".prod-delete").click(function () {
                     var prodId = $(this).parent().parent().find(".prod-id").text();
@@ -470,5 +454,41 @@
             }
         });
     }
+
+    function getSearchProdParams(page, size) {
+        var param = {};
+        param.page = page;
+        param.size = size;
+        var prodId = $("#prod-id-input").val();
+        if (prodId) {
+            param.prodId = prodId;
+        }
+        var category = $("#category-input").val();
+        if (category) {
+            param.category = category;
+        }
+        var platform = $("#platform-input").val();
+        if (platform) {
+            param.platform = platform;
+        }
+        var expirationStart = $("#expiration-start-input").val();
+        if (expirationStart) {
+            param.expirationStart = expirationStart;
+        }
+        var expirationEnd = $("#expiration-end-input").val();
+        if (expirationEnd) {
+            param.expirationEnd = expirationEnd;
+        }
+        var createTimeStart = $("#createtime-start-input").val();
+        if (createTimeStart) {
+            param.createTimeStart = createTimeStart;
+        }
+        var createTimeEnd = $("#createtime-end-input").val();
+        if (createTimeEnd) {
+            param.createTimeEnd = createTimeEnd;
+        }
+        return param;
+    }
+
 </script>
 </html>
