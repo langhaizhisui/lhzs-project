@@ -43,4 +43,8 @@
     from article WHERE 1=1
     <include refid="sql_where"></include>
   </select>
+
+  <delete id="deleteTable">
+    truncate table article
+  </delete>
 </mapper>

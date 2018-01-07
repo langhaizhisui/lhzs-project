@@ -20,4 +20,5 @@ public interface ArticleService extends IBaseService<Article> {
 
     List<Article> searchArticle(Article article);
 
+    void deleteTable();
 }

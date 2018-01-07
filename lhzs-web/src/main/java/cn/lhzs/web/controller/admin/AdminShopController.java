@@ -63,12 +63,6 @@ public class AdminShopController {
         return generatorSuccessResult(new PageInfo(shopService.searchShop(shopSearchCondition)));
     }
 
-    @RequestMapping("/getSiteList")
-    @ResponseBody
-    public ResponseResult getShopListBySite(@RequestBody Shop shop) {
-        return generatorSuccessResult(shopService.getShopList(shop));
-    }
-
     @OpLog(type = DEL, descp = "删除所有店铺")
     @RequestMapping("/all/delete")
     @ResponseBody

@@ -303,7 +303,7 @@
 <script src="/js/jquery.form.js"></script>
 <script src="/admin/js/app.js"></script>
 <script src="/admin/js/systemManage.js"></script>
-<script src="/js/paging.js/js/paging.js"></script>
+<script src="/js/paging.js"></script>
 <script src="/admin/js/navigation.js"></script>
 <script>
     $(function () {
@@ -350,7 +350,7 @@
                 }
                 $(".content-list").html(html);
 
-                var totalPage = result.pages;
+                var totalPage = result.data.pages;
                 var currPage = result.data.pageNum;
 
                 splitPage(totalPage, currPage, ".page-num",
@@ -381,7 +381,7 @@
 
                 $(".prod-edit").click(function () {
                     var id = $(this).parent().parent().find(".prod-id").text();
-                    location.href = "/webGeneralizeEnterManage.html?id=" + id;
+                    location.href = "/admin/webGeneralizeEnterManage.html?id=" + id;
                 });
             }
         });

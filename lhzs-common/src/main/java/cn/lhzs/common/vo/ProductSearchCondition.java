@@ -10,13 +10,13 @@ public class ProductSearchCondition extends BaseCondition {
 
     private String platform;
 
-    private String expirationStart;
+    private Date expirationStart;
 
-    private String expirationEnd;
+    private Date expirationEnd;
 
-    private String createTimeStart;
+    private Date createTimeStart;
 
-    private String createTimeEnd;
+    private Date createTimeEnd;
 
     public Long getProdId() {
         return prodId;
@@ -42,35 +42,35 @@ public class ProductSearchCondition extends BaseCondition {
         this.platform = platform;
     }
 
-    public String getExpirationStart() {
+    public Date getExpirationStart() {
         return expirationStart;
     }
 
-    public void setExpirationStart(String expirationStart) {
+    public void setExpirationStart(Date expirationStart) {
         this.expirationStart = expirationStart;
     }
 
-    public String getExpirationEnd() {
+    public Date getExpirationEnd() {
         return expirationEnd;
     }
 
-    public void setExpirationEnd(String expirationEnd) {
+    public void setExpirationEnd(Date expirationEnd) {
         this.expirationEnd = expirationEnd;
     }
 
-    public String getCreateTimeStart() {
+    public Date getCreateTimeStart() {
         return createTimeStart;
     }
 
-    public void setCreateTimeStart(String createTimeStart) {
+    public void setCreateTimeStart(Date createTimeStart) {
         this.createTimeStart = createTimeStart;
     }
 
-    public String getCreateTimeEnd() {
+    public Date getCreateTimeEnd() {
         return createTimeEnd;
     }
 
-    public void setCreateTimeEnd(String createTimeEnd) {
+    public void setCreateTimeEnd(Date createTimeEnd) {
         this.createTimeEnd = createTimeEnd;
     }
 

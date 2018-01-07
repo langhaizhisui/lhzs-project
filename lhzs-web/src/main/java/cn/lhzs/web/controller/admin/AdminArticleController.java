@@ -47,11 +47,18 @@ public class AdminArticleController {
     }
 
     @OpLog(type = ADD, descp = "增加文章")
-    @RequestMapping("/gene/article")
+    @RequestMapping("/add")
     @ResponseBody
     public ResponseResult addArticle(@RequestBody Article article) {
         Assert.notNull(article);
         return articleService.addArticle(article);
     }
 
+    @OpLog(type = DEL, descp = "删除所有文章")
+    @RequestMapping("/all/delete")
+    @ResponseBody
+    public ResponseResult deleteTable() {
+        articleService.deleteTable();
+        return generatorSuccessResult();
+    }
 }

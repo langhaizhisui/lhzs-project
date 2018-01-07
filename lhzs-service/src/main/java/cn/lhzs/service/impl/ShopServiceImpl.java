@@ -1,11 +1,12 @@
 package cn.lhzs.service.impl;
 
 import cn.lhzs.base.AbstractBaseService;
+import cn.lhzs.common.constant.ShopEnum;
+import cn.lhzs.common.util.StringUtil;
+import cn.lhzs.common.vo.ShopSearchCondition;
 import cn.lhzs.data.bean.Shop;
 import cn.lhzs.data.dao.ShopMapper;
-import cn.lhzs.common.vo.ShopSearchCondition;
 import cn.lhzs.service.intf.ShopService;
-import cn.lhzs.common.util.StringUtil;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -14,6 +15,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 import static com.github.pagehelper.PageHelper.startPage;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Created by ZHX on 2017/4/27.
@@ -34,14 +36,19 @@ public class ShopServiceImpl extends AbstractBaseService<Shop> implements ShopSe
     @Override
     public List<Shop> searchShop(ShopSearchCondition shopSearchCondition) {
         startPage(shopSearchCondition.getPage(), shopSearchCondition.getSize());
-        return findByCondition(getShopSearchExample(shopSearchCondition));
+        List<Shop> shopList = findByCondition(getShopSearchExample(shopSearchCondition));
+        shopList.forEach(shop -> {
+            shop.setSite(ShopEnum.get(shop.getSite()).getName());
+            shop.setType(ShopEnum.get(shop.getType()).getName());
+        });
+        return shopList;
     }
 
     private Example getShopSearchExample(ShopSearchCondition shopSearchCondition) {
         Example example = new Example(Shop.class);
         Example.Criteria criteria = example.createCriteria();
-        if (StringUtil.isNotEmpty(shopSearchCondition.getShopId() + "")) {
-            criteria.andEqualTo("id", shopSearchCondition.getShopId());
+        if (shopSearchCondition.getId() != null) {
+            criteria.andEqualTo("id", shopSearchCondition.getId());
         }
         if (StringUtil.isNotEmpty(shopSearchCondition.getShopName())) {
             criteria.andEqualTo("webShop", shopSearchCondition.getShopName());
@@ -52,9 +59,9 @@ public class ShopServiceImpl extends AbstractBaseService<Shop> implements ShopSe
         if (StringUtil.isNotEmpty(shopSearchCondition.getType())) {
             criteria.andEqualTo("type", shopSearchCondition.getType());
         }
-        if (shopSearchCondition.getCreateTimeStart() != null && shopSearchCondition.getCreateTimeEnd()!=null) {
-            criteria.andGreaterThanOrEqualTo("createTime",shopSearchCondition.getCreateTimeStart())
-                    .orLessThanOrEqualTo("createTime",shopSearchCondition.getCreateTimeEnd());
+        if (shopSearchCondition.getCreateTimeStart() != null && shopSearchCondition.getCreateTimeEnd() != null) {
+            criteria.andGreaterThanOrEqualTo("createTime", shopSearchCondition.getCreateTimeStart())
+                    .andLessThanOrEqualTo("createTime", shopSearchCondition.getCreateTimeEnd());
         }
         return example;
     }

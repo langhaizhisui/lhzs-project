@@ -1,6 +1,6 @@
 var app = {
     cache: [],
-    searchShopList: function (data, callback) {
+    getShopList: function (data, callback) {
         var self = this;
         self.ajax("post", "/admin/shop/search", data, callback);
     },
@@ -68,21 +68,25 @@ var app = {
         var self = this;
         self.ajax("post", "/admin/article/search", data, callback);
     },
+    allArticleDelete: function (data, callback) {
+        var self = this;
+        self.ajax("post", "/admin/article/all/delete", data, callback);
+    },
     addWebGeneralize: function (data, callback) {
         var self = this;
-        self.ajax("post", "/admin/webGeneralize/add", data, callback);
+        self.ajax("post", "/admin/web/generalize/add", data, callback);
     },
     deleteWebGeneralize: function (data, callback) {
         var self = this;
-        self.ajax("get", "/admin/webGeneralize/delete", data, callback);
+        self.ajax("get", "/admin/web/generalize/delete", data, callback);
     },
     updateWebGeneralize: function (data, callback) {
         var self = this;
-        self.ajax("post", "/admin/webGeneralize/update", data, callback);
+        self.ajax("post", "/admin/web/generalize/update", data, callback);
     },
     getWebGeneralizeDetail: function (data, callback) {
         var self = this;
-        self.ajax("get", "/admin/webGeneralize/detail", data, callback);
+        self.ajax("get", "/admin/web/generalize/detail", data, callback);
     },
     getSlideshowPictureList: function (data, callback) {
         var self = this;
@@ -91,6 +95,10 @@ var app = {
     deleteSlideshowPicture: function (data, callback) {
         var self = this;
         self.ajax("get", "/admin/config/slideshowPicture/delete", data, callback);
+    },
+    getWebGeneralize: function (data, callback) {
+        var self = this;
+        self.ajax("post", "/admin/web/generalize/search", data, callback);
     },
     login: function (data, callback) {
         var self = this;

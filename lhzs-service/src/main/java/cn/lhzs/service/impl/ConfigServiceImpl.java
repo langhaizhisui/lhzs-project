@@ -102,8 +102,12 @@ public class ConfigServiceImpl extends AbstractBaseService<Config> implements Co
 
     @Override
     public List<WebGeneralizeCondition> getWebGeneralizeList(WebGeneralizeCondition webGeneralize) {
-        return JSONObject.parseArray(getConfigById(Constants.WEB_GENERALIZE).getValue(), WebGeneralizeCondition.class).stream()
-                .filter(item->StringUtil.isNotEmpty(webGeneralize.getWebName()) && webGeneralize.getWebName().equals(item.getWebName()))
-                .collect(toList());
+        List<WebGeneralizeCondition> webGeneralizeList = JSONObject.parseArray(getConfigById(Constants.WEB_GENERALIZE).getValue(), WebGeneralizeCondition.class);
+        if (webGeneralize.getWebName() != null) {
+            webGeneralizeList = webGeneralizeList.stream()
+                    .filter(item -> StringUtil.isNotEmpty(webGeneralize.getWebName()) && webGeneralize.getWebName().equals(item.getWebName()))
+                    .collect(toList());
+        }
+        return webGeneralizeList;
     }
 }

@@ -326,6 +326,20 @@
         $(".search-btn").click(function () {
             searchInfo(1);
         });
+
+        $(".all-delete-btn").click(function () {
+            $(".load").removeClass("hidden");
+
+            var param = {};
+            app.allArticleDelete(param, function (result) {
+                $(".load").addClass("hidden");
+                if (result.code == 200) {
+                    searchInfo(1);
+                    alert("删除成功");
+                }
+            });
+        });
+
     }
 
     function getTitle(title) {

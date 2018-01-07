@@ -449,7 +449,7 @@
                 });
                 $(".prod-edit").click(function () {
                     var prodId = $(this).parent().parent().find(".prod-id").text();
-                    location.href = "/prodEnterManage.html?id=" + prodId;
+                    location.href = "/admin/prodEnterManage.html?id=" + prodId;
                 });
             }
         });
@@ -473,19 +473,19 @@
         }
         var expirationStart = $("#expiration-start-input").val();
         if (expirationStart) {
-            param.expirationStart = expirationStart;
+            param.expirationStart = expirationStart + " 00:00:00";
         }
         var expirationEnd = $("#expiration-end-input").val();
         if (expirationEnd) {
-            param.expirationEnd = expirationEnd;
+            param.expirationEnd = expirationEnd + " 23:59:59";
         }
         var createTimeStart = $("#createtime-start-input").val();
         if (createTimeStart) {
-            param.createTimeStart = createTimeStart;
+            param.createTimeStart = createTimeStart + " 00:00:00";
         }
         var createTimeEnd = $("#createtime-end-input").val();
         if (createTimeEnd) {
-            param.createTimeEnd = createTimeEnd;
+            param.createTimeEnd = createTimeEnd + " 23:59:59";
         }
         return param;
     }

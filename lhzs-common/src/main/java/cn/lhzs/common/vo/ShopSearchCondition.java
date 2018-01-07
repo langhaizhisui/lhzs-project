@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class ShopSearchCondition extends BaseCondition {
 
-    private Long shopId;
+    private Long id;
 
     private String shopName;
 
@@ -16,12 +16,12 @@ public class ShopSearchCondition extends BaseCondition {
 
     private Date createTimeEnd;
 
-    public Long getShopId() {
-        return shopId;
+    public Long getId() {
+        return id;
     }
 
-    public void setShopId(Long shopId) {
-        this.shopId = shopId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getShopName() {

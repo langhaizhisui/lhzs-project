@@ -72,6 +72,11 @@ public class ArticleServiceImpl extends AbstractBaseService<Article> implements 
         }).collect(toList());
     }
 
+    @Override
+    public void deleteTable() {
+        articleMapper.deleteTable();
+    }
+
     private String getTypeText(String type) {
         StringBuilder builder = new StringBuilder();
         Arrays.asList(type.split(",")).stream().forEach(e -> {
