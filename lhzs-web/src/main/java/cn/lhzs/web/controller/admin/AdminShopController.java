@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 import static cn.lhzs.common.aop.log.OpEnum.ADD;
 import static cn.lhzs.common.aop.log.OpEnum.DEL;
 import static cn.lhzs.common.aop.log.OpEnum.EDIT;
@@ -75,7 +77,11 @@ public class AdminShopController {
     @RequestMapping("/batch/delete")
     @ResponseBody
     public ResponseResult batchDelete(@RequestBody ShopSearchCondition shopSearchCondition) {
-        shopService.searchShop(shopSearchCondition).forEach(shop -> shopService.deleteShopByShopId(shop.getId()));
+        List<Shop> shopList = shopService.searchShop(shopSearchCondition);
+        for (int i = 0; i < shopList.size(); i++) {
+            Shop shop = shopList.get(i);
+            shopService.deleteShopByShopId(shop.getId());
+        }
         return generatorSuccessResult();
     }
 }

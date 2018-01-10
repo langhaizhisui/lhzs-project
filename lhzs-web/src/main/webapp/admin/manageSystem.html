@@ -362,18 +362,8 @@
             return;
         }
         $(".load").removeClass("hidden");
-        var param = {};
-        param.prodId = prodId;
-        param.category = category;
-        param.platform = platform;
-        param.expirationStart = expirationStart;
-        param.expirationEnd = expirationEnd;
-        param.createTimeStart = createTimeStart;
-        param.createTimeEnd = createTimeEnd;
-        param.page = 1;
-        param.size = 20;
 
-        app.batchProdDelete(param, function (result) {
+        app.batchProdDelete(getSearchProdParams(1,1000), function (result) {
             $(".load").addClass("hidden");
             if (result.code == 200) {
                 searchInfo(1);

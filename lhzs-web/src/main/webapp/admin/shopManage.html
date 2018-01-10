@@ -355,17 +355,7 @@
 
             $(".load").removeClass("hidden");
 
-            var param = {};
-            param.id = shopId;
-            param.webShop = shopName;
-            param.site = storeType;
-            param.type = shopType;
-            param.createTimeStart = createTimeStart;
-            param.createTimeEnd = createTimeEnd;
-            param.page = 1;
-            param.size = 20;
-
-            app.batchShopDelete(reqData, function (result) {
+            app.batchShopDelete(getSearchParam(1, 10000), function (result) {
                 $(".load").addClass("hidden");
                 if (result.code == 200) {
                     getShopList(1);
@@ -388,7 +378,7 @@
         });
     }
 
-    function getShopList(page) {
+    function getSearchParam(page, size) {
         var param = {};
         var shopId = $("#shop-id-input").val();
         if (shopId) {
@@ -415,9 +405,11 @@
             param.createTimeEnd = createTimeEnd + " 23:59:59";
         }
         param.page = page;
-        param.size = 20;
-
-        app.getShopList(param, function (result) {
+        param.size = size;
+        return param;
+    }
+    function getShopList(page) {
+        app.getShopList(getSearchParam(page, 20), function (result) {
             if (result.code == 200) {
                 var html = '';
                 var data = result.data.list;

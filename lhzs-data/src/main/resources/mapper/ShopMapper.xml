@@ -19,6 +19,24 @@
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
 
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into shop (web_shop, site,
+        type, sell_name, brand_name,
+        sell_prod, web_url, web_generalize,
+        mobile_url, mobile_generalize, shop_addr,
+        banner, state, create_time, update_time
+        )
+        values
+        <foreach collection="list" index="index" item="data" separator=",">
+            (#{data.webShop}, #{data.site},
+            #{data.type}, #{data.sellName}, #{data.brandName},
+            #{data.sellProd}, #{data.webUrl}, #{data.webGeneralize},
+            #{data.mobileUrl}, #{data.mobileGeneralize}, #{data.shopAddr},
+            #{data.banner},#{data.state}, #{data.createTime}, #{data.updateTime}
+            )
+        </foreach>
+    </insert>
+
     <delete id="deleteTable">
         truncate table shop
     </delete>

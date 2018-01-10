@@ -38,8 +38,12 @@ public class ShopServiceImpl extends AbstractBaseService<Shop> implements ShopSe
         startPage(shopSearchCondition.getPage(), shopSearchCondition.getSize());
         List<Shop> shopList = findByCondition(getShopSearchExample(shopSearchCondition));
         shopList.forEach(shop -> {
-            shop.setSite(ShopEnum.get(shop.getSite()).getName());
-            shop.setType(ShopEnum.get(shop.getType()).getName());
+            if(StringUtil.isNotEmpty(shop.getSite())){
+                shop.setSite(ShopEnum.get(shop.getSite()).getName());
+            }
+            if(StringUtil.isNotEmpty(shop.getType())){
+                shop.setType(ShopEnum.get(shop.getType()).getName());
+            }
         });
         return shopList;
     }
