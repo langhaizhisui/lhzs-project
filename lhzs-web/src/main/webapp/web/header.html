@@ -34,24 +34,67 @@
         getArticleList(1, title);
     }
 
-    function searchProduct() {
-        var key = $(".search-input").val();
-
-        var reqData = {};
+    function searchProd(key) {
         var param = {};
-        param.key = key;
-        reqData.reqData = param;
+        param.page = 1;
+        param.size = 500;
+        param.name = key;
         $.ajax({
             type: 'post',
-            url: "prod/search",
+            url: "/search/product",
             dataType: 'json',
             contentType: "application/json",
-            data: JSON.stringify(reqData),
+            data: JSON.stringify(param),
+            success: function (result) {
+                if (result.code == 200) {
+                    var prodList = result.data.list;
+                    var html = "";
+                    $(".hot-prod-text").text("商品");
+                    $(".hot-prod-next").css("display", "none");
+                    $(".hot-prod").css("display", "block");
+                    for (var i = 0; i < prodList.length; i++) {
+                        var product = prodList[i];
+                        html += '<div class="moldbaby-subject" index="' + i + '">' +
+                            '<div class="moldbaby-subject-img">' +
+                            '<img src="' + product.banner + '">' +
+                            '</div>' +
+                            '<div class="moldbaby-subject-title">' + product.name + '</div>' +
+                            '<div class="clearfix">' +
+                            '<div class="curr-price">现价:¥' + product.discountPrice + '</div>' +
+                            '<div class="other-price">' +
+                            '<div>原价:¥' + product.price + '</div>' +
+                            '<div>立省:¥' + (product.price - product.discountPrice).toFixed(2) + '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="go-shop">去购物</div>' +
+                            '</div>';
+                    }
+                    $("#moldbaby").html(html);
+
+                    $(".moldbaby-subject").click(function () {
+                        var index = $(this).attr("index");
+                        window.open("productDetail.html?prodId=" + prodList[index].prodId);
+                    });
+                }
+            }
+        });
+    }
+
+    function searchShop(key) {
+        var param = {};
+        param.page = 1;
+        param.size = 10;
+        param.shopName = key;
+        $.ajax({
+            type: 'post',
+            url: "/search/shop",
+            dataType: 'json',
+            contentType: "application/json",
+            data: JSON.stringify(param),
             success: function (result) {
                 if (result.code == 200) {
                     var html = '';
-                    var shopList = result.data.shopList.list;
-                    var prodList = result.data.prodList.list;
+                    var shopList = result.data.list;
                     $(".ad").css("display", "none");
                     $("#dataArea").css("display", "none")
                     if (shopList.length == 0) {
@@ -86,37 +129,14 @@
                             window.open("shopDetail.html?shopId=" + shopList[index].id + "&shopImg=" + getShopId(shopList[index].type));
                         });
                     }
-
-                    html = "";
-                    $(".hot-prod-text").text("商品");
-                    $(".hot-prod-next").css("display", "none");
-                    $(".hot-prod").css("display", "block");
-                    for (var i = 0; i < prodList.length; i++) {
-                        var product = prodList[i];
-                        html += '<div class="moldbaby-subject" index="' + i + '">' +
-                            '<div class="moldbaby-subject-img">' +
-                            '<img src="' + product.banner + '">' +
-                            '</div>' +
-                            '<div class="moldbaby-subject-title">' + product.name + '</div>' +
-                            '<div class="clearfix">' +
-                            '<div class="curr-price">现价:¥' + product.discountPrice + '</div>' +
-                            '<div class="other-price">' +
-                            '<div>原价:¥' + product.price + '</div>' +
-                            '<div>立省:¥' + (product.price - product.discountPrice).toFixed(2) + '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '<div class="go-shop">去购物</div>' +
-                            '</div>';
-                    }
-                    $("#moldbaby").html(html);
-
-                    $(".moldbaby-subject").click(function () {
-                        var index = $(this).attr("index");
-                        window.open("productDetail.html?prodId=" + prodList[index].prodId);
-                    });
                 }
             }
         });
+    }
+    function searchProduct() {
+        var key = $(".search-input").val();
+        searchProd(key);
+        searchShop(key);
     }
 
 </script>

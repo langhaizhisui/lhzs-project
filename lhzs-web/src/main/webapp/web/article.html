@@ -313,7 +313,7 @@
             var html = "";
             if (result.code == 200) {
                 var data = result.data.list;
-                $(".article-count-num").text(data.pageSize);
+                $(".article-count-num").text(result.data.pageSize);
                 for (var i = 0; i < data.length; i++) {
                     var item = data[i];
                     html += '<div class="article-item" onclick="articleDetail(' + item.id + ')">' +

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 
 import static cn.lhzs.common.aop.log.OpEnum.ADD;
 import static cn.lhzs.common.result.ResponseResultGenerator.generatorFailResult;
@@ -66,6 +67,7 @@ public class AdminUploadController {
             slideShowPicture.setUrl("/slideShowPicture/" + pictureName);
             slideShowPicture.setToUrl(toUrl);
             slideShowPicture.setWeight(1);
+            slideShowPicture.setCreateTime(new Date());
             uploadService.saveImageInfo(slideShowPicture);
             return generatorSuccessResult();
         } catch (IOException e) {

@@ -23,15 +23,15 @@ public class SearchController {
     @Autowired
     private SearchService searchService;
 
-    @RequestMapping("product")
+    @RequestMapping("/product")
     @ResponseBody
     public ResponseResult searchProductList(@RequestBody ProductSearchCondition productSearchCondition) {
         return generatorSuccessResult(new PageInfo(searchService.searchProductList(productSearchCondition)));
     }
 
-    @RequestMapping("shop")
+    @RequestMapping("/shop")
     @ResponseBody
-        public ResponseResult searchShopList(@RequestBody ShopSearchCondition shopSearchCondition) {
+    public ResponseResult searchShopList(@RequestBody ShopSearchCondition shopSearchCondition) {
         return generatorSuccessResult(new PageInfo(searchService.searchShopList(shopSearchCondition)));
     }
 }

@@ -39,4 +39,10 @@ public class ShopController {
         return generatorSuccessResult(shopService.getShopList(shop));
     }
 
+    @RequestMapping("/search")
+    @ResponseBody
+    public ResponseResult getShopList(@RequestBody ShopSearchCondition shopSearchCondition){
+        return generatorSuccessResult(new PageInfo(shopService.searchShop(shopSearchCondition)));
+    }
+
 }
