@@ -3,6 +3,7 @@ package cn.lhzs.web.controller;
 import cn.lhzs.data.bean.Shop;
 import cn.lhzs.common.vo.ShopSearchCondition;
 import cn.lhzs.common.result.ResponseResult;
+import cn.lhzs.service.intf.SearchService;
 import cn.lhzs.service.intf.ShopService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +24,13 @@ public class ShopController {
     @Autowired
     public ShopService shopService;
 
+    @Autowired
+    public SearchService searchService;
+
     @RequestMapping("/getShop")
     @ResponseBody
     public ResponseResult getShop(Long shopId) {
         return generatorSuccessResult(shopService.getShopByShopId(shopId));
-    }
-
-    @RequestMapping("/search")
-    @ResponseBody
-    public ResponseResult searchShop(@RequestBody ShopSearchCondition shopSearchCondition) {
-        return generatorSuccessResult(new PageInfo(shopService.searchShop(shopSearchCondition)));
     }
 
     @RequestMapping("/getSiteList")

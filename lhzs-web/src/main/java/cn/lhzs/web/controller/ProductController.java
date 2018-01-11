@@ -1,8 +1,9 @@
 package cn.lhzs.web.controller;
 
-import cn.lhzs.common.vo.ProductSearchCondition;
 import cn.lhzs.common.result.ResponseResult;
+import cn.lhzs.common.vo.ProductSearchCondition;
 import cn.lhzs.service.intf.ProductService;
+import cn.lhzs.service.intf.SearchService;
 import cn.lhzs.service.intf.ShopService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class ProductController {
     @Autowired
     public ShopService shopService;
 
+    @Autowired
+    public SearchService searchService;
+
     @RequestMapping(value = "/getProduct", method = RequestMethod.GET)
     @ResponseBody
     public ResponseResult getProduct(Long prodId) {
@@ -37,12 +41,6 @@ public class ProductController {
     @ResponseBody
     public ResponseResult getProductList(@RequestBody ProductSearchCondition productSearchCondition) {
         return generatorSuccessResult(new PageInfo(productService.getProdList(productSearchCondition)));
-    }
-
-    @RequestMapping("/search")
-    @ResponseBody
-    public ResponseResult search(@RequestBody ProductSearchCondition productSearchCondition) {
-        return generatorSuccessResult(new PageInfo(productService.searchProduct(productSearchCondition)));
     }
 
 }

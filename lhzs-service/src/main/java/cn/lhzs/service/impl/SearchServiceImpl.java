@@ -1,5 +1,7 @@
 package cn.lhzs.service.impl;
 
+import cn.lhzs.common.vo.ProductSearchCondition;
+import cn.lhzs.common.vo.ShopSearchCondition;
 import cn.lhzs.data.bean.Product;
 import cn.lhzs.service.intf.SearchService;
 import cn.lhzs.common.util.JestUtil;
@@ -12,8 +14,6 @@ import io.searchbox.core.Search;
 import io.searchbox.indices.CreateIndex;
 import io.searchbox.indices.DeleteIndex;
 import org.apache.log4j.Logger;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,9 +47,11 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public List<Product> searchProductList(String param) {
+    public List<Product> searchProductList(ProductSearchCondition condition) {
         try {
-            JestResult result = getJestResult("name", param, "products", "prod");
+            int from = (condition.getPage() - 1) * condition.getSize();
+            String param = "{\"query\":{\"filtered\":{\"query\":{\"multi_match\":{\"query\":\"" + condition.getName() + "\",\"type\":\"best_fields\",\"minimum_should_match\":\"80%\",\"fields\":[\"name\"]}}}},\"highlight\":{\"pre_tags\":[\"<font color='red'>\"],\"post_tags\":[\"</font>\"],\"fields\":{\"name\":{}}},\"sort\":[],\"from\":" + from + ",\"size\":" + condition.getSize() + "}";
+            JestResult result = getJestResult(param, "products", "prod");
             return result.getSourceAsObjectList(Product.class);
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,9 +60,11 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public List<Product> searchShopList(String param) {
+    public List<Product> searchShopList(ShopSearchCondition condition) {
         try {
-            JestResult result = getJestResult("webShop", param, "shops", "shop");
+            int from = (condition.getPage() - 1) * condition.getSize();
+            String param = "{\"query\":{\"filtered\":{\"query\":{\"multi_match\":{\"query\":\"" + condition.getShopName() + "\",\"type\":\"best_fields\",\"minimum_should_match\":\"80%\",\"fields\":[\"webShop\"]}}}},\"highlight\":{\"pre_tags\":[\"<font color='red'>\"],\"post_tags\":[\"</font>\"],\"fields\":{\"name\":{}}},\"sort\":[],\"from\":" + from + ",\"size\":" + condition.getSize() + "}";
+            JestResult result = getJestResult(param, "shops", "shop");
             return result.getSourceAsObjectList(Product.class);
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,9 +72,8 @@ public class SearchServiceImpl implements SearchService {
         return null;
     }
 
-    private JestResult getJestResult(String field, String param, String index, String type) throws Exception {
-        QueryBuilder queryBuilder = QueryBuilders.fieldQuery(field, param);
-        Search search = new Search(Search.createQueryWithBuilder(queryBuilder.toString()));
+    private JestResult getJestResult(String query, String index, String type) throws Exception {
+        Search search = new Search(query);
         if (StringUtil.isNotEmpty(index)) {
             search.addIndex(index);
         }

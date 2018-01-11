@@ -1,9 +1,10 @@
 package cn.lhzs.web.controller;
 
-import cn.lhzs.data.bean.Product;
-import cn.lhzs.data.bean.Shop;
 import cn.lhzs.common.result.ResponseResult;
+import cn.lhzs.common.vo.ProductSearchCondition;
+import cn.lhzs.common.vo.ShopSearchCondition;
 import cn.lhzs.service.intf.SearchService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,13 +25,13 @@ public class SearchController {
 
     @RequestMapping("product")
     @ResponseBody
-    public ResponseResult searchProductList(@RequestBody Product product) {
-        return generatorSuccessResult(searchService.searchProductList(product.getName()));
+    public ResponseResult searchProductList(@RequestBody ProductSearchCondition productSearchCondition) {
+        return generatorSuccessResult(new PageInfo(searchService.searchProductList(productSearchCondition)));
     }
 
     @RequestMapping("shop")
     @ResponseBody
-    public ResponseResult searchShopList(@RequestBody Shop shop) {
-        return generatorSuccessResult(searchService.searchShopList(shop.getWebShop()));
+        public ResponseResult searchShopList(@RequestBody ShopSearchCondition shopSearchCondition) {
+        return generatorSuccessResult(new PageInfo(searchService.searchShopList(shopSearchCondition)));
     }
 }

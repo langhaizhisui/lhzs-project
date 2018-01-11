@@ -1,5 +1,7 @@
 package cn.lhzs.service.intf;
 
+import cn.lhzs.common.vo.ProductSearchCondition;
+import cn.lhzs.common.vo.ShopSearchCondition;
 import cn.lhzs.data.bean.Product;
 
 import java.util.List;
@@ -11,7 +13,7 @@ public interface SearchService {
 
     <T> void builderSearchIndex(List<T> list,String index, String type);
 
-    List<Product> searchProductList(String param);
+    List<Product> searchProductList(ProductSearchCondition product);
 
-    List<Product> searchShopList(String param);
+    List<Product> searchShopList(ShopSearchCondition shop);
 }

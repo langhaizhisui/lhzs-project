@@ -6,6 +6,8 @@ public class ProductSearchCondition extends BaseCondition {
 
     private Long prodId;
 
+    private String name;
+
     private String category;
 
     private String platform;
@@ -24,6 +26,14 @@ public class ProductSearchCondition extends BaseCondition {
 
     public void setProdId(Long prodId) {
         this.prodId = prodId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCategory() {
