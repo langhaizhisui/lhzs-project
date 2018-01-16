@@ -31,14 +31,14 @@ public class AdminSearchController {
     @Autowired
     private JestThreadPool jestThreadPool;
 
-    @RequestMapping("build/products/index")
+    @RequestMapping("/build/products/index")
     @ResponseBody
     public ResponseResult buildProductsSearchIndex() {
         jestThreadPool.addTask(() -> searchService.builderSearchIndex(productService.getAllProduct(), "products", "prod"));
         return generatorSuccessResult();
     }
 
-    @RequestMapping("build/shops/index")
+    @RequestMapping("/build/shops/index")
     @ResponseBody
     public ResponseResult buildShopsSearchIndex() {
         jestThreadPool.addTask(() -> searchService.builderSearchIndex(shopService.getAllShop(), "shops", "shop"));

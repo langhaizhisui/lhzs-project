@@ -1,6 +1,8 @@
 package cn.lhzs.web.controller.admin;
 
 import cn.lhzs.common.aop.log.OpLog;
+import cn.lhzs.common.constant.ShopEnum;
+import cn.lhzs.common.util.StringUtil;
 import cn.lhzs.data.bean.Shop;
 import cn.lhzs.common.vo.ShopSearchCondition;
 import cn.lhzs.common.result.ResponseResult;
@@ -62,7 +64,16 @@ public class AdminShopController {
     @RequestMapping("/search")
     @ResponseBody
     public ResponseResult searchShop(@RequestBody ShopSearchCondition shopSearchCondition) {
-        return generatorSuccessResult(new PageInfo(shopService.searchShop(shopSearchCondition)));
+        List<Shop> shopList = shopService.searchShop(shopSearchCondition);
+        shopList.forEach(shop -> {
+            if(StringUtil.isNotEmpty(shop.getSite())){
+                shop.setSite(ShopEnum.get(shop.getSite()).getName());
+            }
+            if(StringUtil.isNotEmpty(shop.getType())){
+                shop.setType(ShopEnum.get(shop.getType()).getName());
+            }
+        });
+        return generatorSuccessResult(new PageInfo(shopList));
     }
 
     @OpLog(type = DEL, descp = "删除所有店铺")

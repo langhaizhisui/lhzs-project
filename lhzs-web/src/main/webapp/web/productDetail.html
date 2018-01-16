@@ -73,7 +73,7 @@
     }
 
     function getProductDetail() {
-        var param = {"prodId": prodId};
+        var param = {"id": prodId};
         app.getProductDetail(param, function (result) {
             if (result.code == 200) {
                 var data = result.data;
@@ -106,7 +106,7 @@
     }
     function getGeneralizeProduct() {
         var param = {};
-        param.page = 1;
+        param.page = parseInt(Math.random()*20);
         param.size = 2;
         app.getGeneralizeProduct(param, function (result) {
             if (result.code == 200) {
@@ -125,14 +125,14 @@
 
                 $(".prod-generalize-item").click(function () {
                     var index = $(this).attr("index");
-                    location.href = "/web/productDetail.html?prodId=" + data[index].prodId;
+                    location.href = "/web/productDetail.html?prodId=" + data[index].id;
                 });
             }
         });
     }
     function getProduct() {
         var param = {};
-        param.page = 1;
+        param.page = parseInt(Math.random()*10);
         param.size = 20;
         app.getProductList(param, function (result) {
             if (result.code == 200) {
@@ -159,7 +159,7 @@
 
                 $(".moldbaby-subject").click(function () {
                     var index = $(this).attr("index");
-                    location.href = "/web/productDetail.html?prodId=" + data[index].prodId;
+                    location.href = "/web/productDetail.html?prodId=" + data[index].id;
                 });
             }
         });

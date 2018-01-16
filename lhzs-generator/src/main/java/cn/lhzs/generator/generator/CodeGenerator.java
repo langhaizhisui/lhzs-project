@@ -20,7 +20,7 @@ import static cn.lhzs.generator.generator.ProjectConstant.*;
  */
 public class CodeGenerator {
     //JDBC配置，请修改为你项目的实际配置
-    private static final String JDBC_URL = "jdbc:mysql://119.23.54.39:3306/discount_coupon2";
+    private static final String JDBC_URL = "jdbc:mysql://119.23.54.39:3306/discount_coupon3";
     private static final String JDBC_USERNAME = "root";
     private static final String JDBC_PASSWORD = "biibuy66";
     private static final String JDBC_DIVER_CLASS_NAME = "com.mysql.jdbc.Driver";

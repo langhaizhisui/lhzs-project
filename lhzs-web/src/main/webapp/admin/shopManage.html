@@ -216,8 +216,8 @@
             margin-bottom: 20px;
         }
 
-        .search-btn, .more-delete-btn, .all-delete-btn {
-            width: 59px;
+        .search-btn, .more-delete-btn, .all-delete-btn, .sysn-btn {
+            width: 100px;
             height: 22px;
             border: 1px solid #ccc;
             background-color: #ececec;
@@ -286,6 +286,7 @@
                     <span class="search-btn">查询</span>
                     <span class="more-delete-btn">批量删除</span>
                     <span class="all-delete-btn">全部删除</span>
+                    <span class="sysn-btn">同步到搜索引擎</span>
                 </div>
             </div>
 
@@ -338,6 +339,15 @@
 
         $(".search-btn").click(function () {
             getShopList(1);
+        });
+
+        $(".sysn-btn").click(function () {
+            var param={};
+            app.sysnShop(param,function (result) {
+                if (result.code == 200) {
+                    alert("同步成功");
+                }
+            });
         });
 
         $(".more-delete-btn").click(function () {

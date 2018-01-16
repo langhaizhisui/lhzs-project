@@ -73,7 +73,7 @@
 
                     $(".moldbaby-subject").click(function () {
                         var index = $(this).attr("index");
-                        window.open("productDetail.html?prodId=" + prodList[index].prodId);
+                        window.open("/web/productDetail.html?prodId=" + prodList[index].id);
                     });
                 }
             }
@@ -83,7 +83,7 @@
     function searchShop(key) {
         var param = {};
         param.page = 1;
-        param.size = 10;
+        param.size = 12;
         param.shopName = key;
         $.ajax({
             type: 'post',
@@ -126,7 +126,7 @@
 
                         $(".shop").click(function () {
                             var index = $(this).attr("index");
-                            window.open("shopDetail.html?shopId=" + shopList[index].id + "&shopImg=" + getShopId(shopList[index].type));
+                            window.open("/web/shopDetail.html?shopId=" + shopList[index].id + "&shopImg=" + getShopId(shopList[index].type));
                         });
                     }
                 }

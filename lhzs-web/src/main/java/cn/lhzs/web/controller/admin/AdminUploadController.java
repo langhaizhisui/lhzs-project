@@ -60,18 +60,30 @@ public class AdminUploadController {
         try {
             String slideShowPicturePath = request.getSession().getServletContext().getRealPath("/slideShowPicture");
             String fileName = file.getOriginalFilename();
-            String pictureName = DateUtil.getNowTimeStampStr() + fileName.substring(fileName.indexOf('.'));
+            String pictureName = "/slideShowPicture/" + DateUtil.getNowTimeStampStr() + fileName.substring(fileName.indexOf('.'));
             file.transferTo(new File(slideShowPicturePath, pictureName));
-
-            SlideShowPicture slideShowPicture = new SlideShowPicture();
-            slideShowPicture.setUrl("/slideShowPicture/" + pictureName);
-            slideShowPicture.setToUrl(toUrl);
-            slideShowPicture.setWeight(1);
-            slideShowPicture.setCreateTime(new Date());
-            uploadService.saveImageInfo(slideShowPicture);
+            addOrUpdateSlideShowPicture(toUrl, pictureName);
             return generatorSuccessResult();
         } catch (IOException e) {
             return generatorFailResult("上传失败");
         }
+    }
+
+    @RequestMapping("/slideShowPicture2url")
+    @ResponseBody
+    public ResponseResult saveSlideShowPicture(@RequestParam(value = "pictureUrl") String pictureUrl,
+                                               @RequestParam(value = "toUrl") String toUrl) {
+
+        addOrUpdateSlideShowPicture(toUrl, pictureUrl);
+        return generatorSuccessResult();
+    }
+
+    private void addOrUpdateSlideShowPicture(String toUrl, String url) {
+        SlideShowPicture slideShowPicture = new SlideShowPicture();
+        slideShowPicture.setUrl(url);
+        slideShowPicture.setToUrl(toUrl);
+        slideShowPicture.setWeight(1);
+        slideShowPicture.setCreateTime(new Date());
+        uploadService.saveImageInfo(slideShowPicture);
     }
 }

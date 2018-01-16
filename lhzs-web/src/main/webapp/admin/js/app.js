@@ -96,6 +96,11 @@ var app = {
         var self = this;
         self.ajax("get", "/admin/config/slideshowPicture/delete", data, callback);
     },
+    addSlideShowPicture2url: function (data, callback) {
+        var self = this;
+        self.ajax("get", "/admin/upload/slideShowPicture2url", data, callback);
+    },
+
     getWebGeneralize: function (data, callback) {
         var self = this;
         self.ajax("post", "/admin/web/generalize/search", data, callback);
@@ -107,6 +112,14 @@ var app = {
     getMenu: function (data, callback) {
         var self = this;
         self.ajax("post", "/admin/user/menu", data, callback);
+    },
+    sysnShop:function (data, callback) {
+        var self = this;
+        self.ajax("get", "/admin/search/build/shops/index", data, callback);
+    },
+    sysnProduct:function (data, callback) {
+        var self = this;
+        self.ajax("get", "/admin/search/build/products/index", data, callback);
     },
     "ajax": function (type, url, data, callback) {
         var self = this;

@@ -113,10 +113,6 @@
             font-size: 14px;
         }
 
-        .batch-form {
-            float: left;
-        }
-
         .batch-type {
             float: left;
             font-size: 14px;
@@ -189,11 +185,15 @@
                             </form>
                         </div>
                     </div>
+                    <div style="margin-top: 20px;">
+                        <div class="batch-form-title">图片链接：</div>
+                        <div><input placeholder="http://biibuy.com/picture.png" id="pictureUrl"></div>
+                    </div>
                     <div class="clearfix" style="padding-top: 20px;">
                         <div class="batch-form-title">跳转页面：</div>
                         <div><input placeholder="http://biibuy.com" id="htmlUrl"></div>
-                        <div class="submit-btn">上传</div>
                     </div>
+                    <div class="submit-btn">上传</div>
                 </div>
             </div>
         </div>
@@ -227,19 +227,34 @@
                 alert("请输入页面跳转链接");
                 return;
             }
-            $("#toUrl").val(htmlUrl);
-            var opt = {
-                success: function (result) {
+            var pictureUrl = $("#pictureUrl").val();
+            if (pictureUrl) {
+                var param = {};
+                param.pictureUrl = pictureUrl;
+                param.toUrl = htmlUrl;
+                app.addSlideShowPicture2url(param, function (result) {
                     $(".load").addClass("hidden");
                     if (result.code == 200) {
                         alert("上传成功");
                     } else {
                         alert("上传失败");
                     }
-                }
-            };
+                });
+            } else {
+                $("#toUrl").val(htmlUrl);
+                var opt = {
+                    success: function (result) {
+                        $(".load").addClass("hidden");
+                        if (result.code == 200) {
+                            alert("上传成功");
+                        } else {
+                            alert("上传失败");
+                        }
+                    }
+                };
 
-            $("#sendFile").ajaxSubmit(opt);
+                $("#sendFile").ajaxSubmit(opt);
+            }
         });
     }
 </script>

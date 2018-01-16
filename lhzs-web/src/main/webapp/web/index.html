@@ -95,7 +95,7 @@
 
                 for (var i = 0; i < data.length; i++) {
                     var item = data[i];
-                    html += '<div class="swiper-slide"><a href="' + item.toUrl + '" target="_blank"><img src="http://biibuy.com' + item.url + '"/></div></a>';
+                    html += '<div class="swiper-slide"><a href="' + item.toUrl + '" target="_blank"><img src="' + getToUrl(item.url) + '"/></div></a>';
                 }
 
                 $(".sliderShowPicture").html(html);
@@ -140,6 +140,14 @@
         });
     }
 
+    function getToUrl(url) {
+        if (url.indexOf("/") == 0) {
+            return "http://biibuy.com" + url;
+        } else {
+            return url;
+        }
+    }
+
     var hotProductPage = Math.ceil(Math.random() * 10);
     function getProduct() {
         var param = {};
@@ -172,7 +180,7 @@
 
                 $(".moldbaby-subject").click(function () {
                     var index = $(this).attr("index");
-                    window.open("productDetail.html?prodId=" + data[index].prodId);
+                    window.open("/web/productDetail.html?prodId=" + data[index].id);
                 });
             }
             if (data.length == 0 || data.length < param.pageSize) {
@@ -194,7 +202,7 @@
                 for (var i = 0; i < data.length; i++) {
                     var item = data[i];
                     html += '<li>' +
-                        '<a href="/web/articleDetail.html?id='+item.id+'" target="_blank">'+getArticleTitle(item.title)+'</a>' +
+                        '<a href="/web/articleDetail.html?id=' + item.id + '" target="_blank">' + getArticleTitle(item.title) + '</a>' +
                         '</li>';
                 }
                 $(".advUl").html(html);

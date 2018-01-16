@@ -3,6 +3,7 @@ package cn.lhzs.service.intf;
 import cn.lhzs.common.vo.ProductSearchCondition;
 import cn.lhzs.common.vo.ShopSearchCondition;
 import cn.lhzs.data.bean.Product;
+import cn.lhzs.data.bean.Shop;
 
 import java.util.List;
 
@@ -15,5 +16,5 @@ public interface SearchService {
 
     List<Product> searchProductList(ProductSearchCondition product);
 
-    List<Product> searchShopList(ShopSearchCondition shop);
+    List<Shop> searchShopList(ShopSearchCondition shop);
 }

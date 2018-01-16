@@ -33,8 +33,8 @@ public class ProductController {
 
     @RequestMapping(value = "/getProduct", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseResult getProduct(Long prodId) {
-        return generatorSuccessResult(productService.getProductByProdId(prodId));
+    public ResponseResult getProduct(Long id) {
+        return generatorSuccessResult(productService.getProductByProdId(id));
     }
 
     @RequestMapping(value = "/getList")

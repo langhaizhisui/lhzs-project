@@ -3,6 +3,7 @@ package cn.lhzs.service.impl;
 import cn.lhzs.common.vo.ProductSearchCondition;
 import cn.lhzs.common.vo.ShopSearchCondition;
 import cn.lhzs.data.bean.Product;
+import cn.lhzs.data.bean.Shop;
 import cn.lhzs.service.intf.SearchService;
 import cn.lhzs.common.util.JestUtil;
 import cn.lhzs.common.util.StringUtil;
@@ -60,12 +61,12 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public List<Product> searchShopList(ShopSearchCondition condition) {
+    public List<Shop> searchShopList(ShopSearchCondition condition) {
         try {
             int from = (condition.getPage() - 1) * condition.getSize();
             String param = "{\"query\":{\"filtered\":{\"query\":{\"multi_match\":{\"query\":\"" + condition.getShopName() + "\",\"type\":\"best_fields\",\"minimum_should_match\":\"80%\",\"fields\":[\"webShop\"]}}}},\"highlight\":{\"pre_tags\":[\"<font color='red'>\"],\"post_tags\":[\"</font>\"],\"fields\":{\"name\":{}}},\"sort\":[],\"from\":" + from + ",\"size\":" + condition.getSize() + "}";
             JestResult result = getJestResult(param, "shops", "shop");
-            return result.getSourceAsObjectList(Product.class);
+            return result.getSourceAsObjectList(Shop.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

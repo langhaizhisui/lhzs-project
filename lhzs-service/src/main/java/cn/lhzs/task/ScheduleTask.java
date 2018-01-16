@@ -31,7 +31,7 @@ public class ScheduleTask {
         productService.timerDeleteTask(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
     }
 
-    @Scheduled(cron = "0 0 2 * * ? ")
+    @Scheduled(cron = "0 0 3 * * ? ")
     public void timerUpdateJestIndex() {
         jestThreadPool.addTask(() -> searchService.builderSearchIndex(productService.getAllProduct(), "products", "prod"));
         jestThreadPool.addTask(() -> searchService.builderSearchIndex(shopService.getAllShop(), "shops", "shop"));

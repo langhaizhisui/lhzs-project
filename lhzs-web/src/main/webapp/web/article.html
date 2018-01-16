@@ -495,7 +495,7 @@
 
                 $(".prod-generalize-item").click(function () {
                     var index = $(this).attr("index");
-                    location.href = "/web/productDetail.html?prodId=" + data[index].prodId;
+                    location.href = "/web/productDetail.html?prodId=" + data[index].id;
                 });
             }
         });
@@ -508,7 +508,7 @@
         app.getProductList(param, function (result) {
             if (result.code == 200) {
                 var html = '';
-                var data = result.data.prodList;
+                var data = result.data.list;
                 for (var i = 0; i < data.length; i++) {
                     var product = data[i];
                     html += '<div class="moldbaby-subject" index="' + i + '">' +
@@ -530,7 +530,7 @@
 
                 $(".moldbaby-subject").click(function () {
                     var index = $(this).attr("index");
-                    location.href = "/web/productDetail.html?prodId=" + data[index].prodId;
+                    location.href = "/web/productDetail.html?prodId=" + data[index].id;
                 });
             }
         });
