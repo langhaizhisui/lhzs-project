@@ -12,6 +12,7 @@ public enum ShopEnum {
     SITE_DDW("5","当当网"),
     SITE_GMZX("6","国美在线"),
     SITE_TBD("7","淘宝店"),
+    SITE_GFSC("8","官方商城"),
 
     TYPE_QJD("G","旗舰店"),
     TYPE_ZYD("W","自营店"),

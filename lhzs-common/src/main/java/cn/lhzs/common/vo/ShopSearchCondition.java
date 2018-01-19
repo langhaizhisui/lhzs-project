@@ -1,7 +1,5 @@
 package cn.lhzs.common.vo;
 
-import java.util.Date;
-
 public class ShopSearchCondition extends BaseCondition {
 
     private Long id;
@@ -12,9 +10,9 @@ public class ShopSearchCondition extends BaseCondition {
 
     private String type;
 
-    private Date createTimeStart;
+    private String createTimeStart;
 
-    private Date createTimeEnd;
+    private String createTimeEnd;
 
     public Long getId() {
         return id;
@@ -48,19 +46,19 @@ public class ShopSearchCondition extends BaseCondition {
         this.type = type;
     }
 
-    public Date getCreateTimeStart() {
+    public String getCreateTimeStart() {
         return createTimeStart;
     }
 
-    public void setCreateTimeStart(Date createTimeStart) {
+    public void setCreateTimeStart(String createTimeStart) {
         this.createTimeStart = createTimeStart;
     }
 
-    public Date getCreateTimeEnd() {
+    public String getCreateTimeEnd() {
         return createTimeEnd;
     }
 
-    public void setCreateTimeEnd(Date createTimeEnd) {
+    public void setCreateTimeEnd(String createTimeEnd) {
         this.createTimeEnd = createTimeEnd;
     }
 }

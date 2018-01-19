@@ -1,7 +1,5 @@
 package cn.lhzs.common.vo;
 
-import java.util.Date;
-
 public class ProductSearchCondition extends BaseCondition {
 
     private Long prodId;
@@ -12,13 +10,13 @@ public class ProductSearchCondition extends BaseCondition {
 
     private String platform;
 
-    private Date expirationStart;
+    private String expirationStart;
 
-    private Date expirationEnd;
+    private String expirationEnd;
 
-    private Date createTimeStart;
+    private String createTimeStart;
 
-    private Date createTimeEnd;
+    private String createTimeEnd;
 
     public Long getProdId() {
         return prodId;
@@ -52,35 +50,35 @@ public class ProductSearchCondition extends BaseCondition {
         this.platform = platform;
     }
 
-    public Date getExpirationStart() {
+    public String getExpirationStart() {
         return expirationStart;
     }
 
-    public void setExpirationStart(Date expirationStart) {
+    public void setExpirationStart(String expirationStart) {
         this.expirationStart = expirationStart;
     }
 
-    public Date getExpirationEnd() {
+    public String getExpirationEnd() {
         return expirationEnd;
     }
 
-    public void setExpirationEnd(Date expirationEnd) {
+    public void setExpirationEnd(String expirationEnd) {
         this.expirationEnd = expirationEnd;
     }
 
-    public Date getCreateTimeStart() {
+    public String getCreateTimeStart() {
         return createTimeStart;
     }
 
-    public void setCreateTimeStart(Date createTimeStart) {
+    public void setCreateTimeStart(String createTimeStart) {
         this.createTimeStart = createTimeStart;
     }
 
-    public Date getCreateTimeEnd() {
+    public String getCreateTimeEnd() {
         return createTimeEnd;
     }
 
-    public void setCreateTimeEnd(Date createTimeEnd) {
+    public void setCreateTimeEnd(String createTimeEnd) {
         this.createTimeEnd = createTimeEnd;
     }
 
