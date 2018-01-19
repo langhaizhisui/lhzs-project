@@ -58,7 +58,7 @@ public class AdminUploadController {
                                                @RequestParam(value = "toUrl") String toUrl,
                                                HttpServletRequest request) {
         try {
-            String slideShowPicturePath = request.getSession().getServletContext().getRealPath("/slideShowPicture");
+            String slideShowPicturePath = request.getSession().getServletContext().getRealPath("/");
             String fileName = file.getOriginalFilename();
             String pictureName = "/slideShowPicture/" + DateUtil.getNowTimeStampStr() + fileName.substring(fileName.indexOf('.'));
             file.transferTo(new File(slideShowPicturePath, pictureName));
