@@ -33,7 +33,7 @@ public class SearchServiceImpl implements SearchService {
     public <T> void builderSearchIndex(List<T> list, String index, String type) {
         try {
             DeleteIndex deleteIndex = new DeleteIndex(index);
-            jestClient.equals(deleteIndex);
+            jestClient.execute(deleteIndex);
             CreateIndex createIndex = new CreateIndex(index);
             jestClient.execute(createIndex);
             Bulk bulk = new Bulk(index, type);
