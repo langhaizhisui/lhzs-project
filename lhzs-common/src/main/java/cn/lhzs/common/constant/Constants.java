@@ -44,4 +44,9 @@ public interface Constants {
      */
     String UTF8 = "utf-8";
 
+    /**
+     * 微信公众号信息
+     */
+    String WECHAT_INFO = "10002";
+
 }

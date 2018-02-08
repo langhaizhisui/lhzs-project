@@ -1,8 +1,11 @@
 package cn.lhzs.common.util;
 
 import java.io.BufferedReader;
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -160,5 +163,21 @@ public final class WebUtil {
             ip = inet.getHostAddress();
         }
         return ip;
+    }
+
+    public static Map<String, String> getAllRequestParam(final HttpServletRequest request,String encoding) throws UnsupportedEncodingException {
+        request.setCharacterEncoding(encoding);
+        Map<String, String> res = new HashMap<String, String>();
+        Enumeration<?> temp = request.getParameterNames();
+        if (null != temp) {
+            while (temp.hasMoreElements()) {
+                String key = (String) temp.nextElement();
+                String value = request.getParameter(key);
+                if (StringUtil.isNotEmpty(value)){
+                    res.put(key, value);
+                }
+            }
+        }
+        return res;
     }
 }
