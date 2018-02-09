@@ -1,7 +1,6 @@
 package cn.lhzs.service.impl;
 
 import cn.lhzs.common.constant.Constants;
-import cn.lhzs.common.util.DateUtil;
 import cn.lhzs.common.util.StringUtil;
 import cn.lhzs.common.util.WechatUtil;
 import cn.lhzs.common.vo.WechatAccount;
@@ -35,22 +34,48 @@ public class WechatServiceImpl implements WechatService {
 
         String MsgType = paramFromInputStream.get("MsgType");
         if (WechatUtil.TYPE_TEXT.equals(MsgType)) {
-            String inputText = paramFromInputStream.get("Content");
-            if (StringUtil.isNotEmpty(inputText)) {
+            String content = paramFromInputStream.get("Content");
+            if (StringUtil.isNotEmpty(content)) {
+                if("测试".equals(content)){
+                    return WechatUtil.reply(new WechatReply() {{
+                        setFromUser(paramFromInputStream.get("FromUserName"));
+                        setToUser(paramFromInputStream.get("ToUserName"));
+                        setType(WechatUtil.TYPE_TEXT);
+                        setContent("关键字测试");
+                    }});
+                }
                 return WechatUtil.reply(new WechatReply() {{
                     setFromUser(paramFromInputStream.get("FromUserName"));
                     setToUser(paramFromInputStream.get("ToUserName"));
                     setType(WechatUtil.TYPE_TEXT);
                     setContent("微信公众号测试");
                 }});
+
             }
         } else if (WechatUtil.TYPE_EVENT.equals(MsgType)) {
-            return WechatUtil.reply(new WechatReply() {{
-                setFromUser(paramFromInputStream.get("FromUserName"));
-                setToUser(paramFromInputStream.get("ToUserName"));
-                setType(WechatUtil.TYPE_TEXT);
-                setContent("www.baidu.com");
-            }});
+            String event = paramFromInputStream.get("Event");
+            if(event.equals("subscribe") ){
+                return WechatUtil.reply(new WechatReply() {{
+                    setFromUser(paramFromInputStream.get("FromUserName"));
+                    setToUser(paramFromInputStream.get("ToUserName"));
+                    setType(WechatUtil.TYPE_TEXT);
+                    setContent("用户关注公众号");
+                }});
+            }else if(event.equals("unsubscribe")){
+                return WechatUtil.reply(new WechatReply() {{
+                    setFromUser(paramFromInputStream.get("FromUserName"));
+                    setToUser(paramFromInputStream.get("ToUserName"));
+                    setType(WechatUtil.TYPE_TEXT);
+                    setContent("用户取消公众号");
+                }});
+            } else if(event.equals("SCAN")){
+                return WechatUtil.reply(new WechatReply() {{
+                    setFromUser(paramFromInputStream.get("FromUserName"));
+                    setToUser(paramFromInputStream.get("ToUserName"));
+                    setType(WechatUtil.TYPE_TEXT);
+                    setContent("用户扫描公众号");
+                }});
+            }
         }
         return "";
     }
