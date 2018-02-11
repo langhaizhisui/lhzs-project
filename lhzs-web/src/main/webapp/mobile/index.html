@@ -14,7 +14,8 @@
             height: auto;
             margin: 10px;
         }
-        .search-box{
+
+        .search-box {
             position: relative;
             left: 7.5rem;
             top: -2.8rem;
@@ -24,11 +25,13 @@
             text-align: center;
             padding-bottom: 0.15rem;
         }
-        .search-box-img{
+
+        .search-box-img {
             width: 1.5rem;
             padding-bottom: 0.2rem;
         }
-        .search-box-text{
+
+        .search-box-text {
             display: inline-block;
             font-size: 1.4rem;
         }
@@ -367,7 +370,17 @@
             });
             $("#bannerList .swiper-slide").css("height", sheight);
             $(".swiper-pagination-h").css("bottom", "5px");
-        }, 1000)
+        }, 1000);
+
+        $.ajax({
+            type: 'get',
+            url: "/app/weixin/author/url",
+            success: function (result) {
+                if (result.code == 200) {
+                    location.href = result.data.redirectUri;
+                }
+            }
+        });
     })
 </script>
 </html>

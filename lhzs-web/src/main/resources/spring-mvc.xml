@@ -22,6 +22,8 @@
     <context:component-scan base-package="cn.lhzs.data.dao"></context:component-scan>
     <context:component-scan base-package="cn.lhzs.task"></context:component-scan>
     <context:component-scan base-package="cn.lhzs.common.aop"></context:component-scan>
+    <context:component-scan base-package="cn.lhzs.common.support.http"></context:component-scan>
+    <context:component-scan base-package="cn.lhzs.common.util"></context:component-scan>
     <mvc:annotation-driven/>
     <task:annotation-driven/>
 
@@ -86,5 +88,24 @@
         <property name="unauthorizedUrl" value="/forbidden"/>
         <property name="securityManager" ref="securityManager"></property>
     </bean>
+
+    <!-- httpClient -->
+    <bean id="httpClientConnectionManager" class="org.apache.http.impl.conn.PoolingHttpClientConnectionManager" destroy-method="close">
+        <property name="maxTotal" value="200"></property>
+        <property name="defaultMaxPerRoute" value="100"></property>
+    </bean>
+    <bean id="httpRetryHandler" class="cn.lhzs.common.support.http.impl.HttpClient$HttpRetryHandler"/>
+    <bean id="httpClientBuilder" class="org.apache.http.impl.client.HttpClientBuilder"
+          factory-method="create">
+        <property name="connectionManager" ref="httpClientConnectionManager"></property>
+        <property name="retryHandler" ref="httpRetryHandler"></property>
+    </bean>
+    <bean id="requestConfigBuilder" class="org.apache.http.client.config.RequestConfig$Builder">
+        <property name="connectionRequestTimeout" value="100000"/>
+        <property name="connectTimeout" value="100000"/>
+        <property name="socketTimeout" value="100000"/>
+        <property name="staleConnectionCheckEnabled" value="true"/>
+    </bean>
+    <bean id="requestConfig" factory-bean="requestConfigBuilder" factory-method="build"/>
 
 </beans>
