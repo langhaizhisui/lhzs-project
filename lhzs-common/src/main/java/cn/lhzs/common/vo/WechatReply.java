@@ -1,7 +1,5 @@
 package cn.lhzs.common.vo;
 
-import java.util.Date;
-
 /**
  * Created by ZHX on 2017/12/22.
  */

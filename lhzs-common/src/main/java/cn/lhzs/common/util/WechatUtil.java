@@ -42,7 +42,7 @@ public class WechatUtil {
         }
     }
 
-    public static String accessToken(WechatAccount account, String code) {
+    public static String geAccessTokenUrl(WechatAccount account, String code) {
         return new StringBuilder("https://api.weixin.qq.com/sns/oauth2/access_token")
                 .append("?appid=").append(account.getAppId())
                 .append("&secret=").append(account.getAppsecret())
@@ -50,7 +50,34 @@ public class WechatUtil {
                 .append("&grant_type=authorization_code").toString();
     }
 
-    public static String getUserInfo(WechatToken wechatToken) {
+    /**
+     * 用于获取jsApi票据
+     *
+     * @return
+     */
+    public static String getTempAccessTokenUrl(WechatAccount wechatAccount) {
+        return new StringBuilder("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=")
+                .append(wechatAccount.getAppId())
+                .append("&secret=").append(wechatAccount.getAppsecret())
+                .toString();
+    }
+
+    public static String getJsApiTicketUrl(String token) {
+        return new StringBuilder("https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=")
+                .append(token)
+                .toString();
+    }
+
+    public static String getConfigParam(String ticket, Long timestamp, String nonceStr, String url) {
+        return new StringBuilder("jsapi_ticket=").append(ticket)
+                .append("&noncestr=").append(nonceStr)
+                .append("&timestamp=").append(timestamp)
+                .append("&url=").append(url)
+                .toString();
+    }
+
+
+    public static String getUserInfoUrl(WechatToken wechatToken) {
         return new StringBuilder("https://api.weixin.qq.com/sns/userinfo")
                 .append("?access_token=").append(wechatToken.getAccess_token())
                 .append("&openid=").append(wechatToken.getOpenid())

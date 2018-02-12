@@ -44,7 +44,7 @@ public class CodeGenerator {
 
     public static void main(String[] args) {
 //        String str = tableNameConvertLowerCamel("drp_cty");
-//        genCode("sys_auth","sys_auth_menu","sys_role","sys_role_auth","sys_role_user","sys_user");
+        genCode("wechat_user");
         //genCode("输入表名","输入自定义Model名称");
     }
 

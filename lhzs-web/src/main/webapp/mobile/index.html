@@ -353,6 +353,8 @@
 <script src="/js/jquery.min.js"></script>
 <script src="/js/swiper.jquery.min.js"></script>
 <script src="/js/swiper.js"></script>
+<script src="/mobile/js/jweixin-1.2.0.js"></script>
+<script src="/mobile/js/wechat.js"></script>
 <script>
     $(document).ready(function () {
         setTimeout(swiper.swiperTopFixed(), 1000);
@@ -372,15 +374,23 @@
             $(".swiper-pagination-h").css("bottom", "5px");
         }, 1000);
 
-        $.ajax({
-            type: 'get',
-            url: "/app/weixin/author/url",
-            success: function (result) {
-                if (result.code == 200) {
-                    location.href = result.data.redirectUri;
-                }
-            }
-        });
+        setTimeout(function () {
+            console.log("11111111111111")
+            wechat.share();
+            console.log("22222222222222")
+        },1000);
+
+
+
+//        $.ajax({
+//            type: 'get',
+//            url: "/app/weixin/author/url",
+//            success: function (result) {
+//                if (result.code == 200) {
+//                    location.href = result.data.redirectUri;
+//                }
+//            }
+//        });
     })
 </script>
 </html>

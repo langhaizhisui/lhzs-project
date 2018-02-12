@@ -8,12 +8,14 @@ import cn.lhzs.common.util.WechatUtil;
 import cn.lhzs.common.util.XMLUtil;
 import cn.lhzs.common.vo.WechatAccount;
 import cn.lhzs.common.vo.WechatAuthorize;
+import cn.lhzs.common.vo.WechatConfig;
 import cn.lhzs.common.vo.WechatToken;
 import cn.lhzs.data.bean.WechatUser;
 import cn.lhzs.service.intf.WechatService;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -76,14 +78,18 @@ public class WechatController {
         if(StringUtil.isNotEmpty(code)){
             String authorizeUrl = wechatService.accessToken(code);
             WechatToken wechatToken = JSONObject.parseObject(authorizeUrl, WechatToken.class);
-            saveUserInfo(wechatToken);
+
+            String userInfo = wechatService.getWechatUserInfo(wechatToken);
+            WechatUser wechatUser = JSONObject.parseObject(userInfo, WechatUser.class);
+            wechatService.addWechatUser(wechatUser);
         }
         return generatorSuccessResult();
     }
 
-    private void saveUserInfo(WechatToken wechatToken) {
-        String userInfo = wechatService.getWechatUserInfo(wechatToken);
-        WechatUser wechatUser = JSONObject.parseObject(userInfo, WechatUser.class);
-        wechatService.addWechatUser(wechatUser);
+    @RequestMapping(value = "/config")
+    @ResponseBody
+    public ResponseResult author(@RequestBody WechatConfig wechatConfig) throws Exception {
+        String url = wechatConfig.getUrl();
+        return generatorSuccessResult();
     }
 }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -463,6 +464,17 @@ public class StringUtil {
 			rst = StringUtils.join(strList.iterator(),",");
 		}
 		return rst;
+	}
+
+	public static String getRandomStringByLength(int length) {
+		String base = "abcdefghijklmnopqrstuvwxyz0123456789";
+		Random random = new Random();
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < length; i++) {
+			int number = random.nextInt(base.length());
+			sb.append(base.charAt(number));
+		}
+		return sb.toString();
 	}
 
 }

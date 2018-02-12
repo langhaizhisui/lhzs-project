@@ -20,6 +20,11 @@ public interface Constants {
     Long WECHAT_ACCOUNT = 10002L;
 
     /**
+     * 微信公众号access_token，用于jsapi_ticket
+     */
+    Long WECHAT_TEMP_ACCESS_TOKEN = 10003L;
+
+    /**
      * 当前用户
      */
     String CURRENT_USER = "CURRENT_USER";
@@ -43,10 +48,5 @@ public interface Constants {
      * UTF8
      */
     String UTF8 = "utf-8";
-
-    /**
-     * 微信公众号信息
-     */
-    String WECHAT_INFO = "10002";
 
 }

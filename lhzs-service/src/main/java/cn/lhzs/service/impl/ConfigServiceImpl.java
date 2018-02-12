@@ -37,8 +37,8 @@ public class ConfigServiceImpl extends AbstractBaseService<Config> implements Co
     }
 
     @Override
-    public void updateConfigById(Config config) {
-        save(config);
+    public Config updateConfigById(Config config) {
+        return save(config);
     }
 
     @Override

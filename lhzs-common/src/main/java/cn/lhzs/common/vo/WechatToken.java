@@ -15,6 +15,8 @@ public class WechatToken {
 
     private String scope;
 
+    private Long timestamp;
+
     public String getAccess_token() {
         return access_token;
     }
@@ -53,5 +55,13 @@ public class WechatToken {
 
     public void setScope(String scope) {
         this.scope = scope;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
     }
 }
