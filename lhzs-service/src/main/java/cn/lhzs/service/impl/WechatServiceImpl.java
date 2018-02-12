@@ -1,5 +1,6 @@
 package cn.lhzs.service.impl;
 
+import cn.lhzs.base.AbstractBaseService;
 import cn.lhzs.common.constant.Constants;
 import cn.lhzs.common.exception.WechatException;
 import cn.lhzs.common.support.http.intf.IHttpClient;
@@ -8,6 +9,8 @@ import cn.lhzs.common.util.WechatUtil;
 import cn.lhzs.common.vo.WechatAccount;
 import cn.lhzs.common.vo.WechatReply;
 import cn.lhzs.common.vo.WechatToken;
+import cn.lhzs.data.bean.WechatUser;
+import cn.lhzs.data.dao.WechatUserMapper;
 import cn.lhzs.service.intf.ConfigService;
 import cn.lhzs.service.intf.WechatService;
 import com.alibaba.fastjson.JSONObject;
@@ -21,9 +24,12 @@ import java.util.Map;
  * Created by ZHX on 2017/12/21.
  */
 @Service
-public class WechatServiceImpl implements WechatService {
+public class WechatServiceImpl extends AbstractBaseService<WechatUser> implements WechatService {
 
     Logger logger = Logger.getLogger(WechatServiceImpl.class);
+
+    @Resource
+    public WechatUserMapper wechatUserMapper;
 
     @Resource
     public ConfigService configService;
@@ -94,7 +100,7 @@ public class WechatServiceImpl implements WechatService {
             WechatUtil.filterErrorMsg(result);
             return result;
         } catch (Exception e) {
-            throw new WechatException("获取accessToken异常:"+e.getMessage());
+            throw new WechatException("获取accessToken异常:" + e.getMessage());
         }
     }
 
@@ -106,7 +112,16 @@ public class WechatServiceImpl implements WechatService {
             WechatUtil.filterErrorMsg(result);
             return result;
         } catch (Exception e) {
-            throw new WechatException("获取WechatUserInfo异常:"+e.getMessage());
+            throw new WechatException("获取WechatUserInfo异常:" + e.getMessage());
         }
+    }
+
+    @Override
+    public WechatUser addWechatUser(WechatUser wechatUser) {
+        WechatUser oldWechatUser = findBy("openId", wechatUser.getOpenId());
+        if (oldWechatUser != null && oldWechatUser.getOpenId() != null && oldWechatUser.getOpenId().equals(wechatUser.getOpenId())) {
+            return oldWechatUser;
+        }
+        return save(wechatUser);
     }
 }

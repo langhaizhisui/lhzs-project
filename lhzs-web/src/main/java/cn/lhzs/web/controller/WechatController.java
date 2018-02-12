@@ -9,7 +9,7 @@ import cn.lhzs.common.util.XMLUtil;
 import cn.lhzs.common.vo.WechatAccount;
 import cn.lhzs.common.vo.WechatAuthorize;
 import cn.lhzs.common.vo.WechatToken;
-import cn.lhzs.common.vo.WechatUserInfo;
+import cn.lhzs.data.bean.WechatUser;
 import cn.lhzs.service.intf.WechatService;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +83,7 @@ public class WechatController {
 
     private void saveUserInfo(WechatToken wechatToken) {
         String userInfo = wechatService.getWechatUserInfo(wechatToken);
-        WechatUserInfo wechatUserInfo = JSONObject.parseObject(userInfo, WechatUserInfo.class);
+        WechatUser wechatUser = JSONObject.parseObject(userInfo, WechatUser.class);
+        wechatService.addWechatUser(wechatUser);
     }
 }

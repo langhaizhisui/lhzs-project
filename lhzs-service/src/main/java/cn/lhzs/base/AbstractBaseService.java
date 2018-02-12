@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * 基于通用MyBatis Mapper插件的Service接口的实现
- * 业务逻辑层基类<
+ * 业务逻辑层基类
  *
  * @author ZHX
  */
@@ -64,6 +64,7 @@ public abstract class AbstractBaseService<T extends BaseModel> implements IBaseS
             if (model.getId() == null) {
 //                Long generateId = getMaxId() + 1;
 //                model.setId(generateId);
+                model.setState(1);
                 if (model.getCreateTime() == null) {
                     model.setCreateTime(new Date());
                 }

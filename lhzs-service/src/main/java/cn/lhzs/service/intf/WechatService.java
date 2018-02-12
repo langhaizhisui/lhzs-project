@@ -2,6 +2,7 @@ package cn.lhzs.service.intf;
 
 import cn.lhzs.common.vo.WechatAccount;
 import cn.lhzs.common.vo.WechatToken;
+import cn.lhzs.data.bean.WechatUser;
 
 import java.util.Map;
 
@@ -17,4 +18,6 @@ public interface WechatService {
     String accessToken(String code);
 
     String getWechatUserInfo(WechatToken wechatToken);
+
+    WechatUser addWechatUser(WechatUser wechatUser);
 }
