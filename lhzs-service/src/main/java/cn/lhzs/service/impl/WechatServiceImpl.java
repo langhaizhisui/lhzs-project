@@ -141,14 +141,15 @@ public class WechatServiceImpl extends AbstractBaseService<WechatUser> implement
             String nonceStr = StringUtil.getRandomStringByLength(32);
             String signature = SecureUtil.sha1ToHex(WechatUtil.getConfigParam(ticket, timestamp, nonceStr, url).getBytes(Constants.UTF8));
 
-            return new WechatConfig() {{
-                setAppId(getAccount().getAppId());
-                setNonceStr(nonceStr);
-                setTimestamp(timestamp);
-                setSignature(signature);
-            }};
-
+            WechatConfig wechatConfig = new WechatConfig();
+            wechatConfig.setAppId(getAccount().getAppId());
+            wechatConfig.setNonceStr(nonceStr);
+            wechatConfig.setTimestamp(timestamp);
+            wechatConfig.setSignature(signature);
+            wechatConfig.setUrl(url);
+            return wechatConfig;
         } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
             throw new WechatException("获取Config异常");
         }
     }

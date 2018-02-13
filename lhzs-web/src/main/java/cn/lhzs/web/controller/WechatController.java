@@ -88,8 +88,7 @@ public class WechatController {
 
     @RequestMapping(value = "/config")
     @ResponseBody
-    public ResponseResult author(@RequestBody WechatConfig wechatConfig) throws Exception {
-        String url = wechatConfig.getUrl();
-        return generatorSuccessResult();
+    public ResponseResult config(@RequestBody WechatConfig wechatConfig) throws Exception {
+        return generatorSuccessResult(wechatService.getConfig(wechatConfig.getUrl()));
     }
 }

@@ -2,6 +2,10 @@
  * Created by ZHX on 2017/12/21.
  */
 wechat = {
+    wxShare: function () {
+        wechat.getConfig();
+        wechat.share();
+    },
     share: function () {
         var menuShareTimeline = new Object();
         var menuShareAppMessage = new Object();
@@ -28,16 +32,16 @@ wechat = {
             });
             wx.onMenuShareAppMessage({
                 title: "1111",
-                link: "http://www.baidu.com",
+                link: "http://zhx.tunnel.qydev.com/images/west-boss.png",
                 desc: "分享测试",
-                imgUrl: "http://www.baidu.com"
+                imgUrl: "http://zhx.tunnel.qydev.com/images/west-boss.png"
             });
 
             wx.onMenuShareTimeline({
-                title: "1111",
-                link: "http://www.baidu.com",
-                desc: "分享测试",
-                imgUrl: "http://www.baidu.com"
+                title: "222",
+                link: "http://zhx.tunnel.qydev.com/images/west-boss.png",
+                desc: "分享测试222",
+                imgUrl: "http://zhx.tunnel.qydev.com/images/west-boss.png"
             });
         });
     },
@@ -51,17 +55,15 @@ wechat = {
     },
     getConfig: function () {
         var params = {
-            "url":{url:window.location.href}
+            "url":window.location.href
         };
-        param = JSON.stringify(params);
         $.ajax({
-            type : "POST",
-            url : "/app/weixin/config",
-            dataType : "json",
-            contentType : "application/json",
-            data : param,
-            async : false,
-            success : function(result){
+            type: "post",
+            url: "/app/weixin/config",
+            dataType: 'json',
+            contentType: "application/json",
+            data: JSON.stringify(params),
+            success: function (result) {
                 var data = result.data;
                 wx.config({
                     debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
