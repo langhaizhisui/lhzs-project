@@ -32,16 +32,12 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Spring MVC 配置
- */
 @Configuration
 @EnableWebMvc
 public class ExceptionManageConfig extends WebMvcConfigurerAdapter {
 
     private final Logger logger = LoggerFactory.getLogger(ExceptionManageConfig.class);
 
-    //使用阿里 FastJson 作为JSON MessageConverter
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         FastJsonHttpMessageConverter4 converter = new FastJsonHttpMessageConverter4();

@@ -40,36 +40,4 @@ public class ShiroConfig {
         return securityManager;
     }
 
-    @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
-        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        shiroFilterFactoryBean.setSecurityManager(securityManager);
-        shiroFilterFactoryBean.setLoginUrl("/unLogin");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/forbidden");
-        shiroFilterFactoryBean.setFilters(logoutFilter("/unLogin"));
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(initFilterChainConfiguration());
-        return shiroFilterFactoryBean;
-    }
-
-    private Map<String, Filter> logoutFilter(String redirectUrl) {
-        Map<String, Filter> filters = new LinkedHashMap<>();
-        filters.put("logout", new LogoutFilter() {{
-            setRedirectUrl(redirectUrl);
-        }});
-        return filters;
-    }
-
-    private Map<String, String> initFilterChainConfiguration() {
-        Map<String, String> filterChainDefinitionManager = new LinkedHashMap<>();
-        filterChainDefinitionManager.put("/article/**", "perms[info]");
-        return filterChainDefinitionManager;
-    }
-
-    @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
-        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
-        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
-        return authorizationAttributeSourceAdvisor;
-    }
-
 }

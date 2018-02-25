@@ -1,12 +1,12 @@
 package cn.lhzs.web.shiro;
 
 import cn.lhzs.common.exception.LoginException;
+import cn.lhzs.common.util.StringUtil;
 import cn.lhzs.common.util.WebUtil;
 import cn.lhzs.data.bean.SysAuth;
 import cn.lhzs.data.bean.SysUser;
 import cn.lhzs.service.intf.SysAuthService;
 import cn.lhzs.service.intf.SysUserService;
-import cn.lhzs.common.util.StringUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -20,7 +20,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ShiroRealm extends AuthorizingRealm {
@@ -33,35 +32,24 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        SysUser sysUser = sysUserService.findBy("account", super.getAvailablePrincipal(principals));
-        if (null == sysUser) {
+        Object user = SecurityUtils.getSubject().getSession().getAttribute("user");
+        if (!super.getAvailablePrincipal(principals).equals(user)) {
             throw new LoginException("用户名或密码错误");
         }
-
-        SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();
-        Subject subject = SecurityUtils.getSubject();
-//        if (getSessionUserAuth(simpleAuthorInfo, subject)) {
-//            return simpleAuthorInfo;
-//        }
-
-        return getUserAuth(simpleAuthorInfo, subject, sysUser);
+        return getUserAuth();
     }
 
-    private AuthorizationInfo getUserAuth(SimpleAuthorizationInfo simpleAuthorInfo, Subject subject, SysUser sysUser) {
-        sysAuthService.getUserAuthList(sysUser.getId()).forEach(userAuth -> simpleAuthorInfo.addStringPermission(userAuth.getId() + ""));
+    private AuthorizationInfo getUserAuth() {
+        SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();
+        Subject subject = SecurityUtils.getSubject();
+        if (subject == null) {
+            throw new LoginException("Session超时，请重新登录");
+        }
+        List<SysAuth> userAuthList = (List<SysAuth>) subject.getSession().getAttribute("userAuth");
+        userAuthList.forEach(userAuth -> simpleAuthorInfo.addStringPermission(userAuth.getId() + ""));
         return simpleAuthorInfo;
     }
 
-    private boolean getSessionUserAuth(SimpleAuthorizationInfo simpleAuthorInfo, Subject subject) {
-        if (null != subject) {
-            String userAuth = (String) subject.getSession().getAttribute("userAuth");
-            if (StringUtil.isNotEmpty(userAuth)) {
-                Arrays.asList(userAuth.split(",")).forEach(auth -> simpleAuthorInfo.addStringPermission(auth));
-                return true;
-            }
-        }
-        return false;
-    }
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) {
@@ -70,10 +58,16 @@ public class ShiroRealm extends AuthorizingRealm {
         if (!checkUser(sysUser, token)) {
             throw new LoginException("用户名或密码错误");
         }
+        saveUserInfo(SecurityUtils.getSubject(), sysUser);
+        return new SimpleAuthenticationInfo(token.getUsername(), token.getPassword(), getName());
+    }
+
+    private void saveUserInfo(Subject subject, SysUser sysUser) {
+        Session session = subject.getSession();
+        session.setAttribute("user", sysUser.getAccount());
+        session.setAttribute("userAuth", sysAuthService.getUserAuthList(sysUser.getId()));
+        session.setTimeout(1000 * 60 * 60 * 2);
         WebUtil.saveCurrentUser(sysUser.getId());
-        AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(token.getUsername(), token.getPassword(), getName());
-        setAuthenticationSession(sysUser.getId());
-        return authcInfo;
     }
 
     private boolean checkUser(SysUser sysUser, UsernamePasswordToken token) {
@@ -92,19 +86,6 @@ public class ShiroRealm extends AuthorizingRealm {
             }
         }
         return builder.toString();
-    }
-
-    /**
-     * 将一些数据放到ShiroSession中，以便于其它地方使用
-     * 比如Controller里面，使用时直接用HttpSession.getAttribute(key)就可以取到
-     */
-    private void setAuthenticationSession(Long uid) {
-        Subject currentUser = SecurityUtils.getSubject();
-        if (null != currentUser) {
-            Session session = currentUser.getSession();
-            session.setTimeout(1000 * 60 * 60 * 2);
-            session.setAttribute("user", uid);
-        }
     }
 
 }

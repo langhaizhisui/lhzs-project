@@ -22,21 +22,20 @@ public class ShiroPermissionManage extends ShiroFilterFactoryBean {
     private SysAuthService sysAuthService;
 
     public boolean updateFilter() {
-        Map<String, String> permissionMap = getPermissionMap();
         try {
             AbstractShiroFilter shiroFilter = (AbstractShiroFilter) getObject();
             PathMatchingFilterChainResolver filterChainResolver = (PathMatchingFilterChainResolver) shiroFilter.getFilterChainResolver();
             DefaultFilterChainManager filterManager = (DefaultFilterChainManager) filterChainResolver.getFilterChainManager();
             filterManager.getFilterChains().clear();
-
             getFilterChainDefinitionMap().clear();
-            Map<String, String> chains = getFilterChainDefinitionMap();
-            chains.putAll(permissionMap);
+
+            Map<String, String> permissionMap = getPermissionMap();
             for (Map.Entry<String, String> entry : permissionMap.entrySet()) {
                 String url = entry.getKey();
                 String chainDefinition = entry.getValue();
                 filterManager.createChain(url, chainDefinition);
             }
+            getFilterChainDefinitionMap().putAll(permissionMap);
             return true;
         } catch (Exception e) {
             return false;
@@ -56,7 +55,6 @@ public class ShiroPermissionManage extends ShiroFilterFactoryBean {
             }
             filterChainDefinitionManager.put(url, "authc,perms[" + sysAuth.getId() + "]");
         });
-//        filterChainDefinitionManager.put("/article/**","authc,perms[root]");
     }
 
 }
