@@ -31,12 +31,12 @@ public class OpLogAspect {
     private static final String LOGIN_PWD = "password";
     private static final String LOGIN_METHOD = "login";
 
-    @AfterReturning(pointcut = "execution(* cn.lhzs.web.controller.*.*(..)) && @annotation(ol)", returning = "rvt")
+    @AfterReturning(pointcut = "execution(* cn.lhzs.web.controller.admin.*.*(..)) && @annotation(ol)", returning = "rvt")
     public void addLogSuccess(JoinPoint jp, OpLog ol, Object rvt) {
         addLog(jp, ol, rvt, null);
     }
 
-    @AfterThrowing(pointcut = "execution(* cn.lhzs.web.controller.*.*(..)) && @annotation(ol)", throwing = "ex")
+    @AfterThrowing(pointcut = "execution(* cn.lhzs.web.controller.admin.*.*(..)) && @annotation(ol)", throwing = "ex")
     public void addLog(JoinPoint jp, OpLog ol, Throwable ex) {
         addLog(jp, ol, null, ex);
     }
