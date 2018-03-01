@@ -37,7 +37,7 @@
     function searchProd(key) {
         var param = {};
         param.page = 1;
-        param.size = 500;
+        param.size = 50;
         param.name = key;
         $.ajax({
             type: 'post',
@@ -138,5 +138,13 @@
         searchProd(key);
         searchShop(key);
     }
+
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?b8b74119c4d78e0826e7754bcc11b939";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
 
 </script>
