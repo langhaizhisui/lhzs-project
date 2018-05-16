@@ -52,6 +52,13 @@ public class ResponseResultGenerator {
                 .setMsg(responseCode.getDescp());
     }
 
+    public static ResponseResultByPage getResponseResultByPage(Integer totalPage, Integer  currPage, Object data) {
+        return new ResponseResultByPage()
+                .setPages(totalPage)
+                .setPageNum(currPage)
+                .setData(data);
+    }
+
     public static ResponseResult generatorLoginResult() {
         return getResponseResult(ResponseCode.LOGIN);
     }
