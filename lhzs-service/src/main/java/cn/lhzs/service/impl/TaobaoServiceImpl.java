@@ -32,12 +32,12 @@ public class TaobaoServiceImpl implements TaobaoService {
     @Override
     public TbkDgItemCouponGetResponse searchProduct(Taobao taobao) {
         try {
-            return getTaobaoClient().execute(new TbkDgItemCouponGetRequest(){{
-                setAdzoneId(106100645L);
-                setPageSize(Long.parseLong(taobao.getPage().toString()));
-                setPageNo(Long.parseLong(taobao.getSize().toString()));
-                setQ(taobao.getQ());
-            }});
+            TbkDgItemCouponGetRequest tbkDgItemCouponGetRequest = new TbkDgItemCouponGetRequest();
+            tbkDgItemCouponGetRequest.setAdzoneId(106100645L);
+            tbkDgItemCouponGetRequest.setPageSize(Long.parseLong(taobao.getPage().toString()));
+            tbkDgItemCouponGetRequest.setPageNo(Long.parseLong(taobao.getSize().toString()));
+            tbkDgItemCouponGetRequest.setQ(taobao.getQ());
+            return getTaobaoClient().execute(tbkDgItemCouponGetRequest);
         } catch (ApiException e) {
             logger.error("好券清单API【导购】异常",e);
             throw new TaobaoException("好券清单API【导购】异常");
@@ -47,10 +47,10 @@ public class TaobaoServiceImpl implements TaobaoService {
     @Override
     public TbkItemInfoGetResponse getProductByNumIids(String numIids){
         try {
-            return getTaobaoClient().execute(new TbkItemInfoGetRequest(){{
-                setFields("num_iid,title,pict_url,small_images,reserve_price,zk_final_price,user_type,provcity,item_url");
-                setNumIids(numIids);
-            }});
+            TbkItemInfoGetRequest tbkItemInfoGetRequest = new TbkItemInfoGetRequest();
+            tbkItemInfoGetRequest.setFields("num_iid,title,pict_url,small_images,reserve_price,zk_final_price,user_type,provcity,item_url");
+            tbkItemInfoGetRequest.setNumIids(numIids);
+            return getTaobaoClient().execute( tbkItemInfoGetRequest);
         } catch (ApiException e) {
             logger.error("淘宝客商品详情异常",e);
             throw new TaobaoException("淘宝客商品详情异常");
@@ -60,19 +60,19 @@ public class TaobaoServiceImpl implements TaobaoService {
     @Override
     public TbkShopGetResponse searchShop(Taobao taobao){
         try {
-            return getTaobaoClient().execute(new TbkShopGetRequest(){{
-                setFields("user_id,shop_title,shop_type,seller_nick,pict_url,shop_url");
-                setQ("女装");
-                setIsTmall(true);
-                setStartCredit(taobao.getStartCredit());
-                setEndCredit(taobao.getEndCredit());
-                setStartCommissionRate(taobao.getStartCommissionRate());
-                setEndCommissionRate(taobao.getEndCommissionRate());
-                setStartTotalAction(taobao.getStartTotalAction());
-                setEndTotalAction(taobao.getEndTotalAction());
-                setStartAuctionCount(taobao.getStartAuctionCount());
-                setEndAuctionCount(taobao.getEndAuctionCount());
-            }});
+            TbkShopGetRequest tbkShopGetRequest = new TbkShopGetRequest();
+            tbkShopGetRequest.setFields("user_id,shop_title,shop_type,seller_nick,pict_url,shop_url");
+            tbkShopGetRequest.setQ("女装");
+            tbkShopGetRequest.setIsTmall(true);
+            tbkShopGetRequest.setStartCredit(taobao.getStartCredit());
+            tbkShopGetRequest.setEndCredit(taobao.getEndCredit());
+            tbkShopGetRequest.setStartCommissionRate(taobao.getStartCommissionRate());
+            tbkShopGetRequest.setEndCommissionRate(taobao.getEndCommissionRate());
+            tbkShopGetRequest.setStartTotalAction(taobao.getStartTotalAction());
+            tbkShopGetRequest.setEndTotalAction(taobao.getEndTotalAction());
+            tbkShopGetRequest.setStartAuctionCount(taobao.getStartAuctionCount());
+            tbkShopGetRequest.setEndAuctionCount(taobao.getEndAuctionCount());
+            return getTaobaoClient().execute(tbkShopGetRequest);
         } catch (ApiException e) {
             logger.error("淘宝客店铺查询异常",e);
             throw new TaobaoException("淘宝客店铺查询异常");

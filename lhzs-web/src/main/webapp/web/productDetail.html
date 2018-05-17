@@ -63,6 +63,8 @@
 <script src="/web/js/app.js"></script>
 <script>
     var prodId = getParameter("prodId");
+    var currPrice = getParameter("currPrice");
+    var couponClickUrl = getParameter("couponClickUrl");
 
     $(function () {
         init();
@@ -88,20 +90,20 @@
             if (result.code == 200) {
                 var data = result.data;
 
-                var html = '<img src="' + data.banner + '" class="prod-detail-img">' +
+                var html = '<img src="' + data.pictUrl + '" class="prod-detail-img">' +
                     '<div class="prod-desc">' +
-                    '<div class="prod-desc-title">' + data.name + '</div>' +
+                    '<div class="prod-desc-title">' + data.title + '</div>' +
                     '<div class="prod-desc-price">' +
                     '<span class="prod-desc-price-dx">(独享)</span>' +
                     '<span>券后价 </span>' +
-                    '<span class="prod-desc-price-now">¥' + data.discountPrice + '</span>' +
+                    '<span class="prod-desc-price-now">¥' + currPrice.toFixed(2) + '</span>' +
                     '<span> 在售价</span>' +
-                    '<span class="prod-desc-price-old">¥' + data.price + '</span>' +
+                    '<span class="prod-desc-price-old">¥' + data.zkFinalPrice.toFixed(2) + '</span>' +
                     '</div>' +
                     '<div class="prod-desc-discount">' +
                     '<div class="prod-desc-discount-coupon">' +
                     '<div>优惠券</div>' +
-                    '<div>¥' + (data.price - data.discountPrice).toFixed(2) + '</div>' +
+                    '<div>¥' + (data.zkFinalPrice - currPrice).toFixed(2) + '</div>' +
                     '</div>' +
                     '<div class="prod-desc-discount-go">领券购买</div>' +
                     '</div>' +
@@ -110,7 +112,7 @@
             $(".prod-detail").html(html);
             $("head > title").text(data.name);
             $(".prod-desc-discount-go").click(function () {
-                window.open(data.prodGeneralize);
+                window.open(couponClickUrl);
             })
         });
     }
@@ -121,21 +123,21 @@
         app.getGeneralizeProduct(param, function (result) {
             if (result.code == 200) {
                 var html = '';
-                var data = result.data.list;
+                var data = result.data.data;
                 for (var i = 0; i < data.length; i++) {
                     var product = data[i];
                     html += '<div class="prod-generalize-item" index="' + i + '">' +
                         '<div class="prod-generalize-item-img">' +
-                        '<img src="' + product.banner + '">' +
+                        '<img src="' + product.pictUrl + '">' +
                         '</div>' +
-                        '<div class="prod-generalize-item-price">券后¥' + product.discountPrice.toFixed(2) + '</div>' +
+                        '<div class="prod-generalize-item-price">券后¥' + getCurrPrice(product.couponInfo).toFixed(2) + '</div>' +
                         '</div>'
                 }
                 $(".prod-generalize-list").html(html);
 
                 $(".prod-generalize-item").click(function () {
                     var index = $(this).attr("index");
-                    location.href = "/web/productDetail.html?prodId=" + data[index].id;
+                    location.href = "/web/productDetail.html?prodId=" + data[index].numIid + "&currPrice=" + getCurrPrice(data[index].couponInfo + "&couponClickUrl=" + data[index].couponClickUrl);
                 });
             }
         });
@@ -147,7 +149,7 @@
         app.getProductList(param, function (result) {
             if (result.code == 200) {
                 var html = '';
-                var data = result.data.list;
+                var data = result.data.data;
                 for (var i = 0; i < data.length; i++) {
                     var product = data[i];
                     html += '<div class="moldbaby-subject" index="' + i + '">' +
@@ -156,10 +158,10 @@
                         '</div>' +
                         '<div class="moldbaby-subject-title">' + getProductName(product.name) + '</div>' +
                         '<div class="clearfix">' +
-                        '<div class="curr-price">现价:¥' + product.discountPrice.toFixed(2) + '</div>' +
+                        '<div class="curr-price">现价:¥' + getCurrPrice(product.couponInfo).toFixed(2) + '</div>' +
                         '<div class="other-price">' +
-                        '<div style="margin-bottom:5px">原价:¥' + product.price.toFixed(2) + '</div>' +
-                        '<div>立省:¥' + (product.price - product.discountPrice).toFixed(2) + '</div>' +
+                        '<div style="margin-bottom:5px">原价:¥' + product.zkFinalPrice.toFixed(2) + '</div>' +
+                        '<div>立省:¥' + (product.zkFinalPrice - getCurrPrice(product.couponInfo)).toFixed(2) + '</div>' +
                         '</div>' +
                         '</div>' +
                         '<div class="go-shop">去购物</div>' +
@@ -169,7 +171,7 @@
 
                 $(".moldbaby-subject").click(function () {
                     var index = $(this).attr("index");
-                    location.href = "/web/productDetail.html?prodId=" + data[index].id;
+                    location.href = "/web/productDetail.html?prodId=" + data[index].numIid + "&currPrice=" + getCurrPrice(data[index].couponInfo + "&couponClickUrl=" + data[index].couponClickUrl);
                 });
             }
         });
@@ -179,6 +181,10 @@
             productName = productName.substr(0, 28) + "...";
         }
         return productName;
+    }
+
+    function getCurrPrice(priceInfo) {
+        return priceInfo.split("减")[1].split("元")[0];
     }
 </script>
 <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261882558'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1261882558%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>

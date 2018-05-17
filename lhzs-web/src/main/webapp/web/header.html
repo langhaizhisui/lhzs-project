@@ -38,7 +38,7 @@
         var param = {};
         param.page = 1;
         param.size = 50;
-        param.name = key;
+        param.q = key;
         $.ajax({
             type: 'post',
             url: "/search/product",
@@ -47,7 +47,7 @@
             data: JSON.stringify(param),
             success: function (result) {
                 if (result.code == 200) {
-                    var prodList = result.data.list;
+                    var prodList = result.data.data;
                     var html = "";
                     $(".hot-prod-text").text("商品");
                     $(".hot-prod-next").css("display", "none");
@@ -56,14 +56,14 @@
                         var product = prodList[i];
                         html += '<div class="moldbaby-subject" index="' + i + '">' +
                             '<div class="moldbaby-subject-img">' +
-                            '<img src="' + product.banner + '">' +
+                            '<img src="' + product.pictUrl + '">' +
                             '</div>' +
-                            '<div class="moldbaby-subject-title">' + product.name + '</div>' +
+                            '<div class="moldbaby-subject-title">' + product.title + '</div>' +
                             '<div class="clearfix">' +
-                            '<div class="curr-price">现价:¥' + product.discountPrice + '</div>' +
+                            '<div class="curr-price">现价:¥' + getCurrPrice(product.couponInfo).toFixed(2) + '</div>' +
                             '<div class="other-price">' +
-                            '<div>原价:¥' + product.price + '</div>' +
-                            '<div>立省:¥' + (product.price - product.discountPrice).toFixed(2) + '</div>' +
+                            '<div>原价:¥' + product.zkFinalPrice + '</div>' +
+                            '<div>立省:¥' + (product.zkFinalPrice - getCurrPrice(product.couponInfo)).toFixed(2) + '</div>' +
                             '</div>' +
                             '</div>' +
                             '<div class="go-shop">去购物</div>' +
@@ -73,7 +73,7 @@
 
                     $(".moldbaby-subject").click(function () {
                         var index = $(this).attr("index");
-                        window.open("/web/productDetail.html?prodId=" + prodList[index].id);
+                        window.open("/web/productDetail.html?prodId=" + prodList[index].numIid + "&currPrice=" + getCurrPrice(data[index].couponInfo + "&couponClickUrl=" + data[index].couponClickUrl);
                     });
                 }
             }
@@ -137,6 +137,10 @@
         var key = $(".search-input").val();
         searchProd(key);
         searchShop(key);
+    }
+
+    function getCurrPrice(priceInfo) {
+        return priceInfo.split("减")[1].split("元")[0];
     }
 
 </script>

@@ -445,21 +445,21 @@
         app.getGeneralizeProduct(param, function (result) {
             if (result.code == 200) {
                 var html = '';
-                var data = result.data.list;
+                var data = result.data.data;
                 for (var i = 0; i < data.length; i++) {
                     var product = data[i];
                     html += '<div class="prod-generalize-item" index="' + i + '">' +
                         '<div class="prod-generalize-item-img">' +
-                        '<img src="' + product.banner + '">' +
+                        '<img src="' + product.pictUrl + '">' +
                         '</div>' +
-                        '<div class="prod-generalize-item-price">券后¥' + (product.price - product.discountPrice).toFixed(2) + '</div>' +
+                        '<div class="prod-generalize-item-price">券后¥' + (product.zkFinalPrice - getCurrPrice(product.couponInfo)).toFixed(2) + '</div>' +
                         '</div>'
                 }
                 $(".prod-generalize-list").html(html);
 
                 $(".prod-generalize-item").click(function () {
                     var index = $(this).attr("index");
-                    location.href = "/web/productDetail.html?prodId=" + data[index].id;
+                    location.href = "/web/productDetail.html?prodId=" + data[index].id + "&currPrice=" + getCurrPrice(data[index].couponInfo + "&couponClickUrl=" + data[index].couponClickUrl);
                 });
             }
         });
@@ -477,14 +477,14 @@
                     var product = data[i];
                     html += '<div class="moldbaby-subject" index="' + i + '">' +
                         '<div class="moldbaby-subject-img">' +
-                        '<img src="' + product.banner + '">' +
+                        '<img src="' + product.pictUrl + '">' +
                         '</div>' +
-                        '<div class="moldbaby-subject-title">' + getProductName(product.name) + '</div>' +
+                        '<div class="moldbaby-subject-title">' + getProductName(product.title) + '</div>' +
                         '<div class="clearfix">' +
-                        '<div class="curr-price">现价:¥' + product.discountPrice.toFixed(2) + '</div>' +
+                        '<div class="curr-price">现价:¥' + getCurrPrice(product.couponInfo).toFixed(2) + '</div>' +
                         '<div class="other-price">' +
-                        '<div style="margin-bottom:5px">原价:¥' + product.price.toFixed(2) + '</div>' +
-                        '<div>立省:¥' + (product.price - product.discountPrice).toFixed(2) + '</div>' +
+                        '<div style="margin-bottom:5px">原价:¥' + product.zkFinalPrice.toFixed(2) + '</div>' +
+                        '<div>立省:¥' + (product.zkFinalPrice - getCurrPrice(product.couponInfo)).toFixed(2) + '</div>' +
                         '</div>' +
                         '</div>' +
                         '<div class="go-shop">去购物</div>' +
@@ -494,7 +494,7 @@
 
                 $(".moldbaby-subject").click(function () {
                     var index = $(this).attr("index");
-                    location.href = "/web/productDetail.html?prodId=" + data[index].id;
+                    location.href = "/web/productDetail.html?prodId=" + data[index].id + "&currPrice=" + getCurrPrice(data[index].couponInfo + "&couponClickUrl=" + data[index].couponClickUrl);
                 });
             }
         });
@@ -537,6 +537,10 @@
                 });
             }
         });
+    }
+
+    function getCurrPrice(priceInfo) {
+        return priceInfo.split("减")[1].split("元")[0];
     }
 </script>
 <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");

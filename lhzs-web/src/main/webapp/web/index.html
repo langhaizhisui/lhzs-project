@@ -10,7 +10,7 @@
 
     <script>
         var _hmt = _hmt || [];
-        (function() {
+        (function () {
             var hm = document.createElement("script");
             hm.src = "https://hm.baidu.com/hm.js?b8b74119c4d78e0826e7754bcc11b939";
             var s = document.getElementsByTagName("script")[0];
@@ -168,19 +168,19 @@
         app.getProductList(param, function (result) {
             if (result.code == 200) {
                 var html = '';
-                var data = result.data.list;
+                var data = result.data.data;
                 for (var i = 0; i < data.length; i++) {
                     var product = data[i];
                     html += '<div class="moldbaby-subject" index="' + i + '">' +
                         '<div class="moldbaby-subject-img">' +
-                        '<img src="' + product.banner + '">' +
+                        '<img src="' + product.pictUrl + '">' +
                         '</div>' +
-                        '<div class="moldbaby-subject-title">' + product.name + '</div>' +
+                        '<div class="moldbaby-subject-title">' + product.title + '</div>' +
                         '<div class="clearfix">' +
-                        '<div class="curr-price">现价: ¥' + product.discountPrice.toFixed(2) + '</div>' +
+                        '<div class="curr-price">现价: ¥' + getCurrPrice(product.couponInfo).toFixed(2) + '</div>' +
                         '<div class="other-price">' +
-                        '<div style="margin-bottom:5px">原价: ¥' + product.price.toFixed(2) + '</div>' +
-                        '<div>立省: ¥' + (product.price - product.discountPrice).toFixed(2) + '</div>' +
+                        '<div style="margin-bottom:5px">原价: ¥' + product.zkFinalPrice.toFixed(2) + '</div>' +
+                        '<div>立省: ¥' + (product.zkFinalPrice - getCurrPrice(product.couponInfo)).toFixed(2) + '</div>' +
                         '</div>' +
                         '</div>' +
                         '<div class="go-shop">去购物</div>' +
@@ -191,7 +191,7 @@
 
                 $(".moldbaby-subject").click(function () {
                     var index = $(this).attr("index");
-                    window.open("/web/productDetail.html?prodId=" + data[index].id);
+                    window.open("/web/productDetail.html?prodId=" + data[index].numIid + "&currPrice=" + getCurrPrice(data[index].couponInfo + "&couponClickUrl=" + data[index].couponClickUrl);
                 });
             }
             if (data.length == 0 || data.length < param.pageSize) {
@@ -337,6 +337,10 @@
         } else if (type == "T") {
             return "3";
         }
+    }
+
+    function getCurrPrice(priceInfo) {
+        return priceInfo.split("减")[1].split("元")[0];
     }
 </script>
 <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");

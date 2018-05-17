@@ -158,47 +158,47 @@
         param.size = 20;
 
         if (categoryId == "11") {
-            param.category = "数码电器";
+            param.q = "数码电器";
         } else if (categoryId == "9") {
-            param.category = "鞋包/配饰";
+            param.q = "鞋包/配饰";
         } else if (categoryId == "14") {
-            param.category = "居家日用";
+            param.q = "居家日用";
         } else if (categoryId == "7") {
-            param.category = "女装"
+            param.q = "女装"
         } else if (categoryId == "10") {
-            param.category = "洗沐护肤"
+            param.q = "洗沐护肤"
         } else if (categoryId == "6") {
-            param.category = "母婴";
+            param.q = "母婴";
         } else if (categoryId == "12") {
-            param.category = "食品/冲调";
+            param.q = "食品/冲调";
         } else if (categoryId == "13") {
-            param.category = "宠物";
+            param.q = "宠物";
         } else if (categoryId == "16") {
-            param.category = "文体/车品";
+            param.q = "文体/车品";
         } else if (categoryId == "8") {
-            param.category = "男装";
+            param.q = "男装";
         } else if (categoryId == "15") {
-            param.category = "家装家具"
+            param.q = "家装家具"
         } else if (categoryId == "17") {
-            param.category = "其他"
+            param.q = "其他"
         }
 
         app.getProductList(param, function (result) {
             if (result.code == 200) {
                 var html = '';
-                var data = result.data.list;
+                var data = result.data.data;
                 for (var i = 0; i < data.length; i++) {
                     var product = data[i];
                     html += '<div class="moldbaby-subject" index="' + i + '">' +
                         '<div class="moldbaby-subject-img">' +
-                        '<img src="' + product.banner + '">' +
+                        '<img src="' + product.pictUrl + '">' +
                         '</div>' +
-                        '<div class="moldbaby-subject-title">' + product.name + '</div>' +
+                        '<div class="moldbaby-subject-title">' + product.title + '</div>' +
                         '<div class="clearfix">' +
-                        '<div class="curr-price">现价:¥' + product.discountPrice.toFixed(2) + '</div>' +
+                        '<div class="curr-price">现价:¥' + getCurrPrice(product.couponInfo).toFixed(2) + '</div>' +
                         '<div class="other-price">' +
-                        '<div style="margin-bottom:5px">原价:¥' + product.price.toFixed(2) + '</div>' +
-                        '<div>立省:¥' + (product.price - product.discountPrice).toFixed(2) + '</div>' +
+                        '<div style="margin-bottom:5px">原价:¥' + product.zkFinalPrice.toFixed(2) + '</div>' +
+                        '<div>立省:¥' + (product.zkFinalPrice - getCurrPrice(product.couponInfo)).toFixed(2) + '</div>' +
                         '</div>' +
                         '</div>' +
                         '<div class="go-shop">去购物</div>' +
@@ -224,10 +224,14 @@
 
                 $(".moldbaby-subject").click(function () {
                     var index = $(this).attr("index");
-                    window.open("/web/productDetail.html?prodId=" + data[index].id);
+                    window.open("/web/productDetail.html?prodId=" + data[index].numIid + "&currPrice=" + getCurrPrice(data[index].couponInfo + "&couponClickUrl=" + data[index].couponClickUrl));
                 });
             }
         });
+    }
+
+    function getCurrPrice(priceInfo) {
+        return priceInfo.split("减")[1].split("元")[0];
     }
 </script>
 <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261882558'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1261882558%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
