@@ -48,20 +48,20 @@ public class TaobaoController {
 //            System.out.println(responseResult);
 
 
-            TaobaoClient client = new DefaultTaobaoClient("http://gw.api.taobao.com/router/rest", "23825857", "58a2fff3c1c40fcd0293adac41aedfaa");
-            TbkItemInfoGetRequest tbkItemInfoGetRequest = new TbkItemInfoGetRequest();
-            tbkItemInfoGetRequest.setFields("num_iid,title,pict_url,small_images,reserve_price,zk_final_price,user_type,provcity,item_url,coupon_click_url");
-            tbkItemInfoGetRequest.setNumIids("567957108381");
-            TbkItemInfoGetResponse execute = client.execute(tbkItemInfoGetRequest);
-            System.out.println(execute);
-
 //            TaobaoClient client = new DefaultTaobaoClient("http://gw.api.taobao.com/router/rest", "23825857", "58a2fff3c1c40fcd0293adac41aedfaa");
-//            TbkShopGetRequest req = new TbkShopGetRequest();
-//            req.setFields("user_id,shop_title,shop_type,seller_nick,pict_url,shop_url");
-//            req.setQ("女装");
-//            req.setIsTmall(true);
-//            TbkShopGetResponse response = client.execute(req);
-//            System.out.println(response.getBody());
+//            TbkItemInfoGetRequest tbkItemInfoGetRequest = new TbkItemInfoGetRequest();
+//            tbkItemInfoGetRequest.setFields("num_iid,title,pict_url,small_images,reserve_price,zk_final_price,user_type,provcity,item_url");
+//            tbkItemInfoGetRequest.setNumIids("567957108381");
+//            TbkItemInfoGetResponse execute = client.execute(tbkItemInfoGetRequest);
+//            System.out.println(execute);
+
+            TaobaoClient client = new DefaultTaobaoClient("http://gw.api.taobao.com/router/rest", "23825857", "58a2fff3c1c40fcd0293adac41aedfaa");
+            TbkShopGetRequest req = new TbkShopGetRequest();
+            req.setFields("user_id,shop_title,shop_type,seller_nick,pict_url,shop_url");
+            req.setQ("女装");
+            req.setIsTmall(false);
+            TbkShopGetResponse response = client.execute(req);
+            System.out.println(response.getBody());
         } catch (ApiException e) {
 
         }
