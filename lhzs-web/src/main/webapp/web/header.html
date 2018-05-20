@@ -37,7 +37,7 @@
     function searchProd(key) {
         var param = {};
         param.page = 1;
-        param.size = 50;
+        param.size = 20;
         param.q = key;
         $.ajax({
             type: 'post',
@@ -60,10 +60,10 @@
                             '</div>' +
                             '<div class="moldbaby-subject-title">' + product.title + '</div>' +
                             '<div class="clearfix">' +
-                            '<div class="curr-price">现价:¥' + getCurrPrice(product.couponInfo) + '</div>' +
+                            '<div class="curr-price">现价:¥' + getCurrPrice(product.zkFinalPrice,product.couponInfo) + '</div>' +
                             '<div class="other-price">' +
                             '<div>原价:¥' + product.zkFinalPrice + '</div>' +
-                            '<div>立省:¥' + (product.zkFinalPrice - getCurrPrice(product.couponInfo)).toFixed(2) + '</div>' +
+                            '<div>立省:¥' + (product.zkFinalPrice - getCurrPrice(product.zkFinalPrice,product.couponInfo)).toFixed(2) + '</div>' +
                             '</div>' +
                             '</div>' +
                             '<div class="go-shop">去购物</div>' +
@@ -73,7 +73,7 @@
 
                     $(".moldbaby-subject").click(function () {
                         var index = $(this).attr("index");
-                        window.open("/web/productDetail.html?prodId=" + prodList[index].numIid + "&currPrice=" + getCurrPrice(data[index].couponInfo + "&couponClickUrl=" + data[index].couponClickUrl);
+                        window.open("/web/productDetail.html?prodId=" + prodList[index].numIid + "&currPrice=" + getCurrPrice(prodList[index].zkFinalPrice, prodList[index].couponInfo) + "&couponClickUrl=" + prodList[index].couponClickUrl);
                     });
                 }
             }
@@ -83,7 +83,7 @@
     function searchShop(key) {
         var param = {};
         param.page = 1;
-        param.size = 12;
+        param.size = 8;
         param.shopName = key;
         $.ajax({
             type: 'post',
@@ -139,8 +139,8 @@
         searchShop(key);
     }
 
-    function getCurrPrice(priceInfo) {
-        return priceInfo.split("减")[1].split("元")[0];
+    function getCurrPrice(totalPrice,priceInfo) {
+        return (totalPrice - priceInfo.split("减")[1].split("元")[0]).toFixed(2);
     }
 
 </script>

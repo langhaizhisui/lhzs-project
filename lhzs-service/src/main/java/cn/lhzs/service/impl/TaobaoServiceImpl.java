@@ -34,31 +34,31 @@ public class TaobaoServiceImpl implements TaobaoService {
         try {
             TbkDgItemCouponGetRequest tbkDgItemCouponGetRequest = new TbkDgItemCouponGetRequest();
             tbkDgItemCouponGetRequest.setAdzoneId(106100645L);
-            tbkDgItemCouponGetRequest.setPageSize(Long.parseLong(taobao.getPage().toString()));
+            tbkDgItemCouponGetRequest.setPageSize(Long.parseLong((taobao.getPage() - 1) + ""));
             tbkDgItemCouponGetRequest.setPageNo(Long.parseLong(taobao.getSize().toString()));
             tbkDgItemCouponGetRequest.setQ(taobao.getQ());
             return getTaobaoClient().execute(tbkDgItemCouponGetRequest);
         } catch (ApiException e) {
-            logger.error("好券清单API【导购】异常",e);
+            logger.error("好券清单API【导购】异常", e);
             throw new TaobaoException("好券清单API【导购】异常");
         }
     }
 
     @Override
-    public TbkItemInfoGetResponse getProductByNumIids(String numIids){
+    public TbkItemInfoGetResponse getProductByNumIids(String numIids) {
         try {
             TbkItemInfoGetRequest tbkItemInfoGetRequest = new TbkItemInfoGetRequest();
             tbkItemInfoGetRequest.setFields("num_iid,title,pict_url,small_images,reserve_price,zk_final_price,user_type,provcity,item_url");
             tbkItemInfoGetRequest.setNumIids(numIids);
-            return getTaobaoClient().execute( tbkItemInfoGetRequest);
+            return getTaobaoClient().execute(tbkItemInfoGetRequest);
         } catch (ApiException e) {
-            logger.error("淘宝客商品详情异常",e);
+            logger.error("淘宝客商品详情异常", e);
             throw new TaobaoException("淘宝客商品详情异常");
         }
     }
 
     @Override
-    public TbkShopGetResponse searchShop(Taobao taobao){
+    public TbkShopGetResponse searchShop(Taobao taobao) {
         try {
             TbkShopGetRequest tbkShopGetRequest = new TbkShopGetRequest();
             tbkShopGetRequest.setFields("user_id,shop_title,shop_type,seller_nick,pict_url,shop_url");
@@ -74,13 +74,13 @@ public class TaobaoServiceImpl implements TaobaoService {
             tbkShopGetRequest.setEndAuctionCount(taobao.getEndAuctionCount());
             return getTaobaoClient().execute(tbkShopGetRequest);
         } catch (ApiException e) {
-            logger.error("淘宝客店铺查询异常",e);
+            logger.error("淘宝客店铺查询异常", e);
             throw new TaobaoException("淘宝客店铺查询异常");
         }
     }
 
-    private TaobaoClient getTaobaoClient(){
-        if(client == null){
+    private TaobaoClient getTaobaoClient() {
+        if (client == null) {
             client = new DefaultTaobaoClient("http://gw.api.taobao.com/router/rest", "23825857", "58a2fff3c1c40fcd0293adac41aedfaa");
         }
         return client;
