@@ -1,5 +1,6 @@
 package cn.lhzs.web.controller.admin;
 
+import cn.lhzs.common.exception.TaobaoException;
 import cn.lhzs.common.result.ResponseResult;
 import cn.lhzs.data.bean.Article;
 import cn.lhzs.service.intf.ArticleService;
@@ -21,12 +22,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
+
 import static cn.lhzs.common.result.ResponseResultGenerator.generatorSuccessResult;
 import static cn.lhzs.common.result.ResponseResultGenerator.getResponseResultByPage;
+import static java.lang.Thread.sleep;
 
 /**
-* Created by ZHX on 2018/5/15.
-*/
+ * Created by ZHX on 2018/5/15.
+ */
 @Controller
 @RequestMapping("/taobao")
 public class TaobaoController {
@@ -55,13 +59,35 @@ public class TaobaoController {
 //            TbkItemInfoGetResponse execute = client.execute(tbkItemInfoGetRequest);
 //            System.out.println(execute);
 
+//            TaobaoClient client = new DefaultTaobaoClient("http://gw.api.taobao.com/router/rest", "23825857", "58a2fff3c1c40fcd0293adac41aedfaa");
+//            TbkShopGetRequest req = new TbkShopGetRequest();
+//            req.setFields("user_id,shop_title,shop_type,seller_nick,pict_url,shop_url");
+//            req.setQ("女装");
+//            req.setIsTmall(false);
+//            TbkShopGetResponse response = client.execute(req);
+//            System.out.println(response.getBody());
+
+
             TaobaoClient client = new DefaultTaobaoClient("http://gw.api.taobao.com/router/rest", "23825857", "58a2fff3c1c40fcd0293adac41aedfaa");
-            TbkShopGetRequest req = new TbkShopGetRequest();
-            req.setFields("user_id,shop_title,shop_type,seller_nick,pict_url,shop_url");
-            req.setQ("女装");
-            req.setIsTmall(false);
-            TbkShopGetResponse response = client.execute(req);
-            System.out.println(response.getBody());
+            TbkDgItemCouponGetRequest tbkDgItemCouponGetRequest = new TbkDgItemCouponGetRequest();
+            tbkDgItemCouponGetRequest.setAdzoneId(106100645L);
+            tbkDgItemCouponGetRequest.setPageSize(5L);
+            tbkDgItemCouponGetRequest.setPageNo(5L);
+            tbkDgItemCouponGetRequest.setQ("男鞋");
+            TbkDgItemCouponGetResponse execute;
+            for (int i = 0; i < 100; i++) {
+                System.out.println("执行前："+ new Date().getTime());
+                execute = client.execute(tbkDgItemCouponGetRequest);
+                System.out.println(execute.getBody());
+                System.out.println("执行后："+ new Date().getTime());
+                try {
+                    sleep(2000);
+                } catch (InterruptedException e) {
+
+                }
+            }
+
+
         } catch (ApiException e) {
 
         }

@@ -34,8 +34,8 @@ public class TaobaoServiceImpl implements TaobaoService {
         try {
             TbkDgItemCouponGetRequest tbkDgItemCouponGetRequest = new TbkDgItemCouponGetRequest();
             tbkDgItemCouponGetRequest.setAdzoneId(106100645L);
-            tbkDgItemCouponGetRequest.setPageSize(Long.parseLong((taobao.getPage() - 1) + ""));
-            tbkDgItemCouponGetRequest.setPageNo(Long.parseLong(taobao.getSize().toString()));
+            tbkDgItemCouponGetRequest.setPageSize(Long.parseLong(taobao.getSize().toString()));
+            tbkDgItemCouponGetRequest.setPageNo(Long.parseLong(taobao.getPage().toString()));
             tbkDgItemCouponGetRequest.setQ(taobao.getQ());
             return getTaobaoClient().execute(tbkDgItemCouponGetRequest);
         } catch (ApiException e) {
