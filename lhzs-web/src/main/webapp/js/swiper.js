@@ -5,7 +5,7 @@ var swiper = {
     swiperTopFixed: function () {
         var topMargin = 48;
         var views = $("#swiper-container .swiper-slide").length > 4 && 4 || $("#swiper-container .swiper-slide").length;
-        var swiperHC = new Swiper('.swiper-container', {
+        var swiperHC = new Swiper('#swiper-container', {
             slidesPerView: views,
             slidesPerColumn: 1,
             paginationClickable: true,
