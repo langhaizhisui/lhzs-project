@@ -1,20 +1,12 @@
 var app = {
     cache: [],
-    getCatalog: function (data, callback) {
+    getSlideshowPictureList: function (data, callback) {
         var self = this;
-        self.ajax("post", "/catalog/cataList", data, callback);
+        self.ajax("post", "/config/slideshowPicture/list", data, callback);
     },
-    getShopList: function (data, callback) {
+    getNavProdList: function (data, callback) {
         var self = this;
-        self.ajax("post", "/shop/search", data, callback);
-    },
-    getHotShop: function (data, callback) {
-        var self = this;
-        self.ajax("post", "/shop/search", data, callback);
-    },
-    getShopDetail: function (data, callback) {
-        var self = this;
-        self.ajax("get", "/shop/getShop", data, callback);
+        self.ajax("post", "/prod/mobile/getList", data, callback);
     },
     getProductList: function (data, callback) {
         var self = this;
@@ -23,47 +15,6 @@ var app = {
     getProductDetail: function (data, callback) {
         var self = this;
         self.ajax("get", "/prod/getProduct", data, callback);
-    },
-    getGeneralizeProduct: function (data, callback) {
-        var self = this;
-        self.ajax("post", "/prod/getList", data, callback);
-    },
-    getMeta: function (data, callback) {
-        var self = this;
-        self.ajax("get", "/meta/getMeta", data, callback);
-    },
-    getSelectedNav: function (navId) {
-        setTimeout(function () {
-            $(".top-nav ul li").removeClass("top-nav-select");
-            if (navId <= 5) {
-                $('.top-nav ul li:eq(' + navId + ')').addClass("top-nav-select");
-            }
-        }, 100);
-
-    },
-    getArticleDetail: function (data, callback) {
-        var self = this;
-        self.ajax("post", "/article/detail", data, callback);
-    },
-    getArticleList: function (data, callback) {
-        var self = this;
-        self.ajax("post", "/article/search", data, callback);
-    },
-    getArticleCount: function (data, callback) {
-        var self = this;
-        self.ajax("post", "/article/count", data, callback);
-    },
-    getWebGeneralize: function (data, callback) {
-        var self = this;
-        self.ajax("post", "/web/generalize/search", data, callback);
-    },
-    getWebGeneralizeDetail: function (data, callback) {
-        var self = this;
-        self.ajax("get", "/web/generalize/detail", data, callback);
-    },
-    getSlideshowPictureList: function (data, callback) {
-        var self = this;
-        self.ajax("post", "/config/slideshowPicture/list", data, callback);
     },
     "ajax": function (type, url, data, callback) {
         var self = this;

@@ -74,22 +74,36 @@
         .prod-item {
             width: 48%;
             float: left;
-            margin-right: 2%;width: 48%;
+            margin-right: 2%;
+            width: 48%;
             float: left;
             margin-right: 1.3%;
             border: 1px solid #eee;
-            margin-bottom: 1rem;
+            margin-bottom: 2.2rem;
         }
 
         .prod-item-img {
             width: 100%
+
         }
 
-        .prod-item-title{
+        .prod-item-title {
             margin: 0.4rem;
+            color: black;
         }
-        .prod-item-price{
+
+        .prod-item-price {
             margin: 0.5rem;
+            color: black;
+        }
+
+        .btn-buy {
+            position: fixed;
+            width: 100%;
+            background-color: #ff5e54;
+            padding: 0.6rem 0;
+            bottom: 0;
+            text-align: center;
         }
     </style>
 </head>
@@ -101,74 +115,102 @@
         <div class="set"></div>
     </div>
     <div class="prod-img">
-        <img src="http://img.alicdn.com/tfscom/i3/3383535278/TB1QGD5tf9TBuNjy1zbXXXpepXa_!!0-item_pic.jpg"/>
+
     </div>
     <div class="prod-content">
-        <p class="prod-title">藤席三件套凉席1.8m床1.5可折叠夏季席子2m双人1.2米单人学生宿舍</p>
+        <p class="prod-title"></p>
         <div>
-            <span class="prod-price-curr">优惠价：¥100</span>
-            <span class="prod-price">¥200</span>
-            <span class="prod-remain-num">剩余100张</span>
+            <span class="prod-price-curr"></span>
+            <span class="prod-price"></span>
+            <span class="prod-remain-num"></span>
         </div>
     </div>
 
     <div class="hot-product">
         <p style="margin-top: 3rem;">大家都在看</p>
         <div class="hot-product-list">
-            <div class="prod-item">
-                <img class="prod-item-img"
-                     src="http://img.alicdn.com/tfscom/i3/3383535278/TB1QGD5tf9TBuNjy1zbXXXpepXa_!!0-item_pic.jpg"/>
-                <div class="prod-item-title">藤席三件套凉席1.8m床1.5可折叠夏...</div>
-                <div class="prod-item-price">
-                    <span class="prod-price-curr">优惠价：¥100</span>
-                    <span class="prod-price">¥200</span>
-                </div>
-            </div>
-            <div class="prod-item">
-                <img class="prod-item-img"
-                     src="http://img.alicdn.com/tfscom/i3/3383535278/TB1QGD5tf9TBuNjy1zbXXXpepXa_!!0-item_pic.jpg"/>
-                <div class="prod-item-title">藤席三件套凉席1.8m床1.5可折叠夏...</div>
-                <div class="prod-item-price">
-                    <span class="prod-price-curr">优惠价：¥100</span>
-                    <span class="prod-price">¥200</span>
-                </div>
-            </div>
-            <div class="prod-item">
-                <img class="prod-item-img"
-                     src="http://img.alicdn.com/tfscom/i3/3383535278/TB1QGD5tf9TBuNjy1zbXXXpepXa_!!0-item_pic.jpg"/>
-                <div class="prod-item-title">藤席三件套凉席1.8m床1.5可折叠夏...</div>
-                <div class="prod-item-price">
-                    <span class="prod-price-curr">优惠价：¥100</span>
-                    <span class="prod-price">¥200</span>
-                </div>
-            </div>
-            <div class="prod-item">
-                <img class="prod-item-img"
-                     src="http://img.alicdn.com/tfscom/i3/3383535278/TB1QGD5tf9TBuNjy1zbXXXpepXa_!!0-item_pic.jpg"/>
-                <div class="prod-item-title">藤席三件套凉席1.8m床1.5可折叠夏...</div>
-                <div class="prod-item-price">
-                    <span class="prod-price-curr">优惠价：¥100</span>
-                    <span class="prod-price">¥200</span>
-                </div>
-            </div>
-            <div class="prod-item">
-                <img class="prod-item-img"
-                     src="http://img.alicdn.com/tfscom/i3/3383535278/TB1QGD5tf9TBuNjy1zbXXXpepXa_!!0-item_pic.jpg"/>
-                <div class="prod-item-title">藤席三件套凉席1.8m床1.5可折叠夏...</div>
-                <div class="prod-item-price">
-                    <span class="prod-price-curr">优惠价：¥100</span>
-                    <span class="prod-price">¥200</span>
-                </div>
-            </div>
 
         </div>
     </div>
+    <div class="btn-buy">购买</div>
 </div>
 </body>
 <script src="/js/jquery.min.js"></script>
+<script src="/js/swiper.jquery.min.js"></script>
+<script src="/js/swiper.js"></script>
+<script src="/mobile/js/app.js"></script>
 <script>
-$(".back").click(function () {
-    history.back();
-})
+    var prodId = getParameter("prodId");
+    var currPrice = getParameter("currPrice");
+    var couponClickUrl = getParameter("couponClickUrl");
+    var remainNum = getParameter("remainNum");
+
+    $(function () {
+        getProdDetail();
+        hotProduct();
+        bindEvent();
+    });
+
+    function getProdDetail() {
+        var param = {"id": prodId};
+        app.getProductDetail(param, function (result) {
+            if (result.code == 200) {
+                var data = result.data;
+                $(".prod-img").html('<img src="' + data.pictUrl + '"/>');
+                $(".prod-title").text(data.title);
+                $(".prod-price-curr").text("优惠价：¥" + currPrice);
+                $(".prod-price").text("¥" + data.zkFinalPrice);
+                $(".prod-remain-num").text("销售量" + remainNum + "张");
+            }
+        });
+    }
+
+    function hotProduct() {
+        var param = {};
+        param.page = 1;
+        param.size = 10;
+        app.getProductList(param, function (result) {
+            if (result.code == 200) {
+                $(".hot-product-list").html("");
+                var data = result.data.data;
+                for (var i = 0; i < data.length; i++) {
+                    var item = data[i];
+                    var html = '<a href="/mobile/productDetail.html?prodId=' + item.numIid + '&currPrice=' + getCurrPrice(item.zkFinalPrice, item.couponInfo) + '&couponClickUrl=' + item.couponClickUrl + '&remainNum=' + item.volume + '">' +
+                        '<div class="prod-item">' +
+                        '<img class="prod-item-img" src="' + item.pictUrl + '"/>' +
+                        '<div class="prod-item-title">' + getTitle(item.title) + '</div>' +
+                        '<div class="prod-item-price">' +
+                        '<span class="prod-price-curr">优惠价：¥' + getCurrPrice(item.zkFinalPrice, item.couponInfo) + '</span>' +
+                        '<span class="prod-price">¥' + item.zkFinalPrice + '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '</a>';
+                    $(".hot-product-list").append(html);
+                }
+            }
+        });
+    }
+
+    function getCurrPrice(totalPrice, priceInfo) {
+        return (totalPrice - priceInfo.split("减")[1].split("元")[0]).toFixed(2);
+    }
+
+    function getTitle(title) {
+        if (title > 15) {
+            return title.substr(0, 15) + "...";
+        }
+        return title;
+    }
+
+    function bindEvent() {
+        $(".back").click(function () {
+            history.back();
+        });
+        $(".btn-buy").click(function () {
+            location.href = "/mobile/productBuyRoute.html?couponClickUrl=" + couponClickUrl;
+        })
+
+    }
+
 </script>
 </html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>必买网</title>
+    <meta name="description" content="">
+    <meta name="Keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+<body>
+<div>
+    啊啊啊
+</div>
+
+</body>
+<script src="/js/jquery.min.js"></script>
+<script src="/mobile/js/wechat.js"></script>
+<script src="/mobile/js/app.js"></script>
+<script>
+    $(function () {
+        if(!wechat.isWechat()){
+            location.href = getParameter("couponClickUrl");
+        }
+    });
+</script>
+</html>

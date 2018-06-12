@@ -11,7 +11,7 @@ var swiper = {
             paginationClickable: true,
             spaceBetween: 0
         });
-        $(".swiper-slide").css("width", 100 / views + "%");
+        $("#swiper-container  .swiper-slide").css("width", 100 / views + "%");
         $("#swiper-container .swiper-slide").click(function () {
             var index = $(this).index();
             $(this).addClass("cur").siblings().removeClass("cur");
