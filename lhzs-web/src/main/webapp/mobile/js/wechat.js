@@ -90,5 +90,15 @@ wechat = {
                 });
             }
         });
+    },
+    authorUrl:function (params, callback) {
+        $.ajax({
+            type: "post",
+            url: "/app/weixin/author/url",
+            dataType: 'json',
+            contentType: "application/json",
+            data: JSON.stringify(params),
+            success: callback
+        });
     }
 }

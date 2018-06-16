@@ -79,26 +79,26 @@
 <script src="/mobile/js/wechat.js"></script>
 <script src="/mobile/js/app.js"></script>
 <script>
+    var count = getParameter("count");
+    var openId = getParameter("openId");
+
     $(document).ready(function () {
-        $(".search-box").click(function () {
-            location.href = "/mobile/search.html";
-        });
-
-        getSlideShowPicture();
-        getNavProdList();
-
-//        wechat.wxShare();
-
-//        $.ajax({
-//            type: 'get',
-//            url: "/app/weixin/author/url",
-//            success: function (result) {
-//                if (result.code == 200) {
-//                    location.href = result.data.redirectUri;
-//                }
-//            }
-//        });
+        init();
+        bindEvent();
     });
+
+    function init() {
+        if (!wechat.isWechat()) {
+            getSlideShowPicture();
+            getNavProdList();
+        } else {
+            initWechat();
+            if (count || getCookie("openId")) {
+                getNavProdList();
+                getSlideShowPicture();
+            }
+        }
+    }
 
     function getSlideShowPicture() {
         var param = {};
@@ -157,24 +157,11 @@
         param.size = 6;
         app.getNavProdList(param, function (result) {
             if (result.code == 200) {
-                var html = '<div class="iba-category-bar swiper-container swiper-container-horizontal" id="swiper-container"style="position: absolute; top: 0px;">' +
-                    '<div class="swiper-wrapper">' +
-                    '<div class="swiper-slide cur">母婴</div>' +
-                    '<div class="swiper-slide">女装</div>' +
-                    '<div class="swiper-slide">男装</div>' +
-                    '<div class="swiper-slide">鞋包配饰</div>' +
-                    '<div class="swiper-slide">洗护彩妆</div>' +
-                    '<div class="swiper-slide">数码电器</div>' +
-                    '<div class="swiper-slide">食品/冲调</div>' +
-                    '<div class="swiper-slide">宠物</div>' +
-                    '<div class="swiper-slide">居家日用</div>' +
-                    '<div class="swiper-slide">家装家具</div>' +
-                    '<div class="swiper-slide">文体/车品</div>' +
-                    '</div></div>';
                 var data = result.data;
+                setNavTitle(data);
                 for (var i = 0; i < data.length; i++) {
                     var item = data[i];
-                    html += '<div class="iba-act-area">' +
+                    var html = '<div class="iba-act-area">' +
                         '<div class="iba-type">' +
                         '<p><span>' + item.nav + '</span></p>' +
                         '</div>' +
@@ -200,18 +187,71 @@
                             '</a>'
                     }
                     html += '</div></div>';
-                }
-                html += '</div>';
 
-                $("#iba-act-container").html(html);
+                    $("#iba-act-container").append(html);
+                }
 
                 swiper.swiperTopFixed();
             }
         });
     }
 
+    function setNavTitle(data) {
+        var navTitle = '<div class="iba-category-bar swiper-container swiper-container-horizontal" id="swiper-container"style="position: absolute; top: 0px;">' +
+            '<div class="swiper-wrapper">';
+        for (var i = 0; i < data.length; i++) {
+            var item = data[i];
+            if (i == 0) {
+                navTitle += '<div class="swiper-slide cur">' + item.nav + '</div>';
+            } else {
+                navTitle += '<div class="swiper-slide">' + item.nav + '</div>';
+            }
+        }
+        navTitle += '</div></div>';
+        $("#iba-act-container").append(navTitle);
+    }
+
     function getCurrPrice(totalPrice, priceInfo) {
         return (totalPrice - priceInfo.split("减")[1].split("元")[0]).toFixed(2);
+    }
+
+    function initWechat() {
+        wechat.wxShare();
+        authorUrl();
+    }
+
+    function authorUrl() {
+        if (!count && !getCookie("openId")) {
+            var params = {};
+            params.url = location.pathname;
+            params.count = 1;
+            wechat.authorUrl(params, function (result) {
+                if (result.code == 200) {
+                    setCookie("openId", getParameter("openId"), 2);
+                    location.replace(result.data.redirectUri);
+                }
+            });
+        }
+    }
+
+    function setCookie(key, value, minute) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() + minute * 60 * 1000);
+        document.cookie = key + "=" + escape(value) + ";expires=" + exp.toGMTString();
+    }
+
+    function getCookie(key) {
+        var arr, reg = new RegExp("(^| )" + key + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg)) {
+            return unescape(arr[2]);
+        }
+        return null;
+    }
+
+    function bindEvent() {
+        $(".search-box").click(function () {
+            location.href = "/mobile/search.html";
+        });
     }
 
 </script>

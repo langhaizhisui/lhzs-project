@@ -6,10 +6,7 @@ import cn.lhzs.common.util.StringUtil;
 import cn.lhzs.common.util.WebUtil;
 import cn.lhzs.common.util.WechatUtil;
 import cn.lhzs.common.util.XMLUtil;
-import cn.lhzs.common.vo.WechatAccount;
-import cn.lhzs.common.vo.WechatAuthorize;
-import cn.lhzs.common.vo.WechatConfig;
-import cn.lhzs.common.vo.WechatToken;
+import cn.lhzs.common.vo.*;
 import cn.lhzs.data.bean.WechatUser;
 import cn.lhzs.service.intf.WechatService;
 import com.alibaba.fastjson.JSONObject;
@@ -24,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 import static cn.lhzs.common.result.ResponseResultGenerator.generatorSuccessResult;
+import static cn.lhzs.common.util.UrlUtil.baseUrl;
+import static cn.lhzs.common.util.UrlUtil.homePageUrl;
 
 /**
  * Created by ZHX on 2018/2/8.
@@ -60,11 +59,11 @@ public class WechatController {
 
     @RequestMapping(value = "/author/url")
     @ResponseBody
-    public ResponseResult authorUrl(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ResponseResult authorUrl(@RequestBody WechatCondition wechatCondition, HttpServletRequest request, HttpServletResponse response) throws Exception {
         WechatAccount account = wechatService.getAccount();
         String authorizeUrl = WechatUtil.generatorAuthorizeUrl(new WechatAuthorize() {{
             setAppId(account.getAppId());
-            setRedirectUri("http://zhx.tunnel.qydev.com/app/weixin/author");
+            setRedirectUri(baseUrl + "/app/weixin/author?url=" + wechatCondition.getUrl());
         }});
         WechatAuthorize wechatAuthorize = new WechatAuthorize();
         wechatAuthorize.setRedirectUri(authorizeUrl);
@@ -73,17 +72,22 @@ public class WechatController {
 
     @RequestMapping(value = "/author")
     @ResponseBody
-    public ResponseResult author(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void author(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String code = request.getParameter("code");
-        if(StringUtil.isNotEmpty(code)){
+        if (StringUtil.isNotEmpty(code)) {
             String authorizeUrl = wechatService.accessToken(code);
             WechatToken wechatToken = JSONObject.parseObject(authorizeUrl, WechatToken.class);
 
             String userInfo = wechatService.getWechatUserInfo(wechatToken);
             WechatUser wechatUser = JSONObject.parseObject(userInfo, WechatUser.class);
             wechatService.addWechatUser(wechatUser);
+
+            String url = request.getParameter("url");
+            String redirectUrl = StringUtil.isEmpty(url) ? homePageUrl : url;
+            response.sendRedirect(baseUrl + redirectUrl + "?count=1&openId=" + wechatUser.getOpenId());
+        } else {
+            response.sendRedirect(baseUrl + homePageUrl + "?count=1");
         }
-        return generatorSuccessResult();
     }
 
     @RequestMapping(value = "/config")
