@@ -5,12 +5,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by ZHX on 2017/11/9.
  */
-public class BaseModel {
+public class BaseModel implements Serializable {
 
     @Transient
     private Integer page;

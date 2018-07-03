@@ -1,6 +1,7 @@
 package cn.lhzs.service.impl;
 
 import cn.lhzs.base.AbstractBaseService;
+import cn.lhzs.data.base.ExampleCondition;
 import cn.lhzs.data.bean.Product;
 import cn.lhzs.data.dao.ProductMapper;
 import cn.lhzs.common.vo.ProductSearchCondition;
@@ -59,9 +60,11 @@ public class ProductServiceImpl extends AbstractBaseService<Product> implements 
         return findByCondition(getProductSearchExample(productSearchCondition));
     }
 
-    private Example getProductSearchExample(ProductSearchCondition productSearchCondition) {
-        Example example = new Example(Product.class);
-        Example.Criteria criteria = example.createCriteria();
+    private ExampleCondition getProductSearchExample(ProductSearchCondition productSearchCondition) {
+        ExampleCondition condition = new ExampleCondition(Product.class);
+        condition.setPage(productSearchCondition.getPage());
+        condition.setSize(productSearchCondition.getSize());
+        Example.Criteria criteria = condition.createCriteria();
         if (StringUtil.isNotEmpty(productSearchCondition.getProdId() + "")) {
             criteria.andEqualTo("id", productSearchCondition.getProdId());
         }
@@ -81,7 +84,7 @@ public class ProductServiceImpl extends AbstractBaseService<Product> implements 
             criteria.andGreaterThanOrEqualTo("createTime", productSearchCondition.getCreateTimeStart())
                     .andLessThanOrEqualTo("createTime", productSearchCondition.getCreateTimeEnd());
         }
-        return example;
+        return condition;
     }
 
     @Override

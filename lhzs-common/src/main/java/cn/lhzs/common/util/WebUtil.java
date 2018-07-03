@@ -33,7 +33,8 @@ public final class WebUtil {
 
     private static Logger logger = LoggerFactory.getLogger(WebUtil.class);
 
-    private WebUtil() {}
+    private WebUtil() {
+    }
 
     public static final String getCookieValue(HttpServletRequest request, String cookieName, String defaultValue) {
         Cookie cookie = WebUtils.getCookie(request, cookieName);
@@ -165,7 +166,7 @@ public final class WebUtil {
         return ip;
     }
 
-    public static Map<String, String> getAllRequestParam(final HttpServletRequest request,String encoding) throws UnsupportedEncodingException {
+    public static Map<String, String> getAllRequestParam(final HttpServletRequest request, String encoding) throws UnsupportedEncodingException {
         request.setCharacterEncoding(encoding);
         Map<String, String> res = new HashMap<String, String>();
         Enumeration<?> temp = request.getParameterNames();
@@ -173,7 +174,7 @@ public final class WebUtil {
             while (temp.hasMoreElements()) {
                 String key = (String) temp.nextElement();
                 String value = request.getParameter(key);
-                if (StringUtil.isNotEmpty(value)){
+                if (StringUtil.isNotEmpty(value)) {
                     res.put(key, value);
                 }
             }

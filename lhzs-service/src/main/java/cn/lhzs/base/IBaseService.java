@@ -1,6 +1,7 @@
 package cn.lhzs.base;
 
 import cn.lhzs.data.base.BaseModel;
+import cn.lhzs.data.base.ExampleCondition;
 import org.apache.ibatis.exceptions.TooManyResultsException;
 import tk.mybatis.mapper.entity.Example;
 
@@ -19,6 +20,15 @@ public interface IBaseService<T extends BaseModel> {
     T save(T model);
 
     /**
+     * 保存记录
+     * @param model
+     * @param isUseRedis
+     * @param expire
+     * @return
+     */
+    T save(T model, boolean isUseRedis, Long expire);
+
+    /**
      * 批量持久化
      *
      * @param models 实体列表
@@ -32,6 +42,8 @@ public interface IBaseService<T extends BaseModel> {
      */
     void deleteById(Long id);
 
+    void deleteRedisId(Long id);
+
     /**
      * 批量刪除 eg：ids -> “1,2,3,4”
      *
@@ -39,13 +51,15 @@ public interface IBaseService<T extends BaseModel> {
      */
     void deleteByIds(String ids);
 
+    void deleteRedisIds(String ids);
+
     /**
      * 更新记录
      *
      * @param model 实体
      * @return 更换的实体
      */
-    T update(T model);
+    T update(T model, boolean isUseRedis, Long expire);
 
     /**
      * 通过ID查找
@@ -54,6 +68,8 @@ public interface IBaseService<T extends BaseModel> {
      * @return
      */
     T findById(Long id);
+
+    void addRedisId(Long id, T model);
 
     /**
      * 根据条件查询
@@ -73,13 +89,19 @@ public interface IBaseService<T extends BaseModel> {
      */
     List<T> findByIds(String ids);
 
+    List<T> getRedisIds(String[] idArr);
+
     /**
      * 根据条件查找
      *
-     * @param example
+     * @param condition
      * @return
      */
-    List<T> findByCondition(Example example);
+    List<T> findByCondition(ExampleCondition condition);
+
+    void addPageRedis(String pageKey, List<T> list);
+
+    List<T> getPageRedis(T model);
 
     /**
      * 获取所有
@@ -100,4 +122,6 @@ public interface IBaseService<T extends BaseModel> {
      * @return 最大id值
      */
     Long getMaxId();
+
+    String getAttrValForRedisKey(T t, boolean bWithSupperFields);
 }

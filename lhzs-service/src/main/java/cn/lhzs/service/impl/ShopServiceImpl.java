@@ -4,6 +4,7 @@ import cn.lhzs.base.AbstractBaseService;
 import cn.lhzs.common.constant.ShopEnum;
 import cn.lhzs.common.util.StringUtil;
 import cn.lhzs.common.vo.ShopSearchCondition;
+import cn.lhzs.data.base.ExampleCondition;
 import cn.lhzs.data.bean.Shop;
 import cn.lhzs.data.dao.ShopMapper;
 import cn.lhzs.service.intf.ShopService;
@@ -40,9 +41,11 @@ public class ShopServiceImpl extends AbstractBaseService<Shop> implements ShopSe
         return shopList;
     }
 
-    private Example getShopSearchExample(ShopSearchCondition shopSearchCondition) {
-        Example example = new Example(Shop.class);
-        Example.Criteria criteria = example.createCriteria();
+    private ExampleCondition getShopSearchExample(ShopSearchCondition shopSearchCondition) {
+        ExampleCondition condition = new ExampleCondition(Shop.class);
+        condition.setPage(shopSearchCondition.getPage());
+        condition.setSize(shopSearchCondition.getSize());
+        Example.Criteria criteria = condition.createCriteria();
         if (shopSearchCondition.getId() != null) {
             criteria.andEqualTo("id", shopSearchCondition.getId());
         }
@@ -59,7 +62,7 @@ public class ShopServiceImpl extends AbstractBaseService<Shop> implements ShopSe
             criteria.andGreaterThanOrEqualTo("createTime", shopSearchCondition.getCreateTimeStart())
                     .andLessThanOrEqualTo("createTime", shopSearchCondition.getCreateTimeEnd());
         }
-        return example;
+        return condition;
     }
 
     @Override
@@ -67,16 +70,18 @@ public class ShopServiceImpl extends AbstractBaseService<Shop> implements ShopSe
         return findByCondition(getShopsExample(shop));
     }
 
-    private Example getShopsExample(Shop shop) {
-        Example example = new Example(Shop.class);
-        Example.Criteria criteria = example.createCriteria();
+    private ExampleCondition getShopsExample(Shop shop) {
+        ExampleCondition condition = new ExampleCondition(Shop.class);
+        condition.setPage(shop.getPage());
+        condition.setSize(shop.getSize());
+        Example.Criteria criteria = condition.createCriteria();
         if (StringUtil.isNotEmpty(shop.getType())) {
             criteria.andEqualTo("type", shop.getType());
         }
         if (StringUtil.isNotEmpty(shop.getSite())) {
             criteria.andEqualTo("site", shop.getSite());
         }
-        return example;
+        return condition;
     }
 
     @Override

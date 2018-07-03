@@ -56,7 +56,7 @@ public class ProductController {
     @RequestMapping(value = "/mobile/getList")
     @ResponseBody
     public ResponseResult getMobileProductList(@RequestBody Taobao taobao) {
-        String[] navArr = new String[]{"母婴", "女装", "男装", "鞋包配饰", "洗护彩妆", "数码电器", "食品 冲调", "宠物", "居家日用", "家装家具", "车品"};
+        String[] navArr = new String[]{"食品 冲调", "宠物", "居家日用", "家装家具", "车品"};
         List<JSONObject> resultList = new ArrayList<JSONObject>();
         for (int i = 0; i < navArr.length; i++) {
             taobao.setQ(navArr[i]);

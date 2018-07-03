@@ -20,6 +20,7 @@
     <context:component-scan base-package="cn.lhzs.web"></context:component-scan>
     <context:component-scan base-package="cn.lhzs.service.impl"></context:component-scan>
     <context:component-scan base-package="cn.lhzs.data.dao"></context:component-scan>
+    <context:component-scan base-package="cn.lhzs.data.base"></context:component-scan>
     <context:component-scan base-package="cn.lhzs.task"></context:component-scan>
     <context:component-scan base-package="cn.lhzs.common.aop"></context:component-scan>
     <context:component-scan base-package="cn.lhzs.common.support.http"></context:component-scan>
@@ -107,5 +108,52 @@
         <property name="staleConnectionCheckEnabled" value="true"/>
     </bean>
     <bean id="requestConfig" factory-bean="requestConfigBuilder" factory-method="build"/>
+
+    <!--<context:property-placeholder location="classpath:redis.properties"/>-->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="433" />
+        <property name="maxIdle" value="333" />
+        <property name="minIdle" value="5" />
+        <property name="maxWaitMillis" value="20000" />
+        <property name="testOnBorrow" value="true" />
+    </bean>
+    <bean id="connectionFactory"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="hostName" value="119.23.54.39" />
+        <property name="port" value="6379" />
+        <property name="password" value="" />
+        <property name="poolConfig" ref="poolConfig" />
+    </bean>
+    <bean id="keyConnectionFactory"
+          class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="hostName" value="119.23.54.39" />
+        <property name="port" value="6379" />
+        <property name="password" value="" />
+        <property name="poolConfig" ref="poolConfig" />
+    </bean>
+    <bean id="redisMsgListenerContainer"
+          class="org.springframework.data.redis.listener.RedisMessageListenerContainer">
+        <property name="connectionFactory" ref="keyConnectionFactory" />
+    </bean>
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="keyConnectionFactory" />
+        <property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+        <property name="hashKeySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+        </property>
+    </bean>
+
+    <!--<bean id="transRedisTemplate" class="">-->
+        <!--<property name="connectionFactory" ref="connectionFactory" />-->
+        <!--<property name="keySerializer">-->
+            <!--<bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />-->
+        <!--</property>-->
+        <!--<property name="hashKeySerializer">-->
+            <!--<bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />-->
+        <!--</property>-->
+    <!--</bean>-->
 
 </beans>

@@ -139,6 +139,8 @@
 <script src="/js/swiper.jquery.min.js"></script>
 <script src="/js/swiper.js"></script>
 <script src="/mobile/js/app.js"></script>
+<script src="/mobile/js/jweixin-1.2.0.js"></script>
+<script src="/mobile/js/wechat.js"></script>
 <script>
     var prodId = getParameter("prodId");
     var currPrice = getParameter("currPrice");
@@ -161,8 +163,20 @@
                 $(".prod-price-curr").text("优惠价：¥" + currPrice);
                 $(".prod-price").text("¥" + data.zkFinalPrice);
                 $(".prod-remain-num").text("销售量" + remainNum + "张");
+                setShare(data);
             }
         });
+    }
+
+    function setShare(data) {
+        var friend = {
+            title: "商品详情",
+            link: "http://zhx.tunnel.qydev.com/mobile/productDetail.html?prodId=" + prodId + "&currPrice=" + currPrice + "&couponClickUrl=" + couponClickUrl + "&remainNum=" + remainNum,
+            desc: data.title,
+            imgUrl: data.pictUrl
+        }
+
+        wechat.share(friend, friend);
     }
 
     function hotProduct() {

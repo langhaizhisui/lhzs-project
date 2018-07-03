@@ -152,13 +152,95 @@
     }
 
     function getNavProdList() {
+        var navTitle = ["母婴", "女装", "男装", "鞋包配饰", "洗护彩妆", "数码电器", "食品/冲调", "宠物", "居家日用", "家装家具", "文体/车品"];
+        setNavTitle(navTitle);
+        swiper.swiperTopFixed();
+
+        getProdList("母婴");
+
+        setTimeout(function () {
+            getProdList("女装");
+        }, 200);
+        setTimeout(function () {
+            getProdList("男装");
+        }, 400);
+        setTimeout(function () {
+            getProdList("鞋包配饰");
+        }, 600);
+        setTimeout(function () {
+        getProdList("洗护彩妆");
+        }, 800);
+        setTimeout(function () {
+            getProdList("数码电器");
+        }, 1000);
+        setTimeout(function () {
+            getSecondStartProductList();
+        }, 1200);
+    }
+
+    function getProdList(name) {
+        var param = {};
+        param.page = 1;
+        param.size = 6;
+        param.q = name;
+        getSingleNavProdList(param);
+    }
+
+    function setNavTitle(data) {
+        var navTitle = '<div class="iba-category-bar swiper-container swiper-container-horizontal" id="swiper-container"style="position: absolute; top: 0px;">' +
+            '<div class="swiper-wrapper">';
+        for (var i = 0; i < data.length; i++) {
+            if (i == 0) {
+                navTitle += '<div class="swiper-slide cur">' + data[i] + '</div>';
+            } else {
+                navTitle += '<div class="swiper-slide">' + data[i] + '</div>';
+            }
+        }
+        navTitle += '</div></div>';
+        $("#iba-act-container").append(navTitle);
+    }
+
+    function getSingleNavProdList(param) {
+        var html = '<div class="iba-act-area">' +
+            '<div class="iba-type">' +
+            '<p><span>' + param.q + '</span></p>' +
+            '</div>' +
+            '<div class="iba-product-list listIndex0">';
+        app.getProductList(param, function (result) {
+            if (result.code == 200) {
+                var data = result.data.data;
+                for (var j = 0; j < data.length; j++) {
+                    var prod = data[j];
+                    html += '<a href="/mobile/productDetail.html?prodId=' + prod.numIid + '&currPrice=' + getCurrPrice(prod.zkFinalPrice, prod.couponInfo) + '&couponClickUrl=' + prod.couponClickUrl + '&remainNum=' + prod.volume + '">' +
+                        '<dl class="iba-product-main">' +
+                        '<dt class="iba-product-image">' +
+                        '<img src="' + prod.pictUrl + '" alt="">' +
+                        '</dt>' +
+                        '<dd class="iba-product-description">' +
+                        '<p>' + prod.title + '</p>' +
+                        '<div class="iba-clear">' +
+                        '<div class="iba-product-price"><span class="iba-product-price-label">优惠价￥' + getCurrPrice(prod.zkFinalPrice, prod.couponInfo) + '</span><spanclass="iba-new-price"></span><span class="iba-old-price">￥' + prod.zkFinalPrice + '</span></div>' +
+                        '<div class="iba-product-nation">' +
+                        '<span>销售量：' + prod.volume + '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '</dd>' +
+                        '</dl>' +
+                        '</a>'
+                }
+                html += '</div></div>';
+                $("#iba-act-container").append(html);
+            }
+        });
+    }
+
+    function getSecondStartProductList() {
         var param = {};
         param.page = 1;
         param.size = 6;
         app.getNavProdList(param, function (result) {
             if (result.code == 200) {
                 var data = result.data;
-                setNavTitle(data);
                 for (var i = 0; i < data.length; i++) {
                     var item = data[i];
                     var html = '<div class="iba-act-area">' +
@@ -187,28 +269,10 @@
                             '</a>'
                     }
                     html += '</div></div>';
-
                     $("#iba-act-container").append(html);
                 }
-
-                swiper.swiperTopFixed();
             }
         });
-    }
-
-    function setNavTitle(data) {
-        var navTitle = '<div class="iba-category-bar swiper-container swiper-container-horizontal" id="swiper-container"style="position: absolute; top: 0px;">' +
-            '<div class="swiper-wrapper">';
-        for (var i = 0; i < data.length; i++) {
-            var item = data[i];
-            if (i == 0) {
-                navTitle += '<div class="swiper-slide cur">' + item.nav + '</div>';
-            } else {
-                navTitle += '<div class="swiper-slide">' + item.nav + '</div>';
-            }
-        }
-        navTitle += '</div></div>';
-        $("#iba-act-container").append(navTitle);
     }
 
     function getCurrPrice(totalPrice, priceInfo) {
@@ -216,12 +280,11 @@
     }
 
     function initWechat() {
-        wechat.wxShare();
         authorUrl();
     }
 
     function authorUrl() {
-        if (!count && !getCookie("openId")) {
+        if (!count) {
             var params = {};
             params.url = location.pathname;
             params.count = 1;

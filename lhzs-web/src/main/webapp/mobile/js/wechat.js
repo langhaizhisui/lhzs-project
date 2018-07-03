@@ -2,18 +2,10 @@
  * Created by ZHX on 2017/12/21.
  */
 wechat = {
-    wxShare: function () {
+    share: function (friend, moments) {
         wechat.getConfig();
-        wechat.share();
-    },
-    share: function () {
-        var menuShareTimeline = new Object();
-        var menuShareAppMessage = new Object();
-        //TODO 获取分享数据
-        var menuItems = ['menuItem:share:appMessage', 'menuItem:share:timeline'];
-        wechat.showMenuItems(menuItems);
-
-        wechat.shareFriendOrCircle(menuShareAppMessage, menuShareTimeline);
+        wechat.showMenuItems(['menuItem:share:appMessage', 'menuItem:share:timeline']);
+        wechat.shareFriendOrCircle(friend, moments);
     },
     showMenuItems: function (menuList) {
         wx.ready(function () {
@@ -22,7 +14,7 @@ wechat = {
             });
         });
     },
-    shareFriendOrCircle: function (menuShareAppMessage, menuShareTimeline) {
+    shareFriendOrCircle: function (friend, moments) {
         wx.ready(function () {
             wx.checkJsApi({
                 jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'],
@@ -31,17 +23,17 @@ wechat = {
                 }
             });
             wx.onMenuShareAppMessage({
-                title: "1111",
-                link: "http://zhx.tunnel.qydev.com/images/west-boss.png",
-                desc: "分享测试",
-                imgUrl: "http://zhx.tunnel.qydev.com/images/west-boss.png"
+                title: friend.title,
+                link: friend.link,
+                desc: friend.desc,
+                imgUrl: friend.imgUrl
             });
 
             wx.onMenuShareTimeline({
-                title: "222",
-                link: "http://zhx.tunnel.qydev.com/images/west-boss.png",
-                desc: "分享测试222",
-                imgUrl: "http://zhx.tunnel.qydev.com/images/west-boss.png"
+                title: moments.title,
+                link: moments.link,
+                desc: moments.desc,
+                imgUrl: moments.imgUrl
             });
         });
     },
@@ -55,7 +47,7 @@ wechat = {
     },
     getConfig: function () {
         var params = {
-            "url":window.location.href
+            "url": window.location.href
         };
         $.ajax({
             type: "post",
@@ -91,7 +83,7 @@ wechat = {
             }
         });
     },
-    authorUrl:function (params, callback) {
+    authorUrl: function (params, callback) {
         $.ajax({
             type: "post",
             url: "/app/weixin/author/url",
