@@ -61,7 +61,7 @@ public class AdminProductController {
     @RequestMapping("/search")
     @ResponseBody
     public ResponseResult search(@RequestBody ProductSearchCondition productSearchCondition) {
-        return generatorSuccessResult(new PageInfo(productService.searchProduct(productSearchCondition)));
+        return generatorSuccessResult(productService.searchProduct(productSearchCondition));
     }
 
     @OpLog(type = DEL, descp = "删除所有商品")

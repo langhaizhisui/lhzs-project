@@ -64,7 +64,7 @@ public class AdminShopController {
     @RequestMapping("/search")
     @ResponseBody
     public ResponseResult searchShop(@RequestBody ShopSearchCondition shopSearchCondition) {
-        List<Shop> shopList = shopService.searchShop(shopSearchCondition);
+        List<Shop> shopList = shopService.searchShop(shopSearchCondition).getList();
         shopList.forEach(shop -> {
             if(StringUtil.isNotEmpty(shop.getSite())){
                 shop.setSite(ShopEnum.get(shop.getSite()).getName());
@@ -88,7 +88,7 @@ public class AdminShopController {
     @RequestMapping("/batch/delete")
     @ResponseBody
     public ResponseResult batchDelete(@RequestBody ShopSearchCondition shopSearchCondition) {
-        List<Shop> shopList = shopService.searchShop(shopSearchCondition);
+        List<Shop> shopList = shopService.searchShop(shopSearchCondition).getList();
         for (int i = 0; i < shopList.size(); i++) {
             Shop shop = shopList.get(i);
             shopService.deleteShopByShopId(shop.getId());

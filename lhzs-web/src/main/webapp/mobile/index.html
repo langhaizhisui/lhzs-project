@@ -88,16 +88,18 @@
     });
 
     function init() {
-        if (!wechat.isWechat()) {
-            getSlideShowPicture();
-            getNavProdList();
-        } else {
-            initWechat();
-            if (count || getCookie("openId")) {
-                getNavProdList();
-                getSlideShowPicture();
-            }
-        }
+        getSlideShowPicture();
+        getNavProdList();
+//        if (!wechat.isWechat()) {
+//            getSlideShowPicture();
+//            getNavProdList();
+//        } else {
+//            initWechat();
+//            if (count || getCookie("openId")) {
+//                getNavProdList();
+//                getSlideShowPicture();
+//            }
+//        }
     }
 
     function getSlideShowPicture() {

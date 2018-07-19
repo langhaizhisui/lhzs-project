@@ -1,6 +1,7 @@
 package cn.lhzs.base;
 
 import cn.lhzs.common.util.SecureUtil;
+import cn.lhzs.common.vo.BasePageList;
 import cn.lhzs.data.base.BaseModel;
 import cn.lhzs.data.base.BaseRedis;
 import cn.lhzs.data.base.ExampleCondition;
@@ -149,21 +150,24 @@ public abstract class AbstractBaseService<T extends BaseModel> extends BaseRedis
     }
 
     @Override
-    public List<T> findByCondition(ExampleCondition condition) {
+    public BasePageList<T> findByCondition(ExampleCondition condition) {
+        BasePageList<T> basePageList = new BasePageList<>();
         String pageKey = getPageKey(getAttrValForRedisKey(condition, false), condition.getPage(), condition.getSize());
         List<T> list = hget(getRedisSetPageKey(), pageKey, ArrayList.class);
         if (list == null) {
             list = mapper.selectByExample(condition);
             if (list != null) {
-                addPageRedis(pageKey, list);
+                basePageList.setList(list);
+                basePageList.setTotalPage(10L);
+                addPageRedis(pageKey, basePageList);
             }
         }
-        return list;
+        return basePageList;
     }
 
     @Override
-    public void addPageRedis(String pageKey, List<T> list) {
-        hset(getRedisSetPageKey(), pageKey, (Serializable) list, 10L);
+    public void addPageRedis(String pageKey, BasePageList basePageList) {
+        hset(getRedisSetPageKey(), pageKey, (Serializable) basePageList, 10L);
     }
 
     @Override

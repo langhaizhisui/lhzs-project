@@ -42,7 +42,7 @@ public class ShopController {
     @RequestMapping("/search")
     @ResponseBody
     public ResponseResult getShopList(@RequestBody ShopSearchCondition shopSearchCondition){
-        return generatorSuccessResult(new PageInfo(shopService.searchShop(shopSearchCondition)));
+        return generatorSuccessResult(shopService.searchShop(shopSearchCondition));
     }
 
 }

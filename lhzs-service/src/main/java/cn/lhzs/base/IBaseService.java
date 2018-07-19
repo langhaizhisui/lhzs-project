@@ -1,5 +1,6 @@
 package cn.lhzs.base;
 
+import cn.lhzs.common.vo.BasePageList;
 import cn.lhzs.data.base.BaseModel;
 import cn.lhzs.data.base.ExampleCondition;
 import org.apache.ibatis.exceptions.TooManyResultsException;
@@ -97,10 +98,20 @@ public interface IBaseService<T extends BaseModel> {
      * @param condition
      * @return
      */
-    List<T> findByCondition(ExampleCondition condition);
+    BasePageList<T> findByCondition(ExampleCondition condition);
 
-    void addPageRedis(String pageKey, List<T> list);
+    /**
+     * 添加分页数据
+     * @param pageKey
+     * @param basePageList
+     */
+    void addPageRedis(String pageKey, BasePageList basePageList);
 
+    /**
+     *
+     * @param model
+     * @return
+     */
     List<T> getPageRedis(T model);
 
     /**
@@ -123,5 +134,11 @@ public interface IBaseService<T extends BaseModel> {
      */
     Long getMaxId();
 
+    /**
+     * 获取属性值健
+     * @param t
+     * @param bWithSupperFields
+     * @return
+     */
     String getAttrValForRedisKey(T t, boolean bWithSupperFields);
 }

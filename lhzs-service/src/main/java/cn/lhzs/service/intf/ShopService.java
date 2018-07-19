@@ -1,5 +1,6 @@
 package cn.lhzs.service.intf;
 
+import cn.lhzs.common.vo.BasePageList;
 import cn.lhzs.data.bean.Shop;
 import cn.lhzs.common.vo.ShopSearchCondition;
 
@@ -22,9 +23,9 @@ public interface ShopService {
 
     void updateShop(Shop shop);
 
-    List<Shop> searchShop(ShopSearchCondition shopSearchCondition);
+    BasePageList<Shop> searchShop(ShopSearchCondition shopSearchCondition);
 
-    List<Shop> getShops(Shop shop);
+    BasePageList<Shop> getShops(Shop shop);
 
     void deleteTable();
 

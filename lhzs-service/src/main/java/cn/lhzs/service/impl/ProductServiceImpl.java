@@ -1,6 +1,7 @@
 package cn.lhzs.service.impl;
 
 import cn.lhzs.base.AbstractBaseService;
+import cn.lhzs.common.vo.BasePageList;
 import cn.lhzs.data.base.ExampleCondition;
 import cn.lhzs.data.bean.Product;
 import cn.lhzs.data.dao.ProductMapper;
@@ -28,7 +29,7 @@ public class ProductServiceImpl extends AbstractBaseService<Product> implements 
     public ProductMapper productMapper;
 
     @Override
-    public List<Product> getProdList(ProductSearchCondition productSearchCondition) {
+    public BasePageList<Product> getProdList(ProductSearchCondition productSearchCondition) {
         startPage(productSearchCondition.getPage(), productSearchCondition.getSize());
         return findByCondition(getProductSearchExample(productSearchCondition));
     }
@@ -55,7 +56,7 @@ public class ProductServiceImpl extends AbstractBaseService<Product> implements 
     }
 
     @Override
-    public List<Product> searchProduct(ProductSearchCondition productSearchCondition) {
+    public BasePageList<Product> searchProduct(ProductSearchCondition productSearchCondition) {
         startPage(productSearchCondition.getPage(), productSearchCondition.getSize());
         return findByCondition(getProductSearchExample(productSearchCondition));
     }
@@ -102,7 +103,7 @@ public class ProductServiceImpl extends AbstractBaseService<Product> implements 
 
     @Override
     public void batchDeleteProduct(ProductSearchCondition productSearchCondition) {
-        searchProduct(productSearchCondition).forEach(e -> deleteProdByProdId(e.getId()));
+        searchProduct(productSearchCondition).getList().forEach(e -> deleteProdByProdId(e.getId()));
     }
 
     @Override

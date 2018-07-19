@@ -1,6 +1,7 @@
 package cn.lhzs.service.intf;
 
 import cn.lhzs.base.IBaseService;
+import cn.lhzs.common.vo.BasePageList;
 import cn.lhzs.data.bean.Product;
 import cn.lhzs.common.vo.ProductSearchCondition;
 
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public interface ProductService extends IBaseService<Product> {
 
-    List<Product> getProdList(ProductSearchCondition productSearchCondition);
+    BasePageList<Product> getProdList(ProductSearchCondition productSearchCondition);
 
     Product getProductByProdId(Long id);
 
@@ -21,7 +22,7 @@ public interface ProductService extends IBaseService<Product> {
 
     void updateProd(Product product);
 
-    List<Product> searchProduct(ProductSearchCondition productSearchCondition);
+    BasePageList<Product> searchProduct(ProductSearchCondition productSearchCondition);
 
     void deleteTable();
 

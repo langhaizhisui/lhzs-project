@@ -3,6 +3,7 @@ package cn.lhzs.service.impl;
 import cn.lhzs.base.AbstractBaseService;
 import cn.lhzs.common.constant.ShopEnum;
 import cn.lhzs.common.util.StringUtil;
+import cn.lhzs.common.vo.BasePageList;
 import cn.lhzs.common.vo.ShopSearchCondition;
 import cn.lhzs.data.base.ExampleCondition;
 import cn.lhzs.data.bean.Shop;
@@ -35,10 +36,9 @@ public class ShopServiceImpl extends AbstractBaseService<Shop> implements ShopSe
     }
 
     @Override
-    public List<Shop> searchShop(ShopSearchCondition shopSearchCondition) {
+    public BasePageList<Shop> searchShop(ShopSearchCondition shopSearchCondition) {
         startPage(shopSearchCondition.getPage(), shopSearchCondition.getSize());
-        List<Shop> shopList = findByCondition(getShopSearchExample(shopSearchCondition));
-        return shopList;
+        return findByCondition(getShopSearchExample(shopSearchCondition));
     }
 
     private ExampleCondition getShopSearchExample(ShopSearchCondition shopSearchCondition) {
@@ -66,7 +66,7 @@ public class ShopServiceImpl extends AbstractBaseService<Shop> implements ShopSe
     }
 
     @Override
-    public List<Shop> getShops(Shop shop) {
+    public BasePageList<Shop> getShops(Shop shop) {
         return findByCondition(getShopsExample(shop));
     }
 
