@@ -46,6 +46,7 @@ public class WechatServiceImpl extends AbstractBaseService<WechatUser> implement
 
     @Override
     public WechatAccount getAccount() {
+        logger.info("wechatAccount:"+configService.getConfigById(Constants.WECHAT_ACCOUNT).getValue());
         return JSONObject.parseObject(configService.getConfigById(Constants.WECHAT_ACCOUNT).getValue(), WechatAccount.class);
     }
 

@@ -75,7 +75,7 @@
 <script src="/js/jquery.min.js"></script>
 <script src="/js/swiper.jquery.min.js"></script>
 <script src="/js/swiper.js"></script>
-<script src="/mobile/js/jweixin-1.2.0.js"></script>
+<script src="/mobile/js/jweixin-1.4.0.js"></script>
 <script src="/mobile/js/wechat.js"></script>
 <script src="/mobile/js/app.js"></script>
 <script>
@@ -88,18 +88,18 @@
     });
 
     function init() {
-        getSlideShowPicture();
-        getNavProdList();
-//        if (!wechat.isWechat()) {
-//            getSlideShowPicture();
-//            getNavProdList();
-//        } else {
-//            initWechat();
-//            if (count || getCookie("openId")) {
-//                getNavProdList();
-//                getSlideShowPicture();
-//            }
-//        }
+//        getSlideShowPicture();
+//        getNavProdList();
+        if (!wechat.isWechat()) {
+            getSlideShowPicture();
+            getNavProdList();
+        } else {
+            initWechat();
+            if (count || getCookie("openId")) {
+                getNavProdList();
+                getSlideShowPicture();
+            }
+        }
     }
 
     function getSlideShowPicture() {

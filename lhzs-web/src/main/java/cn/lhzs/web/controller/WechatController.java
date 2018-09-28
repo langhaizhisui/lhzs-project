@@ -61,10 +61,11 @@ public class WechatController {
     @ResponseBody
     public ResponseResult authorUrl(@RequestBody WechatCondition wechatCondition, HttpServletRequest request, HttpServletResponse response) throws Exception {
         WechatAccount account = wechatService.getAccount();
-        String authorizeUrl = WechatUtil.generatorAuthorizeUrl(new WechatAuthorize() {{
-            setAppId(account.getAppId());
-            setRedirectUri(baseUrl + "/app/weixin/author?url=" + wechatCondition.getUrl());
-        }});
+
+        WechatAuthorize params = new WechatAuthorize();
+        params.setAppId(account.getAppId());
+        params.setRedirectUri("http://www.biibuy.com/app/weixin/author?url=" + wechatCondition.getUrl());
+        String authorizeUrl = WechatUtil.generatorAuthorizeUrl(params);
         WechatAuthorize wechatAuthorize = new WechatAuthorize();
         wechatAuthorize.setRedirectUri(authorizeUrl);
         return generatorSuccessResult(wechatAuthorize);

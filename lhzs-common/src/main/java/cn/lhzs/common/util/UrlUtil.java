@@ -28,6 +28,6 @@ import java.util.Map;
  * @author ZHX
  */
 public final class UrlUtil {
-    public static final String baseUrl = "http://zhx.tunnel.qydev.com";
+    public static final String baseUrl = "http://www.biibuy.com";
     public static final String homePageUrl = "/mobile/index.html";
 }
