@@ -1,0 +1,30 @@
+#table-resizable1 {
+  position: relative;
+}
+
+#table-resizable1 table {
+  margin: 0 !important;
+  table-layout: fixed;
+}
+
+#table-resizable1 thead tr th, #table-resizable1 tbody tr td {
+  text-overflow: ellipsis; /* for IE */
+  -moz-text-overflow: ellipsis; /* for Firefox,mozilla */
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
+  border: 1px solid #cecece;
+  padding: 7px 0px;
+}
+#table-resizable1 thead tr th {
+  position: relative;
+  user-select: none;
+  background-color: #e3e3e3;
+  font-weight: bold;
+}
+#table-resizable1 table tr:nth-child(odd){
+  background-color: #ffffff;
+}
+#table-resizable1 table tr:nth-child(even){
+  background-color: #e3e3e3;
+}

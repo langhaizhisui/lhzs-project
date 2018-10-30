@@ -1,0 +1,131 @@
+body {
+    background-color: #ebebeb;
+}
+
+.header {
+    background-color: #313846;
+    color: #979dab;
+    height: 55px;
+    line-height: 55px;
+    min-width: 1000px;
+    float: left;
+    width: 100%;
+    font-size: 15px;
+}
+
+.logo {
+    float: left;
+    padding: 10px 0px;
+    width: 46px;
+    line-height: 32px;
+    min-width: 170px;
+}
+
+.logo img {
+    float: left;
+    width: 65px;
+}
+
+.topNav {
+    float: left;
+    margin-left: 20px;
+}
+
+.topNav span {
+    padding: 15px 25px;
+}
+
+.user {
+    float: right;
+    padding-right: 20px;
+    font-size: 13.5px;
+}
+
+.user a {
+    margin-left: 20px;
+    color: #979dab;
+}
+
+.left {
+    float: left;
+    background-color: #333544;
+    min-height: 800px;
+    min-width: 180px;
+    color: #979dab;
+    width: 191px;
+    font-size: 14.5px;
+}
+
+.leftNav {
+    padding: 10px 0px 10px 20px;
+}
+
+.solidLine {
+    border-bottom: 1px solid white;
+}
+
+.dotLine {
+    border-bottom: 1px dotted white;
+}
+
+.leftNavText {
+    background-color: #2B2B36;
+    padding: 9px 35px;
+    font-size: 13.5px;
+}
+
+.navText {
+    min-width: 500px;
+    background-color: #fefefe;
+    padding: 60px 0px 6px 200px;
+    font-size: 13px;
+    color: #444444;
+}
+
+.arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #979dab;
+    font-size: 0;
+    line-height: 0;
+    margin-right: 5px;
+}
+
+.arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #979dab;
+    font-size: 0;
+    line-height: 0;
+    margin-right: 5px;
+    position: relative;
+    top: -8px;
+}
+
+.hidden {
+    display: none;
+}
+
+.leftNavSelected {
+    background-color: #2db3fa;
+    color: white;
+}
+
+.topNavSelected {
+    background-color: #2B2B36;
+    color: white;
+}
+
+.content {
+    margin: 10px 10px 0px 200px;
+    padding: 10px;
+    background-color: #fefefe;
+    height: 100%;
+    min-width: 500px;
+    min-height: 700px;
+    border-radius: 5px;
+}
