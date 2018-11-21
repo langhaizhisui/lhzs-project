@@ -7,11 +7,93 @@
     <link href="css/index.css" rel='stylesheet' type='text/css'/>
     <link href="css/table_list.css" rel='stylesheet' type='text/css'/>
     <link href="css/nav.css" rel='stylesheet' type='text/css'/>
+    <style>
+        .queryBox {
+            margin: 30px 10px 30px 20px;;
+            min-width: 1000px;
+        }
+
+        .queryRowBox {
+            margin-top: 20px;
+        }
+
+        .queryRowBox .pageInput {
+            margin-right: 20px;
+        }
+
+        .queryRowBox input {
+            height: 20px;
+            position: relative;
+            top: -2px;
+            margin-left: 5px;
+        }
+
+        .groupButton {
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .queryButton {
+            background-color: #03adf4;
+            width: 80px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            border: 1px solid #eeeeee;
+            border-radius: 5px;
+            color: white;
+            display: inline-block;
+        }
+
+        .page-num {
+            text-align: right;
+            min-width: 1000px;
+            margin: 20px 10px;
+            float: right;
+        }
+
+        .page-num span {
+            padding: 3px 8px;
+            background: #e3e3e3;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        #curr-page {
+            background-color: #03adf4;
+        }
+    </style>
 </head>
 <body>
 <div id="pageNav"></div>
 <div class="content" id="tableContainer">
-    <div class="table-resizable" id="table-resizable1" style="overflow:auto;color: #3b3b3b">
+    <div class="queryBox">
+        <div class="queryRowBox">
+            <span class="pageInput">
+                <span class="queryTitleText">商品Id</span>
+                <input/>
+            </span>
+            <span class="pageInput">
+                <span class="queryTitleText">商品名称</span>
+                <input/>
+            </span>
+            <span class="pageInput">
+                <span class="queryTitleText">价格</span>
+                <input/>
+            </span>
+            <span class="pageInput">
+                <span class="queryTitleText">价格</span>
+                <input/>
+            </span>
+            <div class="groupButton">
+                <span class="queryButton">查询</span>
+                <span class="queryButton">返回</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-resizable" id="table-resizable1" style="overflow:auto;color: #3b3b3b;margin: 0px 15px">
         <table style="width:2000px">
             <thead>
             <tr>
@@ -26,12 +108,6 @@
                 </th>
                 <th class="th-btn pointer">
                     参数
-                </th>
-                <th class="th-btn pointer">
-                    日志信息
-                </th>
-                <th class="th-btn pointer">
-                    日志信息
                 </th>
                 <th class="th-btn pointer">
                     日志信息
@@ -97,12 +173,6 @@
                 <td>
                     <a href="#">查看脚本</a>
                 </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
             </tr>
             <tr>
                 <td>1</td>
@@ -137,12 +207,6 @@
                 <td>
                     <a href="#">查看脚本</a>
                 </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
             </tr>
             <tr>
                 <td>1</td>
@@ -150,12 +214,6 @@
                 <td>3</td>
                 <td>4</td>
                 <td>5</td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
                 <td>
                     <a href="#">查看脚本</a>
                 </td>
@@ -187,9 +245,30 @@
             </tbody>
         </table>
     </div>
+    <!--分页-->
+    <div class="page-num"></div>
 </div>
 </body>
 <script src="../js/jquery.min.js"></script>
 <script src="js/nav.js"></script>
 <script src="js/table_list.js"></script>
+<script src="js/paging.js"></script>
+<script>
+    $(function () {
+        splitPage(9, 3, ".page-num",
+            function (index) {
+                if (index != 1) {
+
+                }
+            }, function (index) {
+                index = parseInt(index);
+                if (index != 10) {
+
+                }
+            }, function (index) {
+
+            });
+    });
+
+</script>
 </html>
