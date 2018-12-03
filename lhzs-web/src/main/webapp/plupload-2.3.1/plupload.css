@@ -1,0 +1,12 @@
+.uploader-btn{
+	line-height:17px;
+	cursor:pointer;
+	display:inline-block;
+	height:17px;
+	background:url(btn-icon1.png) no-repeat;
+	padding-left:17px;
+}
+
+.uploader-btn:hover{
+	background:url(btn-icon2.png) no-repeat;
+}
