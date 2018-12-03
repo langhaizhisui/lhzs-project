@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>必买网</title>
+    <meta name="description" content="">
+    <meta name="Keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="/mobile/css/swiper.min.css">
+    <link href="/mobile/css/male.css" rel="stylesheet">
+    <style>
+        .logo {
+            width: 70px;
+            height: auto;
+            float: left;
+        }
+
+        .search-box {
+            float: left;
+            background: #eaebed;
+            border-radius: 0.5rem;
+            width: 70%;
+            text-align: center;
+            padding-bottom: 0.15rem;
+        }
+
+        .search-box-img {
+            width: 1.5rem;
+            padding-bottom: 0.2rem;
+        }
+
+        .search-box-text {
+            display: inline-block;
+            font-size: 1.4rem;
+        }
+
+        .search {
+            background-color: #ff5e54;
+            padding: 10px 0px 5px 0px;
+            position: fixed;
+            z-index: 2;
+            width: 100%;
+        }
+
+        #bannerList {
+            padding-top: 48px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div class="search clearfix">
+        <img class="logo" src="/mobile/images/logo2.jpg">
+        <div class="search-box">
+            <img class="search-box-img" src="/mobile/images/search2.png">
+            <div class="search-box-text">搜索更多</div>
+        </div>
+    </div>
+
+    <div class="swiper-container swiper-container-h swiper-container-horizontal" id="bannerList">
+        <div class="swiper-wrapper" id="banners">
+
+        </div>
+        <div id="bannerListPot" class="swiper-pagination swiper-pagination-h swiper-pagination-bullets"
+             style="bottom: 5px;">
+
+        </div>
+    </div>
+    <div id="iba-act-container">
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/swiper.jquery.min.js"></script>
+<script src="/js/swiper.js"></script>
+<script src="/mobile/js/jweixin-1.4.0.js"></script>
+<script src="/mobile/js/wechat.js"></script>
+<script src="/mobile/js/app.js"></script>
+<script>
+    var count = getParameter("count");
+    var openId = getParameter("openId");
+
+    $(document).ready(function () {
+        init();
+        bindEvent();
+    });
+
+    function init() {
+//        getSlideShowPicture();
+//        getNavProdList();
+        if (!wechat.isWechat()) {
+            getSlideShowPicture();
+            getNavProdList();
+        } else {
+            initWechat();
+            if (count || getCookie("openId")) {
+                getNavProdList();
+                getSlideShowPicture();
+            }
+        }
+    }
+
+    function getSlideShowPicture() {
+        var param = {};
+        param.page = 1;
+        param.size = 20;
+
+        app.getSlideshowPictureList(param, function (result) {
+            if (result.code == 200) {
+                var html = "";
+                var pot = "";
+                var data = result.data.list;
+                for (var i = 0; i < data.length; i++) {
+                    var item = data[i];
+                    html += '<div class="swiper-slide" style="height: 150px;">' +
+                        '<a href="' + item.toUrl + '">' +
+                        '<img class="swiper-lazy swiper-lazy-loaded" src="' + getToUrl(item.url) + '">' +
+                        '</a>' +
+                        '</div>'
+                    pot += '<span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span>';
+                }
+                $("#banners").html(html);
+                $("#bannerListPot").html(pot);
+
+                bannerSwipe();
+            }
+        });
+    }
+
+    function getToUrl(url) {
+        if (url.indexOf("/") == 0) {
+            return "http://biibuy.com" + url;
+        } else {
+            return url;
+        }
+    }
+
+    function bannerSwipe() {
+        var sheight = $(window).width() * 450 / 1125;
+        var swiperH = new Swiper('#bannerList', {
+            pagination: '.swiper-pagination-h',
+            width: $(window).width(),
+            autoHeight: true,
+            height: sheight,
+            loop: true,
+            autoplay: 5000,
+            preloadImages: true,
+            lazyLoading: true
+        });
+        $("#bannerList .swiper-slide").css("height", sheight);
+        $(".swiper-pagination-h").css("bottom", "5px");
+    }
+
+    function getNavProdList() {
+        var navTitle = ["母婴", "女装", "男装", "鞋包配饰", "洗护彩妆", "数码电器", "食品/冲调", "宠物", "居家日用", "家装家具", "文体/车品"];
+        setNavTitle(navTitle);
+        swiper.swiperTopFixed();
+
+        getProdList("母婴");
+
+        setTimeout(function () {
+            getProdList("女装");
+        }, 200);
+        setTimeout(function () {
+            getProdList("男装");
+        }, 400);
+        setTimeout(function () {
+            getProdList("鞋包配饰");
+        }, 600);
+        setTimeout(function () {
+        getProdList("洗护彩妆");
+        }, 800);
+        setTimeout(function () {
+            getProdList("数码电器");
+        }, 1000);
+        setTimeout(function () {
+            getSecondStartProductList();
+        }, 1200);
+    }
+
+    function getProdList(name) {
+        var param = {};
+        param.page = 1;
+        param.size = 6;
+        param.q = name;
+        getSingleNavProdList(param);
+    }
+
+    function setNavTitle(data) {
+        var navTitle = '<div class="iba-category-bar swiper-container swiper-container-horizontal" id="swiper-container"style="position: absolute; top: 0px;">' +
+            '<div class="swiper-wrapper">';
+        for (var i = 0; i < data.length; i++) {
+            if (i == 0) {
+                navTitle += '<div class="swiper-slide cur">' + data[i] + '</div>';
+            } else {
+                navTitle += '<div class="swiper-slide">' + data[i] + '</div>';
+            }
+        }
+        navTitle += '</div></div>';
+        $("#iba-act-container").append(navTitle);
+    }
+
+    function getSingleNavProdList(param) {
+        var html = '<div class="iba-act-area">' +
+            '<div class="iba-type">' +
+            '<p><span>' + param.q + '</span></p>' +
+            '</div>' +
+            '<div class="iba-product-list listIndex0">';
+        app.getProductList(param, function (result) {
+            if (result.code == 200) {
+                var data = result.data.data;
+                for (var j = 0; j < data.length; j++) {
+                    var prod = data[j];
+                    html += '<a href="/mobile/productDetail.html?prodId=' + prod.numIid + '&currPrice=' + getCurrPrice(prod.zkFinalPrice, prod.couponInfo) + '&couponClickUrl=' + prod.couponClickUrl + '&remainNum=' + prod.volume + '">' +
+                        '<dl class="iba-product-main">' +
+                        '<dt class="iba-product-image">' +
+                        '<img src="' + prod.pictUrl + '" alt="">' +
+                        '</dt>' +
+                        '<dd class="iba-product-description">' +
+                        '<p>' + prod.title + '</p>' +
+                        '<div class="iba-clear">' +
+                        '<div class="iba-product-price"><span class="iba-product-price-label">优惠价￥' + getCurrPrice(prod.zkFinalPrice, prod.couponInfo) + '</span><spanclass="iba-new-price"></span><span class="iba-old-price">￥' + prod.zkFinalPrice + '</span></div>' +
+                        '<div class="iba-product-nation">' +
+                        '<span>销售量：' + prod.volume + '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '</dd>' +
+                        '</dl>' +
+                        '</a>'
+                }
+                html += '</div></div>';
+                $("#iba-act-container").append(html);
+            }
+        });
+    }
+
+    function getSecondStartProductList() {
+        var param = {};
+        param.page = 1;
+        param.size = 6;
+        app.getNavProdList(param, function (result) {
+            if (result.code == 200) {
+                var data = result.data;
+                for (var i = 0; i < data.length; i++) {
+                    var item = data[i];
+                    var html = '<div class="iba-act-area">' +
+                        '<div class="iba-type">' +
+                        '<p><span>' + item.nav + '</span></p>' +
+                        '</div>' +
+                        '<div class="iba-product-list listIndex0">';
+                    var prodList = item.prodList;
+                    for (var j = 0; j < prodList.length; j++) {
+                        var prod = prodList[j];
+                        html += '<a href="/mobile/productDetail.html?prodId=' + prod.numIid + '&currPrice=' + getCurrPrice(prod.zkFinalPrice, prod.couponInfo) + '&couponClickUrl=' + prod.couponClickUrl + '&remainNum=' + prod.volume + '">' +
+                            '<dl class="iba-product-main">' +
+                            '<dt class="iba-product-image">' +
+                            '<img src="' + prod.pictUrl + '" alt="">' +
+                            '</dt>' +
+                            '<dd class="iba-product-description">' +
+                            '<p>' + prod.title + '</p>' +
+                            '<div class="iba-clear">' +
+                            '<div class="iba-product-price"><span class="iba-product-price-label">优惠价￥' + getCurrPrice(prod.zkFinalPrice, prod.couponInfo) + '</span><spanclass="iba-new-price"></span><span class="iba-old-price">￥' + prod.zkFinalPrice + '</span></div>' +
+                            '<div class="iba-product-nation">' +
+                            '<span>销售量：' + prod.volume + '</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '</dd>' +
+                            '</dl>' +
+                            '</a>'
+                    }
+                    html += '</div></div>';
+                    $("#iba-act-container").append(html);
+                }
+            }
+        });
+    }
+
+    function getCurrPrice(totalPrice, priceInfo) {
+        return (totalPrice - priceInfo.split("减")[1].split("元")[0]).toFixed(2);
+    }
+
+    function initWechat() {
+        authorUrl();
+    }
+
+    function authorUrl() {
+        if (!count) {
+            var params = {};
+            params.url = location.pathname;
+            params.count = 1;
+            wechat.authorUrl(params, function (result) {
+                if (result.code == 200) {
+                    setCookie("openId", getParameter("openId"), 2);
+                    location.replace(result.data.redirectUri);
+                }
+            });
+        }
+    }
+
+    function setCookie(key, value, minute) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() + minute * 60 * 1000);
+        document.cookie = key + "=" + escape(value) + ";expires=" + exp.toGMTString();
+    }
+
+    function getCookie(key) {
+        var arr, reg = new RegExp("(^| )" + key + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg)) {
+            return unescape(arr[2]);
+        }
+        return null;
+    }
+
+    function bindEvent() {
+        $(".search-box").click(function () {
+            location.href = "/mobile/search.html";
+        });
+    }
+
+</script>
+</html>
