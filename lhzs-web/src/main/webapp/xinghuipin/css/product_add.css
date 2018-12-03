@@ -1,0 +1,38 @@
+.center {
+    margin: 40px 28% 20px 12%;
+}
+
+.table {
+    border: 0;
+    cellspacing: 0;
+    cellpadding: 0;
+    width: 100%;
+}
+
+.table td {
+    border-bottom: 1px solid #cecece;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-top: 1px solid #cecece;
+    border-right: 1px solid #cecece;
+    font-size: 14.5px;
+}
+
+.table-title {
+    background-color: #e3e3e3;
+    text-align: center;
+    border-right: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+}
+
+.table-input {
+    width: 450px;
+    height: 27px;
+    padding-left: 5px;
+    margin-left: 20px;
+}
+
+.groupButton{
+    text-align: center;
+    width: 100%;
+}
