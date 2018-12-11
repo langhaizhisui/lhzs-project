@@ -1,0 +1,48 @@
+.addrList {
+    margin-left: 1rem;
+}
+
+.addrListItem {
+    font-size: 0.9rem;
+    padding-top: 0.5rem;
+}
+
+.addrListItemContent {
+    width: 75%;
+}
+
+.addrListItemContentMobile {
+    font-size: 0.82rem;
+    margin-left: 0.5rem;
+    color: #777777;
+}
+
+.addrListItemEdit {
+    position: relative;
+    float: right;
+    top: -2.6rem;
+    overflow: hidden;
+    padding-right: 0.5rem;
+    color: #777777;
+    font-size: 0.8rem;
+}
+
+.addrListItemLine {
+    border-bottom: 1px solid #a0a0a0;
+    margin-top: 0.3rem;
+}
+
+.addrListItemContentDefault {
+    color: #ff5e54;
+    border: 1px solid;
+    font-size: 0.63rem;
+    padding: 0px 0.3rem 0px 0.35rem;
+    background: #ffeff0;
+}
+
+.addrListItemContentAddr {
+    font-size: 0.77rem;
+}
+.addrListItemContentName{
+    font-size: 0.868rem;
+}

@@ -1,0 +1,122 @@
+body {
+    background-color: #eee;
+}
+#bannerListPot {
+    width: 100%;
+}
+.swiper-pagination-bullet {
+    width: 5px;
+    height: 5px;
+    display: inline-block;
+    border-radius: 100%;
+    border: 1px solid #777777;
+}
+.swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
+    margin: 0 5px;
+}
+.swiper-container-horizontal > .swiper-pagination-bullets {
+    bottom: 15px;
+    right: 0;
+}
+.prod-content, .hot-product {
+    padding: 0rem 1rem;
+    background-color: white;
+}
+.prod-price-curr {
+    color: #ff5e54;
+    font-size: 0.85rem;
+}
+.prod-price-curr2 {
+    color: #ff5e54;
+    font-size: 0.8rem;
+}
+.prod-price {
+    font-size: 0.65rem;
+    margin-left: 0.5rem;
+    text-decoration: line-through;
+}
+.prod-remain-num {
+    font-size: 0.85rem;
+    float: right;
+}
+.prod-title {
+    padding: 0 0 1rem;
+    font-weight: bold;
+    font-size: 0.9rem;
+    line-height: 1.5rem;
+}
+.prod-detail {
+    padding: 0.35rem 0rem;
+}
+.prefer {
+    height: 3rem;
+    line-height: 3rem;
+    text-align: center;
+    font-size: 0.85rem;
+}
+.prod-item {
+    width: 48%;
+    float: left;
+    margin-right: 2%;
+    width: 48%;
+    float: left;
+    margin-right: 1.3%;
+    border: 1px solid #eee;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    background-color: white;
+}
+.prod-item-img {
+    width: 100%;
+    min-height: 10rem;
+}
+.prod-item-title {
+    margin: 0.4rem;
+    color: black;
+    height: 2.2rem;
+    overflow: hidden;
+    font-size: 0.85rem;
+}
+.prod-item-price {
+    margin: 0.5rem;
+    color: black;
+}
+.hot-product {
+    padding: 0rem 0.5rem;
+}
+.btn-bottom {
+    position: fixed;
+    width: 100%;
+    height: 3rem;
+    background-color: white;
+    bottom: 0;
+    border-top: 1px solid #cccccc;
+}
+.bottomContract {
+    text-align: center;
+    display: inline-block;
+    width: 20%;
+    float: left;
+    padding: 0.3rem 0rem;
+    overflow: hidden;
+}
+.bottomContract img{
+    height: 1.35rem;
+}
+.bottomContractText {
+    font-size: 0.7rem;
+}
+.btn-buy{
+    text-align: center;
+    display: inline-block;
+    width: 80%;
+    height: 3rem;
+    line-height: 3rem;
+    background-color: #ff5e54;
+}
+.hot-product-list{
+    overflow: hidden;
+}
+.preferProd{
+    margin-bottom: 4rem;
+}

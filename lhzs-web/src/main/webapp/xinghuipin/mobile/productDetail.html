@@ -6,224 +6,127 @@
     <meta name="description" content="">
     <meta name="Keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="./css/common.css" rel="stylesheet">
+    <link href="../../css/swiper.min.css" rel="stylesheet">
+    <link href="./css/productDetail.css" rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-        }
 
-        .nav {
-            position: fixed;
-            text-align: center;
-            width: 100%;
-            z-index: 1000;
-            background: #ff5e54;
-            padding: 8px 0px;
-        }
-
-        .back {
-            width: 1rem;
-            height: 1rem;
-            line-height: 1rem;
-            background-color: black;
-            border-radius: 100%;
-            padding: 0.3rem;
-            opacity: 0.2;
-            color: white;
-            margin-left: 1rem;
-            float: left;
-        }
-
-        .nav-title {
-            float: left;
-            padding-left: 6rem;
-        }
-
-        .set {
-            float: right;
-            margin-right: 1rem;
-        }
-
-        .prod-img {
-            padding-top: 2.63rem;
-        }
-
-        .prod-img img {
-            width: 100%;
-        }
-
-        .prod-content, .hot-product {
-            padding: 0rem 1rem;
-        }
-
-        .prod-price-curr {
-            color: #ff5e54;
-            font-size: 0.85rem;
-        }
-
-        .prod-price {
-            font-size: 0.65rem;
-            margin-left: 0.5rem;
-            text-decoration: line-through;
-        }
-
-        .prod-remain-num {
-            font-size: 0.85rem;
-            float: right;
-        }
-
-        .prod-item {
-            width: 48%;
-            float: left;
-            margin-right: 2%;
-            width: 48%;
-            float: left;
-            margin-right: 1.3%;
-            border: 1px solid #eee;
-            margin-bottom: 2.2rem;
-        }
-
-        .prod-item-img {
-            width: 100%
-
-        }
-
-        .prod-item-title {
-            margin: 0.4rem;
-            color: black;
-        }
-
-        .prod-item-price {
-            margin: 0.5rem;
-            color: black;
-        }
-
-        .btn-buy {
-            position: fixed;
-            width: 100%;
-            background-color: #ff5e54;
-            padding: 0.6rem 0;
-            bottom: 0;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
 <div>
-    <div class="nav">
-        <div class="back"><</div>
-        <div class="nav-title">商品详情</div>
-        <div class="set"></div>
+    <div class="navBar">
+        <div class="nav">
+            <div class="nav-title">商品详情</div>
+            <div class="back"><</div>
+            <div class="set"></div>
+        </div>
     </div>
-    <div class="prod-img">
 
+    <div class="swiper-container swiper-container-h swiper-container-horizontal" id="bannerList">
+        <div id="banners" class="swiper-wrapper"></div>
+        <div id="bannerListPot" class="swiper-pagination swiper-pagination-h swiper-pagination-bullets"></div>
     </div>
+
     <div class="prod-content">
-        <p class="prod-title"></p>
-        <div>
-            <span class="prod-price-curr"></span>
-            <span class="prod-price"></span>
+        <div class="prod-detail">
+            <span class="prod-price-curr">优惠价：¥44.01</span>
+            <span class="prod-price">¥45.01</span>
             <span class="prod-remain-num"></span>
         </div>
+        <p class="prod-title">2018新款男宝宝新生儿礼盒童装母婴套盒可爱男生回礼男孩女宝宝礼</p>
     </div>
 
-    <div class="hot-product">
-        <p style="margin-top: 3rem;">大家都在看</p>
-        <div class="hot-product-list">
-
+    <div class="preferProd">
+        <div class="prefer">— 大家都在看 —</div>
+        <div class="hot-product">
+            <div class="hot-product-list">
+                <a href="/mobile/productDetail.html?prodId=554302983663&amp;currPrice=49.00&amp;couponClickUrl=https://uland.taobao.com/coupon/edetail?e=p%2F%2F7OiUa224GQASttHIRqXlM3PE9QzEw%2Fx2EI0RhcjtYomNqLX%2FiF8GQyrxTbXaxFSQf7P7nxlOujQ2QTHzLtBccG%2FN3B4qqDfqEFBOhTcwEkjWEtyzo5VJFwbB%2BJR%2FAp4SxlmGcmnJe0P09J7ltD4b%2FfW10abqXN22B6%2F8gbnjk92%2BM7h46c9boO99VQREJuFuGhSUVywwfi2iNaylAvdjH%2B8knoxVQFdgFcXRjhGo%3D&amp;traceId=0b0b21d215441655388104238e&amp;remainNum=0">
+                    <div class="prod-item">
+                        <img class="prod-item-img" src="http://img.alicdn.com/tfscom/i1/76576894/TB2JEkJyY4npuFjSZFmXXXl4FXa_!!76576894.jpg">
+                        <div class="prod-item-title">彩虹条纹上衣夏无袖显瘦性感紧身露脐短款甜美修身高腰吊带衫女潮</div>
+                        <div class="prod-item-price">
+                            <span class="prod-price-curr2">优惠价：¥49.00</span>
+                            <span class="prod-price">¥59.00</span></div>
+                    </div>
+                </a>
+                <a href="/mobile/productDetail.html?prodId=554302983663&amp;currPrice=49.00&amp;couponClickUrl=https://uland.taobao.com/coupon/edetail?e=p%2F%2F7OiUa224GQASttHIRqXlM3PE9QzEw%2Fx2EI0RhcjtYomNqLX%2FiF8GQyrxTbXaxFSQf7P7nxlOujQ2QTHzLtBccG%2FN3B4qqDfqEFBOhTcwEkjWEtyzo5VJFwbB%2BJR%2FAp4SxlmGcmnJe0P09J7ltD4b%2FfW10abqXN22B6%2F8gbnjk92%2BM7h46c9boO99VQREJuFuGhSUVywwfi2iNaylAvdjH%2B8knoxVQFdgFcXRjhGo%3D&amp;traceId=0b0b21d215441655388104238e&amp;remainNum=0">
+                    <div class="prod-item">
+                        <img class="prod-item-img" src="http://img.alicdn.com/tfscom/i1/76576894/TB2JEkJyY4npuFjSZFmXXXl4FXa_!!76576894.jpg">
+                        <div class="prod-item-title">彩虹条纹上衣夏无袖显瘦性感紧身露脐短款甜美修身高腰吊带衫女潮</div>
+                        <div class="prod-item-price">
+                            <span class="prod-price-curr2">优惠价：¥49.00</span>
+                            <span class="prod-price">¥59.00</span></div>
+                    </div>
+                </a>
+                <a href="/mobile/productDetail.html?prodId=554302983663&amp;currPrice=49.00&amp;couponClickUrl=https://uland.taobao.com/coupon/edetail?e=p%2F%2F7OiUa224GQASttHIRqXlM3PE9QzEw%2Fx2EI0RhcjtYomNqLX%2FiF8GQyrxTbXaxFSQf7P7nxlOujQ2QTHzLtBccG%2FN3B4qqDfqEFBOhTcwEkjWEtyzo5VJFwbB%2BJR%2FAp4SxlmGcmnJe0P09J7ltD4b%2FfW10abqXN22B6%2F8gbnjk92%2BM7h46c9boO99VQREJuFuGhSUVywwfi2iNaylAvdjH%2B8knoxVQFdgFcXRjhGo%3D&amp;traceId=0b0b21d215441655388104238e&amp;remainNum=0">
+                    <div class="prod-item">
+                        <img class="prod-item-img" src="http://img.alicdn.com/tfscom/i1/76576894/TB2JEkJyY4npuFjSZFmXXXl4FXa_!!76576894.jpg">
+                        <div class="prod-item-title">彩虹条纹上衣夏无袖显瘦性感紧身露脐短款甜美修身高腰吊带衫女潮</div>
+                        <div class="prod-item-price">
+                            <span class="prod-price-curr2">优惠价：¥49.00</span>
+                            <span class="prod-price">¥59.00</span></div>
+                    </div>
+                </a>
+                <a href="/mobile/productDetail.html?prodId=554302983663&amp;currPrice=49.00&amp;couponClickUrl=https://uland.taobao.com/coupon/edetail?e=p%2F%2F7OiUa224GQASttHIRqXlM3PE9QzEw%2Fx2EI0RhcjtYomNqLX%2FiF8GQyrxTbXaxFSQf7P7nxlOujQ2QTHzLtBccG%2FN3B4qqDfqEFBOhTcwEkjWEtyzo5VJFwbB%2BJR%2FAp4SxlmGcmnJe0P09J7ltD4b%2FfW10abqXN22B6%2F8gbnjk92%2BM7h46c9boO99VQREJuFuGhSUVywwfi2iNaylAvdjH%2B8knoxVQFdgFcXRjhGo%3D&amp;traceId=0b0b21d215441655388104238e&amp;remainNum=0">
+                    <div class="prod-item">
+                        <img class="prod-item-img" src="http://img.alicdn.com/tfscom/i1/76576894/TB2JEkJyY4npuFjSZFmXXXl4FXa_!!76576894.jpg">
+                        <div class="prod-item-title">彩虹条纹上衣夏无袖显瘦性感紧身露脐短款甜美修身高腰吊带衫女潮</div>
+                        <div class="prod-item-price">
+                            <span class="prod-price-curr2">优惠价：¥49.00</span>
+                            <span class="prod-price">¥59.00</span></div>
+                    </div>
+                </a>
+                <a href="/mobile/productDetail.html?prodId=554302983663&amp;currPrice=49.00&amp;couponClickUrl=https://uland.taobao.com/coupon/edetail?e=p%2F%2F7OiUa224GQASttHIRqXlM3PE9QzEw%2Fx2EI0RhcjtYomNqLX%2FiF8GQyrxTbXaxFSQf7P7nxlOujQ2QTHzLtBccG%2FN3B4qqDfqEFBOhTcwEkjWEtyzo5VJFwbB%2BJR%2FAp4SxlmGcmnJe0P09J7ltD4b%2FfW10abqXN22B6%2F8gbnjk92%2BM7h46c9boO99VQREJuFuGhSUVywwfi2iNaylAvdjH%2B8knoxVQFdgFcXRjhGo%3D&amp;traceId=0b0b21d215441655388104238e&amp;remainNum=0">
+                    <div class="prod-item">
+                        <img class="prod-item-img" src="http://img.alicdn.com/tfscom/i1/76576894/TB2JEkJyY4npuFjSZFmXXXl4FXa_!!76576894.jpg">
+                        <div class="prod-item-title">彩虹条纹上衣夏无袖显瘦性感紧身露脐短款甜美修身高腰吊带衫女潮</div>
+                        <div class="prod-item-price">
+                            <span class="prod-price-curr2">优惠价：¥49.00</span>
+                            <span class="prod-price">¥59.00</span></div>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
-    <div class="btn-buy">购买</div>
+
+    <div class="btn-bottom">
+        <div class="bottomContract">
+            <img src="images/logo2.jpg">
+            <div class="bottomContractText">客服</div>
+        </div>
+        <div class="btn-buy">购买</div>
+    </div>
 </div>
 </body>
-<script src="/js/jquery.min.js"></script>
-<script src="/js/swiper.jquery.min.js"></script>
-<script src="/js/swiper.js"></script>
-<script src="/mobile/js/app.js"></script>
-<script src="/mobile/js/jweixin-1.4.0.js"></script>
-<script src="/mobile/js/wechat.js"></script>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/swiper.jquery.min.js"></script>
+<script src="../../js/swiper.js"></script>
 <script>
-    var prodId = getParameter("prodId");
-    var currPrice = getParameter("currPrice");
-    var couponClickUrl = getParameter("couponClickUrl");
-    var remainNum = getParameter("remainNum");
-
     $(function () {
-        getProdDetail();
-        hotProduct();
-        bindEvent();
+        var html = "";
+        var pot = "";
+        for (var i = 0; i < 7; i++) {
+            html += '<div class="swiper-slide">' +
+                '       <a href="">' +
+                '           <img width="100%" class="swiper-lazy swiper-lazy-loaded" src="./images/productPicture.jpg">' +
+                '       </a>' +
+                '   </div>';
+            pot += '<span class="swiper-pagination-bullet swiper-pagination-bullet-active"></span>';
+        }
+        $("#banners").html(html);
+        $("#bannerListPot").html(pot);
+        bannerSwipe();
     });
 
-    function getProdDetail() {
-        var param = {"id": prodId};
-        app.getProductDetail(param, function (result) {
-            if (result.code == 200) {
-                var data = result.data;
-                $(".prod-img").html('<img src="' + data.pictUrl + '"/>');
-                $(".prod-title").text(data.title);
-                $(".prod-price-curr").text("优惠价：¥" + currPrice);
-                $(".prod-price").text("¥" + data.zkFinalPrice);
-                $(".prod-remain-num").text("销售量" + remainNum + "张");
-                setShare(data);
-            }
+    function bannerSwipe() {
+        var swiperH = new Swiper('#bannerList', {
+            pagination: '.swiper-pagination-h',
+            width: $(window).width(),
+            autoHeight: true,
+            height: $(window).width(),
+            loop: true
         });
-    }
-
-    function setShare(data) {
-        var friend = {
-            title: "商品详情",
-            link: "http://www.biibuy.com/mobile/productDetail.html?prodId=" + prodId + "&currPrice=" + currPrice + "&couponClickUrl=" + couponClickUrl + "&remainNum=" + remainNum,
-            desc: data.title,
-            imgUrl: data.pictUrl
-        }
-
-        wechat.share(friend, friend);
-    }
-
-    function hotProduct() {
-        var param = {};
-        param.page = 1;
-        param.size = 10;
-        app.getProductList(param, function (result) {
-            if (result.code == 200) {
-                $(".hot-product-list").html("");
-                var data = result.data.data;
-                for (var i = 0; i < data.length; i++) {
-                    var item = data[i];
-                    var html = '<a href="/mobile/productDetail.html?prodId=' + item.numIid + '&currPrice=' + getCurrPrice(item.zkFinalPrice, item.couponInfo) + '&couponClickUrl=' + item.couponClickUrl + '&remainNum=' + item.volume + '">' +
-                        '<div class="prod-item">' +
-                        '<img class="prod-item-img" src="' + item.pictUrl + '"/>' +
-                        '<div class="prod-item-title">' + getTitle(item.title) + '</div>' +
-                        '<div class="prod-item-price">' +
-                        '<span class="prod-price-curr">优惠价：¥' + getCurrPrice(item.zkFinalPrice, item.couponInfo) + '</span>' +
-                        '<span class="prod-price">¥' + item.zkFinalPrice + '</span>' +
-                        '</div>' +
-                        '</div>' +
-                        '</a>';
-                    $(".hot-product-list").append(html);
-                }
-            }
-        });
-    }
-
-    function getCurrPrice(totalPrice, priceInfo) {
-        return (totalPrice - priceInfo.split("减")[1].split("元")[0]).toFixed(2);
-    }
-
-    function getTitle(title) {
-        if (title > 15) {
-            return title.substr(0, 15) + "...";
-        }
-        return title;
-    }
-
-    function bindEvent() {
-        $(".back").click(function () {
-            history.back();
-        });
-        $(".btn-buy").click(function () {
-            location.href = "/mobile/productBuyRoute.html?couponClickUrl=" + couponClickUrl;
-        })
-
     }
 
 </script>

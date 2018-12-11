@@ -1,0 +1,32 @@
+.inputBar input{
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 0;
+    margin: 0.7rem 1rem;
+    width: 90%;
+}
+.line{
+    border-bottom: 1px solid #a0a0a0;
+}
+.content{
+    margin-top: 2.4rem;
+}
+#province, #city, #district {
+    width: 31%;
+    height: 2rem;
+}
+.zone {
+    margin: 0.7rem 1rem 0.4rem;
+    font-size: 0.85rem;
+    color: #777777;
+}
+.form-inline {
+    margin-bottom: 0.6rem;
+    margin-left: 1rem;
+}
+.defaultAddress {
+    margin: 0.7rem 1rem 0.7rem;
+    font-size: 0.85rem;
+    color: #777777;
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加收货地址</title>
+    <meta name="description" content="">
+    <meta name="Keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="./css/common.css" rel="stylesheet">
+    <link href="./css/addAddress.css" rel="stylesheet">
+</head>
+<body>
+<div>
+    <div class="navBar">
+        <div class="nav">
+            <div class="nav-title">添加收货地址</div>
+            <div class="back"><</div>
+            <div class="set">保存</div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="inputBar">
+            <input placeholder="请输入姓名"/>
+            <div class="line"></div>
+        </div>
+        <div class="inputBar">
+            <input placeholder="请输入手机号码"/>
+            <div class="line"></div>
+        </div>
+        <div>
+            <div class="zone">选择所属地区</div>
+            <form class="form-inline">
+                <div id="distpicker5">
+                    <select class="form-control" id="province"></select>
+                    <select class="form-control" id="city"></select>
+                    <select class="form-control" id="district"></select>
+
+                </div>
+            </form>
+            <div class="line"></div>
+        </div>
+        <div class="inputBar">
+            <input placeholder="请输入详细地址"/>
+            <div class="line"></div>
+        </div>
+        <div>
+            <div class="defaultAddress">设置默认地址</div>
+            <div class="line"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../jQueryDistpicker/js/distpicker.data.js"></script>
+<script src="../../jQueryDistpicker/js/distpicker.js"></script>
+<script src="../../jQueryDistpicker/js/main.js"></script>
+</html>
