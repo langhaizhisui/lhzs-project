@@ -64,19 +64,6 @@
         <session-timeout>45</session-timeout>
     </session-config>
 
-    <!-- 日志记录 -->
-    <context-param>
-        <param-name>log4jConfigLocation</param-name>
-        <param-value>classpath:log4j.properties</param-value>
-    </context-param>
-    <context-param>
-        <param-name>log4jRefreshInterval</param-name>
-        <param-value>6000</param-value>
-    </context-param>
-    <listener>
-        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-    </listener>
-
     <filter-mapping>
         <filter-name>SpringEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
