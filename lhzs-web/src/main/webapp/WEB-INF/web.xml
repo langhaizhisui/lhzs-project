@@ -42,7 +42,6 @@
         </init-param>
     </filter>
 
-
     <!-- Shiro过滤器,使用[/*]匹配所有请求，保证所有的可控请求都经过Shiro的过滤 -->
     <filter>
         <filter-name>shiroFilterFactoryBean</filter-name>
@@ -56,6 +55,15 @@
     </filter>
     <filter-mapping>
         <filter-name>shiroFilterFactoryBean</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>logbackFilter</filter-name>
+        <filter-class>cn.lhzs.web.config.LogbackFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>logbackFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 

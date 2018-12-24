@@ -3,12 +3,13 @@ package cn.lhzs.web.aop;
 import cn.lhzs.common.aop.log.OpLog;
 import cn.lhzs.common.result.ResponseResult;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.CodeSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,19 +25,19 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class OpLogAspect {
 
-    Logger logger = Logger.getLogger(OpLogAspect.class);
+    Logger logger = LoggerFactory.getLogger(OpLogAspect.class);
 
-    private static String ERROR_FORMAT = "【操作日志】suid:%s, 方法:%s, 操作:%s, 参数:%s, 返回值:%s, 异常状态:%s";
+    private static String ERROR_FORMAT = "【操作日志】suid:%s, 方法:%s, 操作:%s, 参数:%s, 返回码:%s, 返回信息:%s，返回数据:%s，异常状态:%s";
 
     private static final String LOGIN_PWD = "password";
     private static final String LOGIN_METHOD = "login";
 
-    @AfterReturning(pointcut = "execution(* cn.lhzs.web.controller.admin.*.*(..)) && @annotation(ol)", returning = "rvt")
+    @AfterReturning(pointcut = "execution(* cn.lhzs.web.controller.*.*(..)) && @annotation(ol)", returning = "rvt")
     public void addLogSuccess(JoinPoint jp, OpLog ol, Object rvt) {
         addLog(jp, ol, rvt, null);
     }
 
-    @AfterThrowing(pointcut = "execution(* cn.lhzs.web.controller.admin.*.*(..)) && @annotation(ol)", throwing = "ex")
+    @AfterThrowing(pointcut = "execution(* cn.lhzs.web.controller.*.*(..)) && @annotation(ol)", throwing = "ex")
     public void addLog(JoinPoint jp, OpLog ol, Throwable ex) {
         addLog(jp, ol, null, ex);
     }
@@ -49,10 +50,16 @@ public class OpLogAspect {
             StringBuilder sb = new StringBuilder(1024);
             logParamValues(sb, paramNames, arguments);
             if (rvt != null && rvt instanceof ResponseResult) {
-                logger.error(String.format(ERROR_FORMAT, "admin", methodName, ol.descp(), sb.toString(), ((ResponseResult) rvt).getCode(), "正常"));
+                ResponseResult responseResult = (ResponseResult) rvt;
+                String dataStr = "";
+                Object data = responseResult.getData();
+                if (data != null) {
+                    dataStr = JSONObject.toJSONString(data);
+                }
+                logger.error(String.format(ERROR_FORMAT, "admin", methodName, ol.descp(), sb.toString(), responseResult.getCode(), responseResult.getMsg(), dataStr, "正常"));
                 return;
             }
-            logger.error(String.format(ERROR_FORMAT, "admin", methodName, ol.descp(), sb.toString(), "", ex.getMessage()));
+            logger.error(String.format(ERROR_FORMAT, "admin", methodName, ol.descp(), sb.toString(), "", "", "", ex.getMessage()));
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
