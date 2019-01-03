@@ -53,7 +53,7 @@ public abstract class AbstractBaseService<T extends BaseModel> extends BaseRedis
     @Override
     public void deleteById(Long id) {
         Assert.notNull(id, "ID不能为空");
-        deleteRedisId(id);
+//        deleteRedisId(id);
         mapper.deleteByPrimaryKey(id);
     }
 
@@ -67,7 +67,7 @@ public abstract class AbstractBaseService<T extends BaseModel> extends BaseRedis
     @Override
     public void deleteByIds(String ids) {
         Assert.notNull(ids, "ID不能为空");
-        deleteRedisIds(ids);
+//        deleteRedisIds(ids);
         mapper.deleteByIds(ids);
     }
 
@@ -97,14 +97,16 @@ public abstract class AbstractBaseService<T extends BaseModel> extends BaseRedis
     public T findById(Long id) {
         Assert.notNull(id, "ID不能为空");
         try {
-            T model = get(getRedisClassIdKey(id.toString()), modelClass);
-            if (model == null) {
-                model = mapper.selectByPrimaryKey(id);
-                if (model != null) {
-                    addRedisId(id, model);
-                }
-            }
-            return model;
+//            T model = get(getRedisClassIdKey(id.toString()), modelClass);
+//            if (model == null) {
+//                model = mapper.selectByPrimaryKey(id);
+//                if (model != null) {
+//                    addRedisId(id, model);
+//                }
+//            }
+//            return model;
+
+            return mapper.selectByPrimaryKey(id);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -132,11 +134,11 @@ public abstract class AbstractBaseService<T extends BaseModel> extends BaseRedis
     @Override
     public List<T> findByIds(String ids) {
         Assert.notNull(ids, "ID不能为空");
-        String[] idArr = ids.split(",");
-        List<T> list = getRedisIds(idArr);
-        if (list.size() == idArr.length) {
-            return list;
-        }
+//        String[] idArr = ids.split(",");
+//        List<T> list = getRedisIds(idArr);
+//        if (list.size() == idArr.length) {
+//            return list;
+//        }
         return mapper.selectByIds(ids);
     }
 
@@ -152,16 +154,18 @@ public abstract class AbstractBaseService<T extends BaseModel> extends BaseRedis
     @Override
     public BasePageList<T> findByCondition(ExampleCondition condition) {
         BasePageList<T> basePageList = new BasePageList<>();
-        String pageKey = getPageKey(getAttrValForRedisKey(condition, false), condition.getPage(), condition.getSize());
-        List<T> list = hget(getRedisSetPageKey(), pageKey, ArrayList.class);
-        if (list == null) {
-            list = mapper.selectByExample(condition);
-            if (list != null) {
-                basePageList.setList(list);
-                basePageList.setTotalPage(10L);
-                addPageRedis(pageKey, basePageList);
-            }
-        }
+//        String pageKey = getPageKey(getAttrValForRedisKey(condition, false), condition.getPage(), condition.getSize());
+//        List<T> list = hget(getRedisSetPageKey(), pageKey, ArrayList.class);
+//        if (list == null) {
+//            list = mapper.selectByExample(condition);
+//            if (list != null) {
+//                basePageList.setList(list);
+//                basePageList.setTotalPage(10L);
+//                addPageRedis(pageKey, basePageList);
+//            }
+//        }
+        List<T> list = mapper.selectByExample(condition);
+        basePageList.setList(list);
         return basePageList;
     }
 
@@ -225,24 +229,24 @@ public abstract class AbstractBaseService<T extends BaseModel> extends BaseRedis
 
     private void updateInfo(T model, boolean isUseRedis, Long expire) {
         mapper.updateByPrimaryKey(model);
-        if (isUseRedis) {
-            String classKey = modelClass.getSimpleName() + 120000;
-            set(classKey, model, expire == null ? 0L : expire);
-            deleteRedisPage();
-        }
+//        if (isUseRedis) {
+//            String classKey = modelClass.getSimpleName() + 120000;
+//            set(classKey, model, expire == null ? 0L : expire);
+//            deleteRedisPage();
+//        }
     }
 
     private void add(T model, boolean isUseRedis, Long expire) {
-//        model.setId(getMaxId() + 1);
+        model.setId(getMaxId() + 1);
         model.setState(1);
         model.setCreateTime(new Date());
         mapper.insert(model);
-        if (isUseRedis) {
-            String classKey = new StringBuilder(modelClass.getSimpleName()).append(":").append("12000").toString();
-            sadd(getRedisSetClassIdKey(), classKey);
-            set(classKey, model, expire == null ? 0L : expire);
-            deleteRedisPage();
-        }
+//        if (isUseRedis) {
+//            String classKey = new StringBuilder(modelClass.getSimpleName()).append(":").append("12000").toString();
+//            sadd(getRedisSetClassIdKey(), classKey);
+//            set(classKey, model, expire == null ? 0L : expire);
+//            deleteRedisPage();
+//        }
     }
 
     private String getPageKey(String pageFieldKey, Integer page, Integer size) {
@@ -295,6 +299,7 @@ public abstract class AbstractBaseService<T extends BaseModel> extends BaseRedis
             Field field = fields[i];
             if (field.getName().equals("page") || field.getName().equals("size")) {
                 continue;
+
             }
             field.setAccessible(true);
             Object val = field.get(t);

@@ -6,6 +6,7 @@
       WARNING - @mbg.generated
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
     <result column="dir" jdbcType="VARCHAR" property="dir" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="alia" jdbcType="VARCHAR" property="alia" />

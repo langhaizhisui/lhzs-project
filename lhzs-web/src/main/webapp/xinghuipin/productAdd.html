@@ -73,7 +73,7 @@
         var row = document.getElementById(fileId);
         $.ajax({
             type: 'post',
-            url: "/notificationUpload/deleteFile",
+            url: "/xhp/file/upload/deleteFile",
             data: 'id=1',
             dataType: "json",
             success: function (data) { // 判断是否成功
@@ -111,7 +111,7 @@
     $(function () {
         var uploader = new plupload.Uploader({
             flash_swf_url: '/web/plupload-2.3.1/Moxie.swf',
-            url: "/notificationUpload/fileUpload?userId",
+            url: "/xhp/file/upload/fileUpload?userId=12563666666",
             browse_button: 'uploader',
             filters: {
                 max_file_size: '100mb',//100b, 10kb, 10mb, 1gb

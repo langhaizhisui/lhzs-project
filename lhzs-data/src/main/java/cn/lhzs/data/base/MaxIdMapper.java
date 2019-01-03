@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.SelectProvider;
  */
 public interface MaxIdMapper<T> {
 
-    @SelectProvider(type = MaxIdProvider.class, method = "dynamicSQL")
+    @SelectProvider(type = MaxIdProvider.class, method = "selectMaxId2")
     @ResultType(Long.class)
     Long selectMaxId();
 }
