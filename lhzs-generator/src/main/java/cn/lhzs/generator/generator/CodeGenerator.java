@@ -20,12 +20,12 @@ import static cn.lhzs.generator.generator.ProjectConstant.*;
  */
 public class CodeGenerator {
     //JDBC配置，请修改为你项目的实际配置
-    private static final String JDBC_URL = "jdbc:mysql://119.23.54.39:3306/discount_coupon3";
+    private static final String JDBC_URL = "jdbc:mysql://120.78.179.158:62299/discount_coupon3";
     private static final String JDBC_USERNAME = "root";
-    private static final String JDBC_PASSWORD = "biibuy66";
+    private static final String JDBC_PASSWORD = "";
     private static final String JDBC_DIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
 
-    private static final String PROJECT_PATH = System.getProperty("user.dir");//项目在硬盘上的基础路径
+    private static final String PROJECT_PATH = System.getProperty("user.dir")+"/lhzs-project";//项目在硬盘上的基础路径
 
     private static final String SERVICE_PATH = PROJECT_PATH + "/lhzs-service";
     private static final String DAO_PATH = PROJECT_PATH + "/lhzs-data";
@@ -44,7 +44,7 @@ public class CodeGenerator {
 
     public static void main(String[] args) {
 //        String str = tableNameConvertLowerCamel("drp_cty");
-        genCode("wechat_user");
+//        genCode("xhp_file_upload");
         //genCode("输入表名","输入自定义Model名称");
     }
 
@@ -67,8 +67,8 @@ public class CodeGenerator {
      */
     public static void genCode(String tableName, String modelName) {
         genModelAndMapper(tableName, modelName);
-//        genService(tableName, modelName);
-//        genController(tableName, modelName);
+        genService(tableName, modelName);
+        genController(tableName, modelName);
     }
 
 

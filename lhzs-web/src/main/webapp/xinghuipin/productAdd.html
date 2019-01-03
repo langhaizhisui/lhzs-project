@@ -7,6 +7,17 @@
     <link href="css/common.css" rel='stylesheet' type='text/css'/>
     <link href="css/nav.css" rel='stylesheet' type='text/css'/>
     <link href="css/product_add.css" rel='stylesheet' type='text/css'/>
+    <style>
+        .mainImgUpload {
+            margin-left: 1.2rem;
+        }
+        #filelist{
+            margin-top: 10px;
+        }
+        #filelist td{
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
 <div id="pageNav"></div>
@@ -22,55 +33,16 @@
             <tr>
                 <td class="table-title">主图链接</td>
                 <td colspan="3">
-                    <input class="table-input" type="text" name="" id="banner-url" value="">
+                    <div class="mainImgUpload">
+                        <div id="uploader" class="commonButton">添加图片</div>
+                        <table id="filelist"></table>
+                    </div>
                 </td>
             </tr>
             <tr>
-                <td class="table-title">详情页链接</td>
+                <td class="table-title">详情页轮播图</td>
                 <td colspan="3">
                     <input class="table-input" type="text" name="" id="detail-url" value="">
-                </td>
-            </tr>
-            <tr>
-                <td class="table-title">类目</td>
-                <td colspan="3">
-                    <input class="table-input" type="text" name="" id="cata" value="">
-                </td>
-            </tr>
-            <tr>
-                <td class="table-title">原价</td>
-                <td colspan="3">
-                    <input class="table-input" type="text" name="" id="price" value="">
-                </td>
-            </tr>
-            <tr>
-                <td class="table-title">销售价</td>
-                <td colspan="3">
-                    <input class="table-input" type="text" name="" id="sale-price" value="">
-                </td>
-            </tr>
-            <tr>
-                <td class="table-title">优惠</td>
-                <td colspan="3">
-                    <input class="table-input" type="text" name="" id="save-price" value="">
-                </td>
-            </tr>
-            <tr>
-                <td class="table-title">平台</td>
-                <td colspan="3">
-                    <input class="table-input" type="text" name="" id="plateform" value="">
-                </td>
-            </tr>
-            <tr>
-                <td class="table-title">商品推广链接</td>
-                <td colspan="3">
-                    <input class="table-input" type="text" name="" id="generalize-url" value="">
-                </td>
-            </tr>
-            <tr>
-                <td class="table-title">有效期</td>
-                <td colspan="3">
-                    <input class="table-input" type="text" name="" id="expiration" value="">
                 </td>
             </tr>
             </tbody>
@@ -84,4 +56,111 @@
 </body>
 <script src="../js/jquery.min.js"></script>
 <script src="js/nav.js"></script>
+<script src="/plupload-2.3.1/plupload.full.min.js"></script>
+<script>
+    var resourceids = [];
+    function pladdFileId(fileId, id) {
+        var resourceId = id.split(',')[2];
+        $("#dl_" + fileId).click(function () {
+            toDownloadPage(resourceId);
+        });
+        resourceids.push(resourceId);
+        $("#fileIds").val(resourceids.join(","));
+    }
+
+    function pldeleteFile(fileId) {
+        var infoTable = document.getElementById("filelist");
+        var row = document.getElementById(fileId);
+        $.ajax({
+            type: 'post',
+            url: "/notificationUpload/deleteFile",
+            data: 'id=1',
+            dataType: "json",
+            success: function (data) { // 判断是否成功
+                if (data.status == 'success') {
+                    infoTable.deleteRow(row.rowIndex);
+                } else {
+                    alert('提示', data.msg, 'error');
+                }
+            },
+            error: function (data) {
+                alert("删除文件出错");
+            }
+        });
+    }
+
+    Date.prototype.format = function (format) {
+        var o = {
+            "M+": this.getMonth() + 1, //month
+            "d+": this.getDate(),    //day
+            "h+": this.getHours(),   //hour
+            "m+": this.getMinutes(), //minute
+            "s+": this.getSeconds(), //second
+            "q+": Math.floor((this.getMonth() + 3) / 3),
+            "S": this.getMilliseconds() //millisecond
+        }
+        if (/(y+)/.test(format)) format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(format)) {
+                format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+            }
+        }
+        return format;
+    }
+
+    $(function () {
+        var uploader = new plupload.Uploader({
+            flash_swf_url: '/web/plupload-2.3.1/Moxie.swf',
+            url: "/notificationUpload/fileUpload?userId",
+            browse_button: 'uploader',
+            filters: {
+                max_file_size: '100mb',//100b, 10kb, 10mb, 1gb
+                prevent_duplicates: true, //不允许选取重复文件
+                multi_selection: false
+            },
+            init: {
+                FilesAdded: function (up, files) {
+                    var fileTrs = "";
+                    for (var i = 0; i < files.length; i++) {
+                        fileTrs +=
+                            "<tr id='attachement" + files[i].id + "'>"
+                            + " <td width='1px' style='padding: 0px'></td>"
+                            + " <td><span id=\"dl_" + files[i].id + "\" >" + files[i].name + "</span></td>"
+                            + " <td><span id=\"" + files[i].id + "\">开始上传</span></td>"
+                            + " <td><div style=\"cursor:pointer;    text-decoration: underline;color: #03adf4;\" onclick=\"pldeleteFile('attachement" + files[i].id + "')\">删除</div></td>"
+                            + "</tr>";
+                    }
+                    $("#filelist").append(fileTrs);
+                    uploader.start();
+                    return false;
+                },
+                FileUploaded: function (up, file, info) {//文件上传完毕触发
+                    $("#" + file.id).html("上传完成");
+                    var resp = info.response;
+                    pladdFileId(file.id, resp);
+                },
+                UploadComplete: function (uploader, files) {
+                    console.log("所有文件上传完毕");
+                },
+                UploadProgress: function (uploader, file) {
+                    $("#" + file.id).html("上传进度为：" + file.percent + "%");
+                },
+                Error: function (uploader, errObject) {
+                    var errorCode = errObject.code;
+                    var errorMsg = errObject.message;
+                    if (errorCode == -600) {
+                        $.messager.alert('提示', "允许上传的单个文件最大为100 MB！", 'info');
+                    } else {
+                        alert(errorMsg);
+                    }
+                }
+            }
+        });
+        uploader.init();
+    });
+
+    function toDownloadPage(fileId) {
+        window.open('${ctx }/notificationUpload/fileDownload?fileId=' + fileId);
+    }
+</script>
 </html>

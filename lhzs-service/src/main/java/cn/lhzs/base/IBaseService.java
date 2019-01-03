@@ -4,7 +4,6 @@ import cn.lhzs.common.vo.BasePageList;
 import cn.lhzs.data.base.BaseModel;
 import cn.lhzs.data.base.ExampleCondition;
 import org.apache.ibatis.exceptions.TooManyResultsException;
-import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
