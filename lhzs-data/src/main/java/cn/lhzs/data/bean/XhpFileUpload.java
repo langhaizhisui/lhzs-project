@@ -8,6 +8,11 @@ import javax.persistence.*;
 public class XhpFileUpload extends BaseModel {
 
     /**
+     * 用户标识
+     */
+    private Long uid;
+
+    /**
      * 存储目录
      */
     private String dir;
@@ -27,6 +32,14 @@ public class XhpFileUpload extends BaseModel {
      */
     @Column(name = "file_size")
     private Double fileSize;
+
+    public Long getUid() {
+        return uid;
+    }
+
+    public void setUid(Long uid) {
+        this.uid = uid;
+    }
 
     /**
      * 获取存储目录
