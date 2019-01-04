@@ -6,8 +6,10 @@ import cn.lhzs.common.util.StringUtil;
 import cn.lhzs.common.uuid.UUIDUtil;
 import cn.lhzs.data.bean.XhpFileUpload;
 import cn.lhzs.service.intf.XhpFileUploadService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,7 +36,9 @@ public class XhpFileUploadController {
 
     @RequestMapping("/deleteFile")
     @ResponseBody
-    public ResponseResult deleteFile(String id) {
+    public ResponseResult deleteFile(@RequestBody XhpFileUpload fileUpload) {
+        fileUpload.setState(2);
+        xhpFileUploadService.save(fileUpload);
         return generatorSuccessResult();
     }
 
@@ -87,8 +91,8 @@ public class XhpFileUploadController {
         OutputStream os = response.getOutputStream();
         FileInputStream fis = null;
         try {
-            String filename = "aa.txt";
-            fis = new java.io.FileInputStream("D://aa.txt");
+            String filename = "3e6794b7a1224f0f97f72825cfd947da.jpg";
+            fis = new java.io.FileInputStream("D:\\attachment\\201901\\3e6794b7a1224f0f97f72825cfd947da.jpg");
             response.setContentType("application/octet-stream; charset=UTF-8");
             response.setHeader("Content-Disposition",
                     "attachment; filename=\"" + filename.toString() + "\"");

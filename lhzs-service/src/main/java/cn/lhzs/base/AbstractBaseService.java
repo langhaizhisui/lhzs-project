@@ -1,12 +1,14 @@
 package cn.lhzs.base;
 
 import cn.lhzs.common.util.SecureUtil;
+import cn.lhzs.common.util.StringUtil;
 import cn.lhzs.common.vo.BasePageList;
 import cn.lhzs.data.base.BaseModel;
 import cn.lhzs.data.base.BaseRedis;
 import cn.lhzs.data.base.ExampleCondition;
 import cn.lhzs.data.base.Mapper;
 import org.apache.ibatis.exceptions.TooManyResultsException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import tk.mybatis.mapper.entity.Example;
@@ -46,8 +48,7 @@ public abstract class AbstractBaseService<T extends BaseModel> extends BaseRedis
     @Override
     public void save(List<T> models) {
         Assert.notNull(models, "MODEL不能为空");
-        models.forEach(item -> update(item, true, 0L));
-//        mapper.insertList(models);
+        mapper.insertList(models);
     }
 
     @Override
@@ -227,13 +228,33 @@ public abstract class AbstractBaseService<T extends BaseModel> extends BaseRedis
         }
     }
 
-    private void updateInfo(T model, boolean isUseRedis, Long expire) {
+    private void updateInfo(T model, boolean isUseRedis, Long expire) throws IllegalAccessException, NoSuchFieldException {
+        T oldModel = findById(model.getId());
+        setPropertyValue(model, oldModel, model.getClass().getDeclaredFields(), false);
+        setPropertyValue(model, oldModel, model.getClass().getSuperclass().getDeclaredFields(), true);
         mapper.updateByPrimaryKey(model);
 //        if (isUseRedis) {
 //            String classKey = modelClass.getSimpleName() + 120000;
 //            set(classKey, model, expire == null ? 0L : expire);
 //            deleteRedisPage();
 //        }
+    }
+
+    private void setPropertyValue(T model, T oldModel, Field[] declaredFields, boolean isParenField) throws IllegalAccessException, NoSuchFieldException {
+        for (Field field : declaredFields) {
+            field.setAccessible(true);
+            Object o = field.get(model);
+            if (o == null || "".equals(o)) {
+                Field oldField;
+                if (isParenField) {
+                    oldField = oldModel.getClass().getSuperclass().getDeclaredField(field.getName());
+                } else {
+                    oldField = oldModel.getClass().getDeclaredField(field.getName());
+                }
+                oldField.setAccessible(true);
+                field.set(model, oldField.get(oldModel));
+            }
+        }
     }
 
     private void add(T model, boolean isUseRedis, Long expire) {

@@ -11,10 +11,8 @@
         .mainImgUpload {
             margin-left: 1.2rem;
         }
-        #filelist{
-            margin-top: 10px;
-        }
-        #filelist td{
+
+        #filelist td {
             padding: 10px;
         }
     </style>
@@ -57,34 +55,29 @@
 <script src="../js/jquery.min.js"></script>
 <script src="js/nav.js"></script>
 <script src="/plupload-2.3.1/plupload.full.min.js"></script>
+<script src="./js/app.js"></script>
 <script>
     var resourceids = [];
-    function pladdFileId(fileId, id) {
-        var resourceId = id.split(',')[2];
+    function pladdFileId(fileId, resp) {
+        var resourceId = $.parseJSON(resp).data.id;
         $("#dl_" + fileId).click(function () {
             toDownloadPage(resourceId);
         });
         resourceids.push(resourceId);
-        $("#fileIds").val(resourceids.join(","));
     }
 
     function pldeleteFile(fileId) {
         var infoTable = document.getElementById("filelist");
         var row = document.getElementById(fileId);
-        $.ajax({
-            type: 'post',
-            url: "/xhp/file/upload/deleteFile",
-            data: 'id=1',
-            dataType: "json",
-            success: function (data) { // 判断是否成功
-                if (data.status == 'success') {
-                    infoTable.deleteRow(row.rowIndex);
-                } else {
-                    alert('提示', data.msg, 'error');
-                }
-            },
-            error: function (data) {
-                alert("删除文件出错");
+        var rowIndex = row.rowIndex;
+        var param = {};
+        param.id = resourceids[rowIndex - 1];
+        app.pldeleteFile(param, function (result) {
+            if (result.code == 200) {
+                infoTable.deleteRow(rowIndex);
+                resourceids.splice((rowIndex - 1), 1);
+            } else {
+                alert(result.msg);
             }
         });
     }
@@ -114,18 +107,18 @@
             url: "/xhp/file/upload/fileUpload?userId=12563666666",
             browse_button: 'uploader',
             filters: {
-                max_file_size: '100mb',//100b, 10kb, 10mb, 1gb
+                max_file_size: '50mb',//100b, 10kb, 10mb, 1gb
                 prevent_duplicates: true, //不允许选取重复文件
                 multi_selection: false
             },
             init: {
                 FilesAdded: function (up, files) {
-                    var fileTrs = "";
+                    var fileTrs = "<tr style='height: 10px;'></tr>";
                     for (var i = 0; i < files.length; i++) {
                         fileTrs +=
                             "<tr id='attachement" + files[i].id + "'>"
                             + " <td width='1px' style='padding: 0px'></td>"
-                            + " <td><span id=\"dl_" + files[i].id + "\" >" + files[i].name + "</span></td>"
+                            + " <td><span id=\"dl_" + files[i].id + "\" style=\"cursor:pointer; color: #03adf4;\">" + files[i].name + "</span></td>"
                             + " <td><span id=\"" + files[i].id + "\">开始上传</span></td>"
                             + " <td><div style=\"cursor:pointer;    text-decoration: underline;color: #03adf4;\" onclick=\"pldeleteFile('attachement" + files[i].id + "')\">删除</div></td>"
                             + "</tr>";
@@ -146,13 +139,7 @@
                     $("#" + file.id).html("上传进度为：" + file.percent + "%");
                 },
                 Error: function (uploader, errObject) {
-                    var errorCode = errObject.code;
-                    var errorMsg = errObject.message;
-                    if (errorCode == -600) {
-                        $.messager.alert('提示', "允许上传的单个文件最大为100 MB！", 'info');
-                    } else {
-                        alert(errorMsg);
-                    }
+                    alert("上传错误，请联系管理员");
                 }
             }
         });
@@ -160,7 +147,7 @@
     });
 
     function toDownloadPage(fileId) {
-        window.open('${ctx }/notificationUpload/fileDownload?fileId=' + fileId);
+        window.open('/xhp/file/upload/fileDownload?fileId=' + fileId);
     }
 </script>
 </html>
