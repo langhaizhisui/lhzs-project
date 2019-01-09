@@ -1,4 +1,4 @@
-package cn.lhzs.web.controller;
+package cn.lhzs.web.controller.xinghuipin.admin;
 
 import cn.lhzs.common.result.ResponseResult;
 import cn.lhzs.common.util.DateUtil;
@@ -28,7 +28,7 @@ import static cn.lhzs.common.result.ResponseResultGenerator.generatorSuccessResu
  * Created by ZHX on 2019/01/03.
  */
 @Controller
-@RequestMapping("/xhp/file/upload")
+@RequestMapping("/xhp/admin/file/upload")
 public class XhpFileUploadController {
 
     @Autowired

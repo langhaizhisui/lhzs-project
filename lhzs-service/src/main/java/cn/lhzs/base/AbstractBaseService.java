@@ -48,8 +48,10 @@ public abstract class AbstractBaseService<T extends BaseModel> extends BaseRedis
     @Override
     public void save(List<T> models) {
         Assert.notNull(models, "MODEL不能为空");
-        mapper.insertList(models);
+        models.forEach(item -> update(item, true, 0L));
+//        mapper.insertList(models);
     }
+
 
     @Override
     public void deleteById(Long id) {
@@ -97,6 +99,7 @@ public abstract class AbstractBaseService<T extends BaseModel> extends BaseRedis
     @Override
     public T findById(Long id) {
         Assert.notNull(id, "ID不能为空");
+
         try {
 //            T model = get(getRedisClassIdKey(id.toString()), modelClass);
 //            if (model == null) {
@@ -168,6 +171,11 @@ public abstract class AbstractBaseService<T extends BaseModel> extends BaseRedis
         List<T> list = mapper.selectByExample(condition);
         basePageList.setList(list);
         return basePageList;
+    }
+
+    @Override
+    public List<T> findByExampleCondition(ExampleCondition condition) {
+        return mapper.selectByExample(condition);
     }
 
     @Override

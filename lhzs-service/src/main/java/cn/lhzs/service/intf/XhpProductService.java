@@ -1,6 +1,9 @@
 package cn.lhzs.service.intf;
-import cn.lhzs.data.bean.XhpProduct;
+
 import cn.lhzs.base.IBaseService;
+import cn.lhzs.data.bean.XhpProduct;
+
+import java.util.List;
 
 
 /**
@@ -8,4 +11,7 @@ import cn.lhzs.base.IBaseService;
  */
 public interface XhpProductService extends IBaseService<XhpProduct> {
 
+    List<XhpProduct> getProductList(XhpProduct xhpProduct);
+
+    boolean addProduct(XhpProduct product);
 }

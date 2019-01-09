@@ -2,6 +2,7 @@ package cn.lhzs.data.bean;
 
 import cn.lhzs.data.base.BaseModel;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 @Table(name = "xhp_product")
@@ -33,6 +34,9 @@ public class XhpProduct extends BaseModel {
      * 商品配置信息
      */
     private String config;
+
+    @Transient
+    private List<XhpProductSku> skuList;
 
     /**
      * 获取商品标题
@@ -124,4 +128,11 @@ public class XhpProduct extends BaseModel {
         this.config = config;
     }
 
+    public List<XhpProductSku> getSkuList() {
+        return skuList;
+    }
+
+    public void setSkuList(List<XhpProductSku> skuList) {
+        this.skuList = skuList;
+    }
 }

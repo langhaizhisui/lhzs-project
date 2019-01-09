@@ -2,8 +2,17 @@ var app = {
     cache: [],
     pldeleteFile: function (data, callback) {
         var self = this;
-        self.ajax("post", "/xhp/file/upload/deleteFile", data, callback);
+        self.ajax("post", "/xhp/admin/file/upload/deleteFile", data, callback);
     },
+    addProduct: function (data, callback) {
+        var self = this;
+        self.ajax("post", "/xhp/admin/product/add", data, callback);
+    },
+    getProductList: function (data, callback) {
+        var self = this;
+        self.ajax("post", "/xhp/admin/product/list", data, callback);
+    },
+
     "ajax": function (type, url, data, callback) {
         var self = this;
         if (self.isParamEmpty(type) || self.isParamEmpty(url) || self.isParamEmpty(data)) {

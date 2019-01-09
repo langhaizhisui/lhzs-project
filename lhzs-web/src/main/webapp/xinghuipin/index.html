@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
+    <title>商品</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/common.css" rel='stylesheet' type='text/css'/>
     <link href="css/table_list.css" rel='stylesheet' type='text/css'/>
     <link href="css/nav.css" rel='stylesheet' type='text/css'/>
+    <link href="css/index.css" rel='stylesheet' type='text/css'/>
 </head>
 <body>
 <div id="pageNav"></div>
@@ -25,10 +26,6 @@
                 <span class="queryTitleText">价格</span>
                 <input/>
             </span>
-            <span class="pageInput">
-                <span class="queryTitleText">价格</span>
-                <input/>
-            </span>
             <div class="groupButton">
                 <span class="commonButton">查询</span>
                 <span class="commonButton">返回</span>
@@ -41,150 +38,18 @@
             <thead>
             <tr>
                 <th class="th-btn pointer">
-                    执行周期
+                    商品Id
                 </th>
                 <th class="th-btn pointer">
-                    用户
+                    商品名称
                 </th>
                 <th class="th-btn pointer">
-                    脚本路径
+                    详情
                 </th>
-                <th class="th-btn pointer">
-                    参数
-                </th>
-                <th class="th-btn pointer">
-                    日志信息
-                </th>
-                <th class="th-btn pointer">
-                    日志信息
-                </th>
-                <th class="th-btn pointer">
-                    日志信息
-                </th>
-                <th class="th-btn pointer">
-                    日志信息
-                </th>
-                <th class="th-btn pointer">
-                    日志信息
-                </th>
-                <th class="th-btn pointer">
-                    日志信息
-                </th>
-                <th class="th-btn pointer">
-                    日志信息
-                </th>
-                <th class="th-btn pointer">
-                    日志信息
-                </th>
-                <th class="th-btn pointer">
-                    日志信息
-                </th>
-                <th>操作</th>
             </tr>
             </thead>
-            <tbody>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-                <td>
-                    <a href="#">查看脚本</a>
-                </td>
-            </tr>
+            <tbody id="prodTBody">
+
             </tbody>
         </table>
     </div>
@@ -192,26 +57,54 @@
     <div class="page-num"></div>
 </div>
 </body>
-<script src="../js/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <script src="js/nav.js"></script>
 <script src="js/table_list.js"></script>
 <script src="js/paging.js"></script>
+<script src="js/app.js"></script>
 <script>
     $(function () {
-        splitPage(9, 3, ".page-num",
-            function (index) {
-                if (index != 1) {
-
-                }
-            }, function (index) {
-                index = parseInt(index);
-                if (index != 10) {
-
-                }
-            }, function (index) {
-
-            });
+        getProdList(1);
     });
 
+    function getProdList(page) {
+        var param = {};
+        param.page = page;
+        param.size = 20;
+        app.getProductList(param, function (result) {
+            if (result.code == 200) {
+                var prod = "";
+                var data = result.data.list;
+                for (var i = 0; i < data.length; i++) {
+                    var item = data[i];
+                    prod +=
+                        '<tr>' +
+                        '    <td>' + item.id + '</td>' +
+                        '    <td class="prodTitle">' + item.title + '</td>' +
+                        '    <td class="scan">查看</td>' +
+                        '</tr>';
+                }
+                $("#prodTBody").html(prod);
+
+                var totalPage = result.data.pages;
+                var currPage = result.data.pageNum;
+                splitPage(totalPage, currPage, ".page-num",
+                    function (index) {
+                        if (index != 1) {
+                            getProdList(index - 1);
+                        }
+                    }, function (index) {
+                        index = parseInt(index);
+                        if (index != totalPage) {
+                            getProdList(index + 1);
+                        }
+                    }, function (index) {
+                        getProdList(index);
+                    });
+            } else {
+                alert(result.msg);
+            }
+        });
+    }
 </script>
 </html>

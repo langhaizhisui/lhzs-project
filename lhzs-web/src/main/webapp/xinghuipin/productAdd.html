@@ -11,10 +11,6 @@
         .mainImgUpload {
             margin-left: 1.2rem;
         }
-
-        #filelist td {
-            padding: 10px;
-        }
     </style>
 </head>
 <body>
@@ -22,7 +18,6 @@
 <div class="content">
     <div class="center">
         <table class="table">
-            <tbody>
             <tr>
                 <td class="table-title">商品名称</td>
                 <td colspan="3">
@@ -33,21 +28,52 @@
                 <td colspan="3">
                     <div class="mainImgUpload">
                         <div id="uploader" class="commonButton">添加图片</div>
-                        <table id="filelist"></table>
+                        <table id="filelist" style="margin-top: 10px;"></table>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td class="table-title">详情页轮播图</td>
                 <td colspan="3">
-                    <input class="table-input" type="text" name="" id="detail-url" value="">
+                    <div class="mainImgUpload">
+                        <div id="detailuploader" class="commonButton">添加图片</div>
+                        <table id="detailfilelist" style="margin-top: 10px;"></table>
+                    </div>
                 </td>
             </tr>
-            </tbody>
+            <tr>
+                <td class="table-title">分类</td>
+                <td colspan="3">
+                    <div class="mainImgUpload">
+                        <div class="commonButton" onclick="addCatalog()">增加分类</div>
+                        <table id="catalogTable" style="margin-top: 10px;">
+                            <thead>
+                            <tr>
+                                <td width="1px" style="padding: 0px"></td>
+                                <td style="text-align: center">标题</td>
+                                <td style="text-align: center">价格</td>
+                                <td style="text-align: center">操作</td>
+                                </td>
+                            </tr>
+                            </thead>
+                            <tbody id="catalogTableTBody">
+                            <tr>
+                                <td width="1px" style="padding: 0px"></td>
+                                <td style="padding: 10px;"><input class="catalogTitle"/></td>
+                                <td style="padding: 10px;"><input class="catalogPrice"/></td>
+                                <td style="padding: 10px;cursor:pointer; text-decoration: underline;color: #03adf4;"
+                                    onclick="deleteCatalogTableRow(this)">删除
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
         </table>
-
         <div class="groupButton">
-            <span class="commonButton">保存</span>
+            <span class="commonButton" onclick="save()">保存</span>
+            <span class="commonButton" onclick="back()">返回</span>
         </div>
     </div>
 </div>
@@ -56,98 +82,160 @@
 <script src="js/nav.js"></script>
 <script src="/plupload-2.3.1/plupload.full.min.js"></script>
 <script src="./js/app.js"></script>
+<script src="./js/file_upload.js"></script>
 <script>
-    var resourceids = [];
-    function pladdFileId(fileId, resp) {
-        var resourceId = $.parseJSON(resp).data.id;
-        $("#dl_" + fileId).click(function () {
-            toDownloadPage(resourceId);
-        });
-        resourceids.push(resourceId);
-    }
-
-    function pldeleteFile(fileId) {
-        var infoTable = document.getElementById("filelist");
-        var row = document.getElementById(fileId);
-        var rowIndex = row.rowIndex;
-        var param = {};
-        param.id = resourceids[rowIndex - 1];
-        app.pldeleteFile(param, function (result) {
-            if (result.code == 200) {
-                infoTable.deleteRow(rowIndex);
-                resourceids.splice((rowIndex - 1), 1);
-            } else {
-                alert(result.msg);
-            }
-        });
-    }
-
-    Date.prototype.format = function (format) {
-        var o = {
-            "M+": this.getMonth() + 1, //month
-            "d+": this.getDate(),    //day
-            "h+": this.getHours(),   //hour
-            "m+": this.getMinutes(), //minute
-            "s+": this.getSeconds(), //second
-            "q+": Math.floor((this.getMonth() + 3) / 3),
-            "S": this.getMilliseconds() //millisecond
-        }
-        if (/(y+)/.test(format)) format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-        for (var k in o) {
-            if (new RegExp("(" + k + ")").test(format)) {
-                format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
-            }
-        }
-        return format;
-    }
-
     $(function () {
-        var uploader = new plupload.Uploader({
-            flash_swf_url: '/web/plupload-2.3.1/Moxie.swf',
-            url: "/xhp/file/upload/fileUpload?userId=12563666666",
-            browse_button: 'uploader',
-            filters: {
-                max_file_size: '50mb',//100b, 10kb, 10mb, 1gb
-                prevent_duplicates: true, //不允许选取重复文件
-                multi_selection: false
-            },
-            init: {
-                FilesAdded: function (up, files) {
-                    var fileTrs = "<tr style='height: 10px;'></tr>";
-                    for (var i = 0; i < files.length; i++) {
-                        fileTrs +=
-                            "<tr id='attachement" + files[i].id + "'>"
-                            + " <td width='1px' style='padding: 0px'></td>"
-                            + " <td><span id=\"dl_" + files[i].id + "\" style=\"cursor:pointer; color: #03adf4;\">" + files[i].name + "</span></td>"
-                            + " <td><span id=\"" + files[i].id + "\">开始上传</span></td>"
-                            + " <td><div style=\"cursor:pointer;    text-decoration: underline;color: #03adf4;\" onclick=\"pldeleteFile('attachement" + files[i].id + "')\">删除</div></td>"
-                            + "</tr>";
-                    }
-                    $("#filelist").append(fileTrs);
-                    uploader.start();
-                    return false;
-                },
-                FileUploaded: function (up, file, info) {//文件上传完毕触发
-                    $("#" + file.id).html("上传完成");
-                    var resp = info.response;
-                    pladdFileId(file.id, resp);
-                },
-                UploadComplete: function (uploader, files) {
-                    console.log("所有文件上传完毕");
-                },
-                UploadProgress: function (uploader, file) {
-                    $("#" + file.id).html("上传进度为：" + file.percent + "%");
-                },
-                Error: function (uploader, errObject) {
-                    alert("上传错误，请联系管理员");
-                }
-            }
-        });
-        uploader.init();
+        mainPicUpload();
+        detailPicsUpload();
     });
 
-    function toDownloadPage(fileId) {
-        window.open('/xhp/file/upload/fileDownload?fileId=' + fileId);
+    function deleteCatalogTableRow(obj) {
+        var childrenCount = $("#catalogTableTBody").children().length;
+        if (childrenCount <= 1) {
+            alert("至少保留一个分类");
+            return;
+        }
+        $(obj).parent().remove();
     }
+
+    function addCatalog() {
+        var catalogRow = '<tr>' +
+            '    <td width="1px" style="padding: 0px"></td>' +
+            '    <td style="padding: 10px;"><input class="catalogTitle"/></td>' +
+            '    <td style="padding: 10px;"><input class="catalogPrice"/></td>' +
+            '    <td style="padding: 10px;cursor:pointer; text-decoration: underline;color: #03adf4;" onclick="deleteCatalogTableRow(this)">删除</td>' +
+            '    </tr>'
+        $("#catalogTableTBody").append(catalogRow);
+    }
+
+    function save() {
+        var params = {};
+        var prodTitle = $("#prod-name").val();
+        if (!prodTitle) {
+            alert("请输入商品名称");
+            return;
+        }
+        params.title = prodTitle;
+
+        var mainPic = $("#filelist").find(".item");
+        if (mainPic.length < 1) {
+            alert("请添加主图");
+            return;
+        }
+        params.banner = mainPic.first().text();
+
+        var detailPic = $("#detailfilelist").find(".item");
+        if (detailPic.length < 1) {
+            alert("请添加详情轮播图");
+            return;
+        }
+        var detail = "";
+        for (var i = 0; i < detailPic.length; i++) {
+            var pic = detailPic.get(i);
+            if (i != detailPic.length - 1) {
+                detail +=  $(pic).text() + ",";
+            } else {
+                detail += $(pic).text();
+            }
+        }
+        params.detaibanners = detail;
+
+        var childrenCount = $("#catalogTableTBody").children().length;
+        if (childrenCount < 1) {
+            alert("请添加分类");
+            return;
+        }
+        var cataArr = [];
+        for (var i = 0; i < $(".catalogTitle").length; i++) {
+            var title = $($(".catalogTitle").get(i)).val();
+            var price = $($(".catalogPrice").get(i)).val();
+            if (!title || !price) {
+                alert("请检查分类的标题或价格为空");
+                return;
+            }
+            cataArr.push({"title": title, "price": price});
+        }
+        params.skuList = cataArr;
+
+        app.addProduct(params, function (result) {
+            if (result.code == 200) {
+                alert("添加成功！");
+            }
+        });
+    }
+
+    function back() {
+        history.back();
+    }
+
+    function mainPicUpload() {
+        var config = {};
+        config.url = "/xhp/file/upload/fileUpload?userId=12563666666";
+        config.uploadButton = "uploader";
+        config.maxFileSize = "50mb";
+        config.preventDuplicates = true;
+        var uploader = fileUploadConfig(config, function (up, files) {
+            var fileTrs = "";
+            for (var i = 0; i < files.length; i++) {
+                fileTrs +=
+                    "<tr id='attachement" + files[i].id + "'>"
+                    + " <td width='1px' style='padding: 0px'></td>"
+                    + " <td style='padding: 10px; display: none'><span id=\"item_" + files[i].id + "\" class='item'></span></td>"
+                    + " <td style='padding: 10px; cursor:pointer; color: #03adf4;'><span id=\"dl_" + files[i].id + "\">" + files[i].name + "</span></td>"
+                    + " <td style='padding: 10px;'><span id=\"" + files[i].id + "\">开始上传</span></td>"
+                    + " <td style='padding: 10px; cursor:pointer; text-decoration: underline;color: #03adf4;'><div onclick=\"pldeleteFile('filelist','attachement" + files[i].id + "','item_" + files[i].id + "')\">删除</div></td>"
+                    + "</tr>";
+            }
+            $("#filelist").append(fileTrs);
+            uploader.start();
+            return false;
+        }, function (up, file, info) {//文件上传完毕触发
+            $("#" + file.id).html("上传完成");
+            var resp = info.response;
+            pladdFileId(file.id, resp);
+        }, function (uploader, files) {
+            console.log("所有文件上传完毕");
+        }, function (uploader, file) {
+            $("#" + file.id).html("上传进度为：" + file.percent + "%");
+        }, function (uploader, errObject) {
+            alert("上传错误，请联系管理员");
+        });
+        uploader.init();
+    }
+
+    function detailPicsUpload() {
+        var config = {};
+        config.url = "/xhp/file/upload/fileUpload?userId=12563666666";
+        config.uploadButton = "detailuploader";
+        config.maxFileSize = "50mb";
+        config.preventDuplicates = true;
+        var uploader = fileUploadConfig(config, function (up, files) {
+            var fileTrs = "";
+            for (var i = 0; i < files.length; i++) {
+                fileTrs +=
+                    "<tr id='attachement" + files[i].id + "'>"
+                    + " <td style='padding: 10px; display: none'><span id=\"item_" + files[i].id + "\" class='item'></span></td>"
+                    + " <td style='padding: 10px; cursor:pointer; color: #03adf4;'><span id=\"dl_" + files[i].id + "\">" + files[i].name + "</span></td>"
+                    + " <td style='padding: 10px;'><span id=\"" + files[i].id + "\">开始上传</span></td>"
+                    + " <td style='padding: 10px; cursor:pointer; text-decoration: underline;color: #03adf4;'><div onclick=\"pldeleteFile('detailfilelist','attachement" + files[i].id + "','item_" + files[i].id + "')\">删除</div></td>"
+                    + "</tr>";
+            }
+            $("#detailfilelist").append(fileTrs);
+            uploader.start();
+            return false;
+        }, function (up, file, info) {//文件上传完毕触发
+            $("#" + file.id).html("上传完成");
+            var resp = info.response;
+            pladdFileId(file.id, resp);
+        }, function (uploader, files) {
+            console.log("所有文件上传完毕");
+        }, function (uploader, file) {
+            $("#" + file.id).html("上传进度为：" + file.percent + "%");
+        }, function (uploader, errObject) {
+            alert("上传错误，请联系管理员");
+        });
+        uploader.init();
+    }
+
 </script>
 </html>

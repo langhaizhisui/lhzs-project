@@ -140,4 +140,6 @@ public interface IBaseService<T extends BaseModel> {
      * @return
      */
     String getAttrValForRedisKey(T t, boolean bWithSupperFields);
+
+    List<T> findByExampleCondition(ExampleCondition condition);
 }
