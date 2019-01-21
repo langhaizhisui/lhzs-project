@@ -1,9 +1,14 @@
 package cn.lhzs.web.controller.admin;
 
 import cn.lhzs.common.exception.LoginException;
+import cn.lhzs.common.util.StringUtil;
+import cn.lhzs.common.util.WebUtil;
 import cn.lhzs.common.vo.LoginCondition;
 import cn.lhzs.common.result.ResponseResult;
+import cn.lhzs.data.bean.SysUser;
 import cn.lhzs.service.intf.ArticleService;
+import cn.lhzs.service.intf.SysAuthService;
+import cn.lhzs.service.intf.SysUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
@@ -11,6 +16,7 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,11 +34,16 @@ import static cn.lhzs.common.result.ResponseResultGenerator.generatorUnLoginResu
 public class AdminLoginController {
 
     @Autowired
-    public ArticleService articleService;
+    private SysUserService sysUserService;
 
     @RequestMapping("/login")
     @ResponseBody
     public ResponseResult login(@RequestBody LoginCondition loginCondition) {
+
+        SysUser sysUser = sysUserService.getUserInfo(loginCondition);
+        if(sysUser == null){
+            throw new LoginException("用户名或密码错误");
+        }
 
         UsernamePasswordToken token = new UsernamePasswordToken(loginCondition.getUserName(), loginCondition.getPassword());
         try {
@@ -42,7 +53,12 @@ public class AdminLoginController {
             if (!currentUser.isAuthenticated()) {
                 token.clear();
             }
-            return generatorLoginResult();
+
+            String url = "/admin/manageSystem.html";
+            if(sysUser.getState() == 2){
+                url = "/xinghuipin/index.html";
+            }
+            return generatorLoginResult(url);
         } catch (UnknownAccountException e) {
             throw new LoginException("未知账户" + token.getPrincipal());
         } catch (IncorrectCredentialsException e) {
@@ -67,4 +83,5 @@ public class AdminLoginController {
     public ResponseResult forbidden() {
         return generatorUnLoginResult();
     }
+
 }

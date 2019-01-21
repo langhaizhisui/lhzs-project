@@ -75,7 +75,7 @@
             param.password=$("#password").val();
             app.login(param, function (result) {
                 if(result.code == 601){
-                    location.replace("/admin/manageSystem.html");
+                    location.replace(result.data);
                 }else{
                     alert(result.msg);
                 }

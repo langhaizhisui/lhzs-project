@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 */
 @Controller
 @RequestMapping("/xhp/admin/shop")
-public class XhpShopController {
+public class XhpAdminShopController {
 
     @Autowired
     private XhpShopService xhpShopService;

@@ -29,7 +29,7 @@ import static cn.lhzs.common.result.ResponseResultGenerator.generatorSuccessResu
  */
 @Controller
 @RequestMapping("/xhp/admin/file/upload")
-public class XhpFileUploadController {
+public class XhpAdminFileUploadController {
 
     @Autowired
     private XhpFileUploadService xhpFileUploadService;

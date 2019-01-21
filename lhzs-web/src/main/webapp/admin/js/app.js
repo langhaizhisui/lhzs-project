@@ -142,7 +142,7 @@ var app = {
                 url: url + param,
                 success: function (result) {
                     if (result.code == 600) {
-                        location.replace("/login.html");
+                        location.replace("/admin/login.html");
                         return;
                     }
                     return callback(result);

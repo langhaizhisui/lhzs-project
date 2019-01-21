@@ -4,17 +4,13 @@ var app = {
         var self = this;
         self.ajax("post", "/config/slideshowPicture/list", data, callback);
     },
-    getNavProdList: function (data, callback) {
-        var self = this;
-        self.ajax("post", "/prod/mobile/getList", data, callback);
-    },
     getProductList: function (data, callback) {
         var self = this;
-        self.ajax("post", "/prod/getList", data, callback);
+        self.ajax("post", "/xhp/prod/list", data, callback);
     },
     getProductDetail: function (data, callback) {
         var self = this;
-        self.ajax("get", "/prod/getProduct", data, callback);
+        self.ajax("get", "/xhp/prod/detail", data, callback);
     },
     "ajax": function (type, url, data, callback) {
         var self = this;
@@ -53,20 +49,6 @@ var app = {
             console.log("请检查参数，不能为空");
             return true;
         }
-    },
-    backTop: function () {
-        $(window).on('scroll', function () {
-            if ($(window).scrollTop() > 100) {
-                $('.back-to-top').css("display", 'block');
-            } else {
-                $('.back-to-top').css("display", 'none');
-            }
-        });
-        $('.back-to-top').on('click', function (e) {
-            $('html,body').animate({
-                scrollTop: 0
-            }, 700);
-        });
     }
 }
 

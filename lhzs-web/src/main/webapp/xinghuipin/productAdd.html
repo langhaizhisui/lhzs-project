@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
+    <title>商品添加</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/common.css" rel='stylesheet' type='text/css'/>
@@ -81,21 +81,92 @@
 <script src="../js/jquery.min.js"></script>
 <script src="js/nav.js"></script>
 <script src="/plupload-2.3.1/plupload.full.min.js"></script>
-<script src="./js/app.js"></script>
 <script src="./js/file_upload.js"></script>
+<script src="./js/app.js"></script>
 <script>
+    var prodId = getParameter("prodId");
+
     $(function () {
         mainPicUpload();
         detailPicsUpload();
+        editInfo();
     });
 
-    function deleteCatalogTableRow(obj) {
+    function editInfo() {
+        if (!prodId) {
+            return;
+        }
+
+        var param = {};
+        param.id = prodId;
+        app.getProductDetail(param, function (result) {
+            if (result.code == 200) {
+                var item = result.data;
+                $("#prod-name").val(item.title);
+
+                var files = item.mainBannerList;
+                var fileTrs = "";
+                for (var i = 0; i < files.length; i++) {
+                    fileTrs +=
+                        "<tr id='attachement" + files[i].id + "'>"
+                        + " <td width='1px' style='padding: 0px'></td>"
+                        + " <td style='padding: 10px; display: none'><span id=\"item_" + files[i].id + "\" class='item'>" + files[i].id + "</span></td>"
+                        + " <td style='padding: 10px; cursor:pointer; color: #03adf4;'><span id=\"dl_" + files[i].id + "\">" + files[i].name + "</span></td>"
+                        + " <td style='padding: 10px;'><span id=\"" + files[i].id + "\">已上传</span></td>"
+                        + " <td style='padding: 10px; cursor:pointer; text-decoration: underline;color: #03adf4;'><div onclick=\"pldeleteFile('filelist','attachement" + files[i].id + "','item_" + files[i].id + "')\">删除</div></td>"
+                        + "</tr>";
+                }
+                $("#filelist").append(fileTrs);
+
+                files = item.detailBannerList;
+                var fileTrs = "";
+                for (var i = 0; i < files.length; i++) {
+                    fileTrs +=
+                        "<tr id='attachement" + files[i].id + "'>"
+                        + " <td style='padding: 10px; display: none'><span id=\"item_" + files[i].id + "\" class='item'>" + files[i].id + "</span></td>"
+                        + " <td style='padding: 10px; cursor:pointer; color: #03adf4;'><span id=\"dl_" + files[i].id + "\">" + files[i].name + "</span></td>"
+                        + " <td style='padding: 10px;'><span id=\"" + files[i].id + "\">已上传</span></td>"
+                        + " <td style='padding: 10px; cursor:pointer; text-decoration: underline;color: #03adf4;'><div onclick=\"pldeleteFile('detailfilelist','attachement" + files[i].id + "','item_" + files[i].id + "')\">删除</div></td>"
+                        + "</tr>";
+                }
+                $("#detailfilelist").append(fileTrs);
+
+                var catalogRow = "";
+                var skuList = item.skuList;
+                for (var i = 0; i < skuList.length; i++) {
+                    var item = skuList[i];
+                    catalogRow += '<tr skuId="' + item.id + '">' +
+                        '    <td width="1px" style="padding: 0px"></td>' +
+                        '    <td style="padding: 10px;"><input class="catalogTitle" value="' + item.title + '"/></td>' +
+                        '    <td style="padding: 10px;"><input class="catalogPrice" value="' + item.price + '"/></td>' +
+                        '    <td style="padding: 10px;cursor:pointer; text-decoration: underline;color: #03adf4;" onclick="deleteCatalogTableRow(this,' + item.id + ')">删除</td>' +
+                        '    </tr>';
+                }
+                $("#catalogTableTBody").html(catalogRow);
+            } else {
+                alert(result.msg);
+            }
+        });
+    }
+
+    function deleteCatalogTableRow(obj, skuId) {
         var childrenCount = $("#catalogTableTBody").children().length;
         if (childrenCount <= 1) {
             alert("至少保留一个分类");
             return;
         }
         $(obj).parent().remove();
+        if (prodId && id) {
+            var param = {};
+            param.id = skuId;
+            app.deleteProductSku(param, function (result) {
+                if (result.code == 200) {
+                    alert("删除成功");
+                } else {
+                    alert(data.msg);
+                }
+            })
+        }
     }
 
     function addCatalog() {
@@ -133,7 +204,7 @@
         for (var i = 0; i < detailPic.length; i++) {
             var pic = detailPic.get(i);
             if (i != detailPic.length - 1) {
-                detail +=  $(pic).text() + ",";
+                detail += $(pic).text() + ",";
             } else {
                 detail += $(pic).text();
             }
@@ -153,15 +224,30 @@
                 alert("请检查分类的标题或价格为空");
                 return;
             }
-            cataArr.push({"title": title, "price": price});
+
+            var skuId = $($(".catalogTitle").get(i)).parent().parent().attr("skuId");
+            if (skuId) {
+                cataArr.push({"title": title, "price": price, "id": skuId});
+            } else {
+                cataArr.push({"title": title, "price": price});
+            }
         }
         params.skuList = cataArr;
+        if (prodId) {
+            params.id = prodId;
+            app.addProduct(params, function (result) {
+                if (result.code == 200) {
+                    alert("更新成功");
+                }
+            });
+        } else {
+            app.addProduct(params, function (result) {
+                if (result.code == 200) {
+                    alert("添加成功！");
+                }
+            });
+        }
 
-        app.addProduct(params, function (result) {
-            if (result.code == 200) {
-                alert("添加成功！");
-            }
-        });
     }
 
     function back() {
@@ -170,7 +256,7 @@
 
     function mainPicUpload() {
         var config = {};
-        config.url = "/xhp/file/upload/fileUpload?userId=12563666666";
+        config.url = "/xhp/admin/file/upload/fileUpload?userId=12563666666";
         config.uploadButton = "uploader";
         config.maxFileSize = "50mb";
         config.preventDuplicates = true;
@@ -205,7 +291,7 @@
 
     function detailPicsUpload() {
         var config = {};
-        config.url = "/xhp/file/upload/fileUpload?userId=12563666666";
+        config.url = "/xhp/admin/file/upload/fileUpload?userId=12563666666";
         config.uploadButton = "detailuploader";
         config.maxFileSize = "50mb";
         config.preventDuplicates = true;
@@ -236,6 +322,5 @@
         });
         uploader.init();
     }
-
 </script>
 </html>

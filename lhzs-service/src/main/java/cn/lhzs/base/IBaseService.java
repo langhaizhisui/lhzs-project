@@ -79,7 +79,8 @@ public interface IBaseService<T extends BaseModel> {
      * @return
      * @throws TooManyResultsException
      */
-    T findBy(String fieldName, Object value) throws TooManyResultsException;
+    T
+    findBy(String fieldName, Object value) throws TooManyResultsException;
 
     /**
      * 通过多个ID查找//eg：ids -> “1,2,3,4”

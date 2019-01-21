@@ -74,6 +74,11 @@ body {
     font-size: 13.5px;
 }
 
+.leftNavText a, .topNavText a{
+    color: #979dab;
+    text-decoration: none;
+}
+
 .navText {
     min-width: 500px;
     background-color: #fefefe;

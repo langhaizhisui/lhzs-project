@@ -12,7 +12,26 @@ var app = {
         var self = this;
         self.ajax("post", "/xhp/admin/product/list", data, callback);
     },
-
+    getCatalogList: function (data, callback) {
+        var self = this;
+        self.ajax("post", "/xhp/admin/product/catalog", data, callback);
+    },
+    getProductDetail: function (data, callback) {
+        var self = this;
+        self.ajax("post", "/xhp/admin/product/detail", data, callback);
+    },
+    deleteProductSku: function (data, callback) {
+        var self = this;
+        self.ajax("post", "/xhp/admin/product/sku/delete", data, callback);
+    },
+    getMenu: function (data, callback) {
+        var self = this;
+        self.ajax("post", "/admin/user/menu", data, callback);
+    },
+    login: function (data, callback) {
+        var self = this;
+        self.ajax("post", "/login", data, callback);
+    },
     "ajax": function (type, url, data, callback) {
         var self = this;
         if (self.isParamEmpty(type) || self.isParamEmpty(url) || self.isParamEmpty(data)) {
@@ -34,7 +53,7 @@ var app = {
                 url: url + param,
                 success: function (result) {
                     if (result.code == 600) {
-                        location.replace("/login.html");
+                        location.replace("/xinghuipin/login.html");
                         return;
                     }
                     return callback(result);
@@ -49,7 +68,7 @@ var app = {
                 data: JSON.stringify(data),
                 success: function (result) {
                     if (result.code == 600) {
-                        location.replace("/admin/login.html");
+                        location.replace("/xinghuipin/login.html");
                         return;
                     }
                     return callback(result);

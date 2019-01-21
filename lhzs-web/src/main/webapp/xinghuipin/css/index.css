@@ -7,3 +7,11 @@
 .prodTitle {
     font-size: 15px;
 }
+
+.page-num {
+    text-align: right;
+    min-width: 1000px;
+    margin: 20px 0px;
+    float: none;
+    width: 1020px;
+}

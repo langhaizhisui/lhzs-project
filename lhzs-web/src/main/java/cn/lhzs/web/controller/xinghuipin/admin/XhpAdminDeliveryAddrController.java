@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 */
 @Controller
 @RequestMapping("/xhp/admin/delivery/addr")
-public class XhpDeliveryAddrController {
+public class XhpAdminDeliveryAddrController {
 
     @Autowired
     private XhpDeliveryAddrService xhpDeliveryAddrService;

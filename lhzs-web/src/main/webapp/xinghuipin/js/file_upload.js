@@ -27,9 +27,9 @@ function pladdFileId(fileId, resp) {
     $("#item_" + fileId).text(resourceId);
 }
 
-function pldeleteFile(table, row, itemId) {
+function pldeleteFile(table, rowNum, itemId) {
     var infoTable = document.getElementById(table).firstChild;
-    var row = document.getElementById(row);
+    var row = document.getElementById(rowNum);
     var param = {};
     param.id = $("#" + itemId).text();
     app.pldeleteFile(param, function (result) {

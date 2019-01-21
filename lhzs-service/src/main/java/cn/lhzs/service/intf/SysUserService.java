@@ -1,6 +1,7 @@
 package cn.lhzs.service.intf;
 
 import cn.lhzs.base.IBaseService;
+import cn.lhzs.common.vo.LoginCondition;
 import cn.lhzs.data.bean.SysAuthMenu;
 import cn.lhzs.data.bean.SysUser;
 
@@ -12,4 +13,6 @@ import java.util.Set;
 public interface SysUserService extends IBaseService<SysUser> {
 
     Set<SysAuthMenu> getMenu();
+
+    SysUser getUserInfo(LoginCondition loginCondition);
 }

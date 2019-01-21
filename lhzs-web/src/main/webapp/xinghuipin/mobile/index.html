@@ -7,12 +7,12 @@
     <meta name="Keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="/mobile/css/swiper.min.css">
-    <link href="/mobile/css/male.css" rel="stylesheet">
-    <link href="/mobile/css/index.css" rel="stylesheet">
+    <link href="./css/male.css" rel="stylesheet">
+    <link href="./css/index.css" rel="stylesheet">
 </head>
 <body>
 <div>
-    <div class="search clearfix">index
+    <div class="search clearfix">
         <img class="logo" src="/mobile/images/logo2.jpg">
         <div class="search-box">
             <img class="search-box-img" src="/mobile/images/search2.png">
@@ -35,12 +35,12 @@
 </div>
 
 </body>
-<script src="/js/jquery.min.js"></script>
-<script src="/js/swiper.jquery.min.js"></script>
-<script src="/js/swiper.js"></script>
-<script src="/mobile/js/jweixin-1.4.0.js"></script>
-<script src="/mobile/js/wechat.js"></script>
-<script src="/mobile/js/app.js"></script>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/swiper.jquery.min.js"></script>
+<script src="../js/swiper.js"></script>
+<script src="./js/jweixin-1.4.0.js"></script>
+<script src="./js/wechat.js"></script>
+<script src="./js/app.js"></script>
 <script>
     var count = getParameter("count");
     var openId = getParameter("openId");
@@ -51,8 +51,6 @@
     });
 
     function init() {
-//        getSlideShowPicture();
-//        getNavProdList();
         if (!wechat.isWechat()) {
             getSlideShowPicture();
             getNavProdList();
@@ -117,38 +115,47 @@
     }
 
     function getNavProdList() {
-        var navTitle = ["母婴", "女装", "男装", "鞋包配饰", "洗护彩妆", "数码电器", "食品/冲调", "宠物", "居家日用", "家装家具", "文体/车品"];
+        var navTitle = ["轮滑用品"];
         setNavTitle(navTitle);
         swiper.swiperTopFixed();
 
-        getProdList("母婴");
-
-        setTimeout(function () {
-            getProdList("女装");
-        }, 200);
-        setTimeout(function () {
-            getProdList("男装");
-        }, 400);
-        setTimeout(function () {
-            getProdList("鞋包配饰");
-        }, 600);
-        setTimeout(function () {
-        getProdList("洗护彩妆");
-        }, 800);
-        setTimeout(function () {
-            getProdList("数码电器");
-        }, 1000);
-        setTimeout(function () {
-            getSecondStartProductList();
-        }, 1200);
-    }
-
-    function getProdList(name) {
         var param = {};
         param.page = 1;
-        param.size = 6;
-        param.q = name;
-        getSingleNavProdList(param);
+        param.size = 10;
+        app.getProductList(param, function (result) {
+            if (result.code == 200) {
+                var data = result.data.list;
+                for (var i = 0; i < 1; i++) {
+                    var html = '<div class="iba-act-area">' +
+                        '<div class="iba-type">' +
+                        '<p><span>' + navTitle[i] + '</span></p>' +
+                        '</div>' +
+                        '<div class="iba-product-list listIndex0">';
+
+                    for (var j = 0; j < data.length; j++) {
+                        var prod = data[j];
+                        html += '<a href="/xinghuipin/mobile/productDetail.html?prodId=' + prod.id + '">' +
+                            '<dl class="iba-product-main">' +
+                            '<dt class="iba-product-image">' +
+                            '<img src="' + prod.url + '" alt="">' +
+                            '</dt>' +
+                            '<dd class="iba-product-description">' +
+                            '<p>' + prod.title + '</p>' +
+                            '<div class="iba-clear">' +
+                            '<div class="iba-product-price"><span class="iba-product-price-label">优惠价￥10</span><spanclass="iba-new-price"></span><span class="iba-old-price">￥20</span></div>' +
+                            '<div class="iba-product-nation">' +
+                            '<span>销售量：5</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '</dd>' +
+                            '</dl>' +
+                            '</a>'
+                    }
+                    html += '</div></div>';
+                    $("#iba-act-container").append(html);
+                }
+            }
+        });
     }
 
     function setNavTitle(data) {
@@ -163,85 +170,6 @@
         }
         navTitle += '</div></div>';
         $("#iba-act-container").append(navTitle);
-    }
-
-    function getSingleNavProdList(param) {
-        var html = '<div class="iba-act-area">' +
-            '<div class="iba-type">' +
-            '<p><span>' + param.q + '</span></p>' +
-            '</div>' +
-            '<div class="iba-product-list listIndex0">';
-        app.getProductList(param, function (result) {
-            if (result.code == 200) {
-                var data = result.data.data;
-                for (var j = 0; j < data.length; j++) {
-                    var prod = data[j];
-                    html += '<a href="/mobile/productDetail.html?prodId=' + prod.numIid + '&currPrice=' + getCurrPrice(prod.zkFinalPrice, prod.couponInfo) + '&couponClickUrl=' + prod.couponClickUrl + '&remainNum=' + prod.volume + '">' +
-                        '<dl class="iba-product-main">' +
-                        '<dt class="iba-product-image">' +
-                        '<img src="' + prod.pictUrl + '" alt="">' +
-                        '</dt>' +
-                        '<dd class="iba-product-description">' +
-                        '<p>' + prod.title + '</p>' +
-                        '<div class="iba-clear">' +
-                        '<div class="iba-product-price"><span class="iba-product-price-label">优惠价￥' + getCurrPrice(prod.zkFinalPrice, prod.couponInfo) + '</span><spanclass="iba-new-price"></span><span class="iba-old-price">￥' + prod.zkFinalPrice + '</span></div>' +
-                        '<div class="iba-product-nation">' +
-                        '<span>销售量：' + prod.volume + '</span>' +
-                        '</div>' +
-                        '</div>' +
-                        '</dd>' +
-                        '</dl>' +
-                        '</a>'
-                }
-                html += '</div></div>';
-                $("#iba-act-container").append(html);
-            }
-        });
-    }
-
-    function getSecondStartProductList() {
-        var param = {};
-        param.page = 1;
-        param.size = 6;
-        app.getNavProdList(param, function (result) {
-            if (result.code == 200) {
-                var data = result.data;
-                for (var i = 0; i < data.length; i++) {
-                    var item = data[i];
-                    var html = '<div class="iba-act-area">' +
-                        '<div class="iba-type">' +
-                        '<p><span>' + item.nav + '</span></p>' +
-                        '</div>' +
-                        '<div class="iba-product-list listIndex0">';
-                    var prodList = item.prodList;
-                    for (var j = 0; j < prodList.length; j++) {
-                        var prod = prodList[j];
-                        html += '<a href="/mobile/productDetail.html?prodId=' + prod.numIid + '&currPrice=' + getCurrPrice(prod.zkFinalPrice, prod.couponInfo) + '&couponClickUrl=' + prod.couponClickUrl + '&remainNum=' + prod.volume + '">' +
-                            '<dl class="iba-product-main">' +
-                            '<dt class="iba-product-image">' +
-                            '<img src="' + prod.pictUrl + '" alt="">' +
-                            '</dt>' +
-                            '<dd class="iba-product-description">' +
-                            '<p>' + prod.title + '</p>' +
-                            '<div class="iba-clear">' +
-                            '<div class="iba-product-price"><span class="iba-product-price-label">优惠价￥' + getCurrPrice(prod.zkFinalPrice, prod.couponInfo) + '</span><spanclass="iba-new-price"></span><span class="iba-old-price">￥' + prod.zkFinalPrice + '</span></div>' +
-                            '<div class="iba-product-nation">' +
-                            '<span>销售量：' + prod.volume + '</span>' +
-                            '</div>' +
-                            '</div>' +
-                            '</dd>' +
-                            '</dl>' +
-                            '</a>'
-                    }
-                    html += '</div></div>';
-                    $("#iba-act-container").append(html);
-                }
-            }
-        });
-    }
-
-    function getCurrPrice(totalPrice, priceInfo) {
-        return (totalPrice - priceInfo.split("减")[1].split("元")[0]).toFixed(2);
     }
 
     function initWechat() {

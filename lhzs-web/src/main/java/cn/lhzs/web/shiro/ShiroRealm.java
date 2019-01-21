@@ -24,11 +24,6 @@ import java.util.List;
 
 public class ShiroRealm extends AuthorizingRealm {
 
-    @Autowired
-    private SysUserService sysUserService;
-
-    @Autowired
-    private SysAuthService sysAuthService;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -54,38 +49,7 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-        SysUser sysUser = sysUserService.findBy("account", token.getUsername());
-        if (!checkUser(sysUser, token)) {
-            throw new LoginException("用户名或密码错误");
-        }
-        saveUserInfo(SecurityUtils.getSubject(), sysUser);
         return new SimpleAuthenticationInfo(token.getUsername(), token.getPassword(), getName());
-    }
-
-    private void saveUserInfo(Subject subject, SysUser sysUser) {
-        Session session = subject.getSession();
-        session.setAttribute("user", sysUser.getAccount());
-        session.setAttribute("userAuth", sysAuthService.getUserAuthList(sysUser.getId()));
-        session.setTimeout(1000 * 60 * 60 * 2);
-        WebUtil.saveCurrentUser(sysUser.getId());
-    }
-
-    private boolean checkUser(SysUser sysUser, UsernamePasswordToken token) {
-        String password = getTokenPassword(token.getPassword());
-        if (sysUser != null && StringUtil.isNotEmpty(password) && password.equals(sysUser.getPassword())) {
-            return true;
-        }
-        return false;
-    }
-
-    private String getTokenPassword(char[] password) {
-        StringBuilder builder = new StringBuilder();
-        if (password != null) {
-            for (int i = 0; i < password.length; i++) {
-                builder.append(password[i]);
-            }
-        }
-        return builder.toString();
     }
 
 }

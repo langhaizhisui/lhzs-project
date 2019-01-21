@@ -59,8 +59,9 @@ public class ResponseResultGenerator {
                 .setData(data);
     }
 
-    public static ResponseResult generatorLoginResult() {
-        return getResponseResult(ResponseCode.LOGIN);
+    public static ResponseResult generatorLoginResult(Object data) {
+        return getResponseResult(ResponseCode.LOGIN)
+                .setData(data);
     }
 
     public static ResponseResult generatorUnLoginResult() {

@@ -3,6 +3,7 @@ package cn.lhzs.data.bean;
 import cn.lhzs.data.base.BaseModel;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.*;
 
 @Table(name = "xhp_product")
@@ -37,6 +38,12 @@ public class XhpProduct extends BaseModel {
 
     @Transient
     private List<XhpProductSku> skuList;
+
+    @Transient
+    private List<XhpFileUpload> mainBannerList;
+
+    @Transient
+    private List<XhpFileUpload> detailBannerList;
 
     /**
      * 获取商品标题
@@ -134,5 +141,21 @@ public class XhpProduct extends BaseModel {
 
     public void setSkuList(List<XhpProductSku> skuList) {
         this.skuList = skuList;
+    }
+
+    public List<XhpFileUpload> getMainBannerList() {
+        return mainBannerList;
+    }
+
+    public void setMainBannerList(List<XhpFileUpload> mainBannerList) {
+        this.mainBannerList = mainBannerList;
+    }
+
+    public List<XhpFileUpload> getDetailBannerList() {
+        return detailBannerList;
+    }
+
+    public void setDetailBannerList(List<XhpFileUpload> detailBannerList) {
+        this.detailBannerList = detailBannerList;
     }
 }

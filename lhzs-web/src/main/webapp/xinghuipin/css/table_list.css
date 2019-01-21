@@ -7,24 +7,28 @@
   table-layout: fixed;
 }
 
-#table-resizable1 thead tr th, #table-resizable1 tbody tr td {
+thead tr th, tbody tr td {
   text-overflow: ellipsis; /* for IE */
   -moz-text-overflow: ellipsis; /* for Firefox,mozilla */
   overflow: hidden;
   white-space: nowrap;
   text-align: center;
   border: 1px solid #cecece;
-  padding: 7px 0px;
+  padding: 7px 10px;
 }
-#table-resizable1 thead tr th {
+thead tr th {
   position: relative;
   user-select: none;
   background-color: #e3e3e3;
   font-weight: bold;
 }
-#table-resizable1 table tr:nth-child(odd){
+table tr:nth-child(odd){
   background-color: #ffffff;
 }
-#table-resizable1 table tr:nth-child(even){
+table tr:nth-child(even){
   background-color: #e3e3e3;
+}
+table{
+  margin-left: auto;
+  margin-right: auto;
 }
